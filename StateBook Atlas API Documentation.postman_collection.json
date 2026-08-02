@@ -1,0 +1,1780 @@
+{
+	"info": {
+		"_postman_id": "1345d63e-de36-46a1-8d52-e17920f51ced",
+		"name": "Documentation",
+		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5838532"
+	},
+	"item": [
+		{
+			"name": "Overview",
+			"item": [
+				{
+					"name": "A Simple REST API Example",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata?auth=demo&data=dem.acs.pop.total.val&geo=city:burlington-vt",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata"
+							],
+							"query": [
+								{
+									"key": "auth",
+									"value": "demo"
+								},
+								{
+									"key": "data",
+									"value": "dem.acs.pop.total.val"
+								},
+								{
+									"key": "geo",
+									"value": "city:burlington-vt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "A Simple REST API Example",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Developers Guide",
+			"item": [
+				{
+					"name": "Requests and Responses | An Example",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\",\r\n      \"dem.acs.pop.total.ayc\",\r\n      \"dem.acs.pop.total.aycp\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requesting User Information | Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getuser?data=tokens,profile",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getuser"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "tokens,profile"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requesting User Information | Profile Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": [\r\n        \"profile\",\r\n        \"tokens\"\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getuser",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Checking API Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/ping",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ping"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Datapoints | Individual Datapoints",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata?auth=demo&data=dem.acs.pop.total.val,dem.acs.pop.total.ayc&geo=city:burlington-vt",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata"
+							],
+							"query": [
+								{
+									"key": "auth",
+									"value": "demo"
+								},
+								{
+									"key": "data",
+									"value": "dem.acs.pop.total.val,dem.acs.pop.total.ayc"
+								},
+								{
+									"key": "geo",
+									"value": "city:burlington-vt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Datapoints | Individual Datapoints",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\",\r\n      \"dem.acs.pop.total.ayc\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Datapoints | Datapoints and Geographic Context",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\",\r\n      \"econ.tax.str.ovrl\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections | Examples of Collection Structure",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ],\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\",\r\n          \"trn.airport.runway\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"cbsa:burlington-south-burlington-vt-metro-area\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections | Collections and Geographic Context",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ],\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"wkf.oews.occ\",\r\n        \"datapoints\": [\r\n          \"wkf.oews.occ.desc\",\r\n          \"wkf.oews.occ.emp.val\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections | Nested Collections",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ],\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"edu.ipeds.inst\",\r\n        \"datapoints\": [\r\n          \"edu.ipeds.inst.name\",\r\n          \"edu.ipeds.inst.ugrad\"\r\n        ],\r\n        \"collections\": [\r\n          {\r\n            \"collection\": \"edu.ipeds.inst.deg\",\r\n            \"datapoints\": [\r\n              \"edu.ipeds.inst.deg.desc\",\r\n              \"edu.ipeds.inst.deg.bach.val\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criteria | Geographies #1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criteria | Geographies #2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geographies\": [\"city:burlington-vt\", \"city:south-burlington-vt\"]\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criteria | Requesting Geographies by Address",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geographies\": {\r\n      \"address\": \"123 Main Street, Burlington, VT 05401\",\r\n      \"regionType\": \"city\"\r\n    }\r\n  }\r\n}\r\n"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criteria | Requesting Geographies by Latitude/Longitude",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geographies\": {\r\n      \"latlon\": \"44.47588, -73.21400\",\r\n      \"regionType\": \"city\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criteria | Custom Geographies | Radius Search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"radius\": 25,\r\n      \"address\": \"123 Main Street, Burlington, VT, 05401\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criteria | Custom Geographies | Drive Time Search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"drivetime\": 60,\r\n      \"address\": \"123 Main Street, Burlington, VT, 05401\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criteria | Custom Geographies | Drive Distance Search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"drivedistance\": 50,\r\n      \"address\": \"123 Main Street, Burlington, VT, 05401\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criteria | Custom Geographies | GeoJSON Object",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"geojson\": {\r\n        \"type\": \"Polygon\",\r\n        \"coordinates\": [\r\n          [\r\n            [-73.27091217041016, 44.4299798500283],\r\n            [-73.12551498413086, 44.4299798500283],\r\n            [-73.12551498413086, 44.52086677372567],\r\n            [-73.27091217041016, 44.52086677372567],\r\n            [-73.27091217041016, 44.4299798500283]\r\n          ]\r\n        ]\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criteria | Custom Geographies | Combined Geographies",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"combined\": [\"county:chittenden-county-vt\", \r\n                   \"county:franklin-county-vt\"]\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scope | Geographies",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ],\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\"\r\n        ],\r\n       \"scope\": {\r\n          \"geography\": \"cbsa:burlington-south-burlington-vt-metro-area\"\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scope | Time Periods #1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ],\r\n    \"scope\": {\r\n      \"periods\": [\"2016\", \"2017\"]\r\n    }\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scope | Time Periods #2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\",\r\n      {\r\n        \"datapoint\": \"econ.tax.str.ovrl\",\r\n        \"scope\": {\r\n          \"periods\": [\"2015\", \"2016\", \"2017\"]\r\n        }\r\n      }\r\n    ],\r\n    \"scope\": {\r\n      \"periods\": [\"2016\", \"2017\"]\r\n    }\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scope | Filtering Collections #1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ],\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"ind.cbp.naics\",\r\n        \"datapoints\": [\r\n          \"ind.cbp.naics.desc\",\r\n          \"ind.cbp.naics.emp.val\"\r\n        ],\r\n        \"scope\": {\r\n          \"periods\": [\"2015\", \"2016\"],\r\n          \"datapoints\": {\r\n            \"ind.cbp.naics.code\": [\"541511\"]\r\n          }\r\n        }\r\n      }\r\n    ],\r\n    \"scope\": {\r\n      \"periods\": [\"2016\", \"2017\"]\r\n    }\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scope | Filtering Collections #2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ],\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\",\r\n          \"trn.airport.runway\"\r\n        ],\r\n        \"scope\": {\r\n          \"sql\": {\r\n            \">\": [\"trn.airport.runway\", 6000]\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"cbsa:burlington-south-burlington-vt-metro-area\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Summaries | Regional Datapoint Auto-Summaries #1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.male.val\",\r\n      \"dem.acs.pop.male.pct\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"combined\": [\"city:burlington-vt\",\r\n                   \"city:south-burlington-vt\"]\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Summaries | Regional Datapoint Auto-Summaries #2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.male.val\",\r\n      \"dem.acs.pop.male.pct\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"combined\": [\"city:burlington-vt\",\r\n                   \"city:south-burlington-vt\"]\r\n    }\r\n  },\r\n  \"summary\": \"auto\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Summaries | Regional Datapoint Auto-Summaries #3",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.male.val\",\r\n      \"dem.acs.pop.male.pct\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"drivetime\": 15,\r\n      \"geographicCentroid\": \"city:burlington-vt\"\r\n    }\r\n  },\r\n  \"summary\": \"auto\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Summaries | Regional Datapoint Custom Summaries",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"summarize(dem.acs.pop.male.val)\",\r\n      \"summarize(dem.acs.pop.male.pct)\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"combined\": [\"city:burlington-vt\",\r\n                   \"city:south-burlington-vt\"]\r\n    }\r\n  },\r\n  \"summary\": true\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Summaries | Collection Auto-Summaries",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n    \t{\r\n    \t\t\"collection\": \"trn.airport\",\r\n    \t\t\"name\": \"Number of airports by type\",\r\n    \t\t\"datapoints\": [\r\n    \t\t\t\"trn.airport.type\",\r\n    \t\t\t\"trn.airport.pass\",\r\n    \t\t\t\"count\"\r\n    \t\t],\r\n    \t\t\"summary\": \"auto\"\r\n    \t}\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"name\": \"100-mile radius from Burlington, VT\",\r\n      \"radius\": 100,\r\n      \"geographicCentroid\": \"city:burlington-vt\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Summaries | Collection Custom Summaries",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n    \t{\r\n    \t\t\"collection\": \"trn.airport\",\r\n    \t\t\"name\": \"Number of airports by type\",\r\n    \t\t\"datapoints\": [\r\n    \t\t\t\"trn.airport.type\",\r\n    \t\t\t\"sum(trn.airport.pass)\",\r\n    \t\t\t\"avg(trn.airport.frght)\",\r\n    \t\t\t\"min(trn.airport.runway)\",\r\n    \t\t\t\"max(trn.airport.runway)\",\r\n    \t\t\t\"count\"\r\n    \t\t],\r\n    \t\t\"summary\": {\r\n    \t\t\t\"groupby\": \"trn.airport.type\"\r\n    \t\t}\r\n    \t}\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"name\": \"100-mile radius from Burlington, VT\",\r\n      \"radius\": 100,\r\n      \"geographicCentroid\": \"city:burlington-vt\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ordering | Simple Ordering for Collections",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n    \t{\r\n    \t\t\"collection\": \"trn.airport\",\r\n    \t\t\"datapoints\": [\r\n    \t\t\t\"trn.airport.locid\",\r\n    \t\t\t\"trn.airport.name\",\r\n    \t\t\t\"trn.airport.type\",\r\n    \t\t\t\"trn.airport.pass\",\r\n    \t\t\t\"trn.airport.frght\",\r\n    \t\t\t\"trn.airport.runway\"\r\n    \t\t],\r\n    \t\t\"orderby\": [\"trn.airport.type\", \"trn.airport.name\"]\r\n    \t}\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"name\": \"100-mile radius from Burlington, VT\",\r\n      \"radius\": 100,\r\n      \"geographicCentroid\": \"city:burlington-vt\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ordering | Complex Ordering for Collections",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n    \t{\r\n    \t\t\"collection\": \"trn.airport\",\r\n    \t\t\"datapoints\": [\r\n    \t\t\t\"trn.airport.type\",\r\n    \t\t\t\"trn.airport.locid\",\r\n    \t\t\t\"trn.airport.name\",\r\n    \t\t\t\"trn.airport.runway\"\r\n    \t\t],\r\n    \t\t\"orderby\": [\r\n    \t\t\t{\r\n    \t\t\t\t\"datapoint\": \"trn.airport.type\",\r\n    \t\t\t\t\"order\": \"ascending\"\r\n    \t\t\t},\r\n    \t\t\t{\r\n    \t\t\t\t\"datapoint\": \"trn.airport.runway\",\r\n    \t\t\t\t\"order\": \"descending\"\r\n    \t\t\t}\r\n    \t\t]\r\n    \t}\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"name\": \"100-mile radius from Burlington, VT\",\r\n      \"radius\": 100,\r\n      \"geographicCentroid\": \"city:burlington-vt\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ordering | Ordering with Top for Collections",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"collections\": [\r\n    \t{\r\n    \t\t\"collection\": \"trn.airport\",\r\n    \t\t\"datapoints\": [\r\n    \t\t\t\"trn.airport.type\",\r\n    \t\t\t\"trn.airport.locid\",\r\n    \t\t\t\"trn.airport.name\",\r\n    \t\t\t\"trn.airport.pass\"\r\n    \t\t],\r\n    \t\t\"orderby\": [\r\n    \t\t\t{\r\n    \t\t\t\t\"datapoint\": \"trn.airport.pass\",\r\n    \t\t\t\t\"order\": \"descending\"\r\n    \t\t\t}\r\n    \t\t],\r\n    \t\t\"top\": 3\r\n    \t}\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": {\r\n      \"name\": \"100-mile radius from Burlington, VT\",\r\n      \"radius\": 100,\r\n      \"geographicCentroid\": \"city:burlington-vt\"\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Templates | A Simple Example",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata?auth=demo&template=demographicOverview",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata"
+							],
+							"query": [
+								{
+									"key": "auth",
+									"value": "demo"
+								},
+								{
+									"key": "template",
+									"value": "demographicOverview"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Templates | A Simple Example",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"template\": \"demographicOverview\"\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Templates | Regional Geography",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata?auth=demo&template=demographicOverview&geo=city:burlington-vt",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata"
+							],
+							"query": [
+								{
+									"key": "auth",
+									"value": "demo"
+								},
+								{
+									"key": "template",
+									"value": "demographicOverview"
+								},
+								{
+									"key": "geo",
+									"value": "city:burlington-vt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Templates | Regional Geography",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"template\": \"demographicOverview\",\r\n  \"criteria\": {\r\n      \"geography\": \"city:burlington-vt\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Templates | Custom Geographies",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"template\": \"demographicOverview\",\r\n  \"criteria\": {\r\n      \"geography\": {\r\n      \t  \"drivetime\": 60,\r\n      \t  \"geographicCentroid\": \"city:burlington-vt\"\r\n      }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Options | Format Option",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\",\r\n      \"dem.acs.pop.total.ayc\",\r\n      \"dem.acs.pop.total.aycp\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  },\r\n  \"options\": {\r\n    \"outputFormat\": \"formatted\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Options | Metadata Option",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ],\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\",\r\n          \"trn.airport.runway\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geography\": \"city:burlington-vt\"\r\n  },\r\n  \"options\": {\r\n    \"includeMetadata\": true\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Options | GeoJSON Option",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\"\r\n    ],\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"trn.airport\",\r\n        \"datapoints\": [\r\n          \"trn.airport.name\",\r\n          \"trn.airport.runway\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n      \"geography\": \"city:burlington-vt\"\r\n  },\r\n  \"options\": {\r\n    \"includeMetadata\": true,\r\n    \"includeGeojson\": true\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Examples",
+			"item": [
+				{
+					"name": "Large number of ACS datapoints",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"scope\": {\r\n      \"periods\": \"last5\",\r\n      \"sources\": [\"acs1\", \"acs5\"]\r\n    },\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\",\r\n      \"dem.acs.pop.total.ayc\",\r\n      \"dem.acs.pop.total.aycp\",\r\n      \"dem.acs.pop.total.moe\",\r\n      \"dem.acs.pop.total.cv\",\r\n      \"dem.acs.pop.male.val\",\r\n      \"dem.acs.pop.male.pct\",\r\n      \"dem.acs.pop.male.ayc\",\r\n      \"dem.acs.pop.male.aycp\",\r\n      \"dem.acs.pop.male.moe\",\r\n      \"dem.acs.pop.male.cv\",\r\n      \"dem.acs.pop.female.val\",\r\n      \"dem.acs.pop.female.pct\",\r\n      \"dem.acs.pop.female.ayc\",\r\n      \"dem.acs.pop.female.aycp\",\r\n      \"dem.acs.pop.female.moe\",\r\n      \"dem.acs.pop.female.cv\",\r\n      \"dem.acs.mdage.total.val\",\r\n      \"dem.acs.mdage.total.ayc\",\r\n      \"dem.acs.mdage.total.aycp\",\r\n      \"dem.acs.mdage.total.moe\",\r\n      \"dem.acs.mdage.total.cv\",\r\n      \"dem.acs.mdage.male.val\",\r\n      \"dem.acs.mdage.male.ayc\",\r\n      \"dem.acs.mdage.male.aycp\",\r\n      \"dem.acs.mdage.male.moe\",\r\n      \"dem.acs.mdage.male.cv\",\r\n      \"dem.acs.mdage.female.val\",\r\n      \"dem.acs.mdage.female.ayc\",\r\n      \"dem.acs.mdage.female.aycp\",\r\n      \"dem.acs.mdage.female.moe\",\r\n      \"dem.acs.mdage.female.cv\",\r\n      \"dem.acs.hhd.total.val\",\r\n      \"dem.acs.hhd.total.ayc\",\r\n      \"dem.acs.hhd.total.aycp\",\r\n      \"dem.acs.hhd.total.moe\",\r\n      \"dem.acs.hhd.total.cv\",\r\n      \"dem.acs.hhd.pcinc.val\",\r\n      \"dem.acs.hhd.pcinc.ayc\",\r\n      \"dem.acs.hhd.pcinc.aycp\",\r\n      \"dem.acs.hhd.pcinc.moe\",\r\n      \"dem.acs.hhd.pcinc.cv\",\r\n      \"dem.acs.hhd.mninc.val\",\r\n      \"dem.acs.hhd.mninc.ayc\",\r\n      \"dem.acs.hhd.mninc.aycp\",\r\n      \"dem.acs.hhd.mninc.moe\",\r\n      \"dem.acs.hhd.mninc.cv\",\r\n      \"dem.acs.hhd.mdinc.val\",\r\n      \"dem.acs.hhd.mdinc.ayc\",\r\n      \"dem.acs.hhd.mdinc.aycp\",\r\n      \"dem.acs.hhd.mdinc.moe\",\r\n      \"dem.acs.hhd.mdinc.cv\",\r\n      \"dem.acs.hsu.total.val\",\r\n      \"dem.acs.hsu.total.moe\",\r\n      \"dem.acs.hsu.total.cv\",\r\n      \"dem.acs.hsu.mdval.val\",\r\n      \"dem.acs.hsu.mdval.moe\",\r\n      \"dem.acs.hsu.mdval.cv\",\r\n      \"dem.acs.hsc.mdcost.total.val\",\r\n      \"dem.acs.hsc.mdcost.total.moe\",\r\n      \"dem.acs.hsc.mdcost.total.cv\",\r\n      \"dem.acs.hsc.mdcost.wmtg.val\",\r\n      \"dem.acs.hsc.mdcost.wmtg.moe\",\r\n      \"dem.acs.hsc.mdcost.wmtg.cv\",\r\n      \"dem.acs.hsc.mdcost.womtg.val\",\r\n      \"dem.acs.hsc.mdcost.womtg.moe\",\r\n      \"dem.acs.hsc.mdcost.womtg.cv\",\r\n      \"dem.acs.hsc.mdrent.val\",\r\n      \"dem.acs.hsc.mdrent.moe\",\r\n      \"dem.acs.hsc.mdrent.cv\",\r\n      \"dem.acs.gmb.1pl.domin.val\",\r\n      \"dem.acs.gmb.1pl.domin.pct\",\r\n      \"dem.acs.gmb.1pl.domin.ayc\",\r\n      \"dem.acs.gmb.1pl.domin.aycp\",\r\n      \"dem.acs.gmb.1pl.domin.moe\",\r\n      \"dem.acs.gmb.1pl.domin.cv\",\r\n      \"dem.acs.gmb.1pl.domout.val\",\r\n      \"dem.acs.gmb.1pl.domout.pct\",\r\n      \"dem.acs.gmb.1pl.domout.ayc\",\r\n      \"dem.acs.gmb.1pl.domout.aycp\",\r\n      \"dem.acs.gmb.1pl.domout.moe\",\r\n      \"dem.acs.gmb.1pl.domout.cv\",\r\n      \"dem.acs.gmb.1pl.domnet.val\",\r\n      \"dem.acs.gmb.1pl.domnet.pct\",\r\n      \"dem.acs.gmb.1pl.domnet.ayc\",\r\n      \"dem.acs.gmb.1pl.domnet.moe\",\r\n      \"dem.acs.gmb.1pl.domnet.cv\",\r\n      \"dem.acs.gmb.15pl.domin.val\",\r\n      \"dem.acs.gmb.15pl.domin.pct\",\r\n      \"dem.acs.gmb.15pl.domin.ayc\",\r\n      \"dem.acs.gmb.15pl.domin.aycp\",\r\n      \"dem.acs.gmb.15pl.domin.moe\",\r\n      \"dem.acs.gmb.15pl.domin.cv\",\r\n      \"dem.acs.gmb.15pl.domout.val\",\r\n      \"dem.acs.gmb.15pl.domout.pct\",\r\n      \"dem.acs.gmb.15pl.domout.ayc\",\r\n      \"dem.acs.gmb.15pl.domout.aycp\",\r\n      \"dem.acs.gmb.15pl.domout.moe\",\r\n      \"dem.acs.gmb.15pl.domout.cv\",\r\n      \"dem.acs.gmb.15pl.domnet.val\",\r\n      \"dem.acs.gmb.15pl.domnet.pct\",\r\n      \"dem.acs.gmb.15pl.domnet.ayc\",\r\n      \"dem.acs.gmb.15pl.domnet.moe\",\r\n      \"dem.acs.gmb.15pl.domnet.cv\",\r\n      \"dem.acs.gmb.25pl.domin.val\",\r\n      \"dem.acs.gmb.25pl.domin.pct\",\r\n      \"dem.acs.gmb.25pl.domin.ayc\",\r\n      \"dem.acs.gmb.25pl.domin.aycp\",\r\n      \"dem.acs.gmb.25pl.domin.moe\",\r\n      \"dem.acs.gmb.25pl.domin.cv\",\r\n      \"dem.acs.gmb.25pl.domout.val\",\r\n      \"dem.acs.gmb.25pl.domout.pct\",\r\n      \"dem.acs.gmb.25pl.domout.ayc\",\r\n      \"dem.acs.gmb.25pl.domout.aycp\",\r\n      \"dem.acs.gmb.25pl.domout.moe\",\r\n      \"dem.acs.gmb.25pl.domout.cv\",\r\n      \"dem.acs.gmb.25pl.domnet.val\",\r\n      \"dem.acs.gmb.25pl.domnet.pct\",\r\n      \"dem.acs.gmb.25pl.domnet.ayc\",\r\n      \"dem.acs.gmb.25pl.domnet.moe\",\r\n      \"dem.acs.gmb.25pl.domnet.cv\",\r\n      \"edu.acs.enr.3pl.k12.val\",\r\n      \"edu.acs.enr.3pl.k12.pct\",\r\n      \"edu.acs.enr.3pl.k12.ayc\",\r\n      \"edu.acs.enr.3pl.k12.aycp\",\r\n      \"edu.acs.enr.3pl.k12.moe\",\r\n      \"edu.acs.enr.3pl.k12.cv\",\r\n      \"edu.acs.enr.3pl.ugrad.val\",\r\n      \"edu.acs.enr.3pl.ugrad.pct\",\r\n      \"edu.acs.enr.3pl.ugrad.ayc\",\r\n      \"edu.acs.enr.3pl.ugrad.aycp\",\r\n      \"edu.acs.enr.3pl.ugrad.moe\",\r\n      \"edu.acs.enr.3pl.ugrad.cv\",\r\n      \"edu.acs.enr.3pl.grad.val\",\r\n      \"edu.acs.enr.3pl.grad.pct\",\r\n      \"edu.acs.enr.3pl.grad.ayc\",\r\n      \"edu.acs.enr.3pl.grad.aycp\",\r\n      \"edu.acs.enr.3pl.grad.moe\",\r\n      \"edu.acs.enr.3pl.grad.cv\",\r\n      \"edu.acs.enr.18-24.clg.val\",\r\n      \"edu.acs.enr.18-24.clg.pct\",\r\n      \"edu.acs.enr.18-24.clg.ayc\",\r\n      \"edu.acs.enr.18-24.clg.aycp\",\r\n      \"edu.acs.enr.18-24.clg.moe\",\r\n      \"edu.acs.enr.18-24.clg.cv\",\r\n      \"edu.acs.att.18-24.0-8.val\",\r\n      \"edu.acs.att.18-24.0-8.pct\",\r\n      \"edu.acs.att.18-24.0-8.ayc\",\r\n      \"edu.acs.att.18-24.0-8.aycp\",\r\n      \"edu.acs.att.18-24.0-8.moe\",\r\n      \"edu.acs.att.18-24.0-8.cv\",\r\n      \"edu.acs.att.18-24.9-12.val\",\r\n      \"edu.acs.att.18-24.9-12.pct\",\r\n      \"edu.acs.att.18-24.9-12.ayc\",\r\n      \"edu.acs.att.18-24.9-12.aycp\",\r\n      \"edu.acs.att.18-24.9-12.moe\",\r\n      \"edu.acs.att.18-24.9-12.cv\",\r\n      \"edu.acs.att.18-24.high.val\",\r\n      \"edu.acs.att.18-24.high.pct\",\r\n      \"edu.acs.att.18-24.high.ayc\",\r\n      \"edu.acs.att.18-24.high.aycp\",\r\n      \"edu.acs.att.18-24.high.moe\",\r\n      \"edu.acs.att.18-24.high.cv\",\r\n      \"edu.acs.att.18-24.assc.val\",\r\n      \"edu.acs.att.18-24.assc.pct\",\r\n      \"edu.acs.att.18-24.assc.ayc\",\r\n      \"edu.acs.att.18-24.assc.aycp\",\r\n      \"edu.acs.att.18-24.assc.moe\",\r\n      \"edu.acs.att.18-24.assc.cv\",\r\n      \"edu.acs.att.18-24.bach.val\",\r\n      \"edu.acs.att.18-24.bach.pct\",\r\n      \"edu.acs.att.18-24.bach.ayc\",\r\n      \"edu.acs.att.18-24.bach.aycp\",\r\n      \"edu.acs.att.18-24.bach.moe\",\r\n      \"edu.acs.att.18-24.bach.cv\",\r\n      \"edu.acs.att.25pl.0-8.val\",\r\n      \"edu.acs.att.25pl.0-8.pct\",\r\n      \"edu.acs.att.25pl.0-8.ayc\",\r\n      \"edu.acs.att.25pl.0-8.aycp\",\r\n      \"edu.acs.att.25pl.0-8.moe\",\r\n      \"edu.acs.att.25pl.0-8.cv\",\r\n      \"edu.acs.att.25pl.9-12.val\",\r\n      \"edu.acs.att.25pl.9-12.pct\",\r\n      \"edu.acs.att.25pl.9-12.ayc\",\r\n      \"edu.acs.att.25pl.9-12.aycp\",\r\n      \"edu.acs.att.25pl.9-12.moe\",\r\n      \"edu.acs.att.25pl.9-12.cv\",\r\n      \"edu.acs.att.25pl.high.val\",\r\n      \"edu.acs.att.25pl.high.pct\",\r\n      \"edu.acs.att.25pl.high.ayc\",\r\n      \"edu.acs.att.25pl.high.aycp\",\r\n      \"edu.acs.att.25pl.high.moe\",\r\n      \"edu.acs.att.25pl.high.cv\",\r\n      \"edu.acs.att.25pl.assc.val\",\r\n      \"edu.acs.att.25pl.assc.pct\",\r\n      \"edu.acs.att.25pl.assc.ayc\",\r\n      \"edu.acs.att.25pl.assc.aycp\",\r\n      \"edu.acs.att.25pl.assc.moe\",\r\n      \"edu.acs.att.25pl.assc.cv\",\r\n      \"edu.acs.att.25pl.bach.val\",\r\n      \"edu.acs.att.25pl.bach.pct\",\r\n      \"edu.acs.att.25pl.bach.ayc\",\r\n      \"edu.acs.att.25pl.bach.aycp\",\r\n      \"edu.acs.att.25pl.bach.moe\",\r\n      \"edu.acs.att.25pl.bach.cv\",\r\n      \"edu.acs.att.25pl.grad.val\",\r\n      \"edu.acs.att.25pl.grad.pct\",\r\n      \"edu.acs.att.25pl.grad.ayc\",\r\n      \"edu.acs.att.25pl.grad.aycp\",\r\n      \"edu.acs.att.25pl.grad.moe\",\r\n      \"edu.acs.att.25pl.grad.cv\",\r\n      \"edu.acs.att.25pl.highpl.val\",\r\n      \"edu.acs.att.25pl.highpl.pct\",\r\n      \"edu.acs.att.25pl.highpl.ayc\",\r\n      \"edu.acs.att.25pl.highpl.aycp\",\r\n      \"edu.acs.att.25pl.highpl.moe\",\r\n      \"edu.acs.att.25pl.highpl.cv\",\r\n      \"edu.acs.att.25pl.bachpl.val\",\r\n      \"edu.acs.att.25pl.bachpl.pct\",\r\n      \"edu.acs.att.25pl.bachpl.ayc\",\r\n      \"edu.acs.att.25pl.bachpl.aycp\",\r\n      \"edu.acs.att.25pl.bachpl.moe\",\r\n      \"edu.acs.att.25pl.bachpl.cv\",\r\n      \"wkf.acs.emp.16pl.total.val\",\r\n      \"wkf.acs.emp.16pl.total.ayc\",\r\n      \"wkf.acs.emp.16pl.total.aycp\",\r\n      \"wkf.acs.emp.16pl.total.moe\",\r\n      \"wkf.acs.emp.16pl.total.cv\",\r\n      \"wkf.acs.emp.16pl.notlabor.val\",\r\n      \"wkf.acs.emp.16pl.notlabor.pct\",\r\n      \"wkf.acs.emp.16pl.notlabor.ayc\",\r\n      \"wkf.acs.emp.16pl.notlabor.aycp\",\r\n      \"wkf.acs.emp.16pl.notlabor.moe\",\r\n      \"wkf.acs.emp.16pl.notlabor.cv\",\r\n      \"wkf.acs.emp.16pl.labor.total.val\",\r\n      \"wkf.acs.emp.16pl.labor.total.pct\",\r\n      \"wkf.acs.emp.16pl.labor.total.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.total.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.total.moe\",\r\n      \"wkf.acs.emp.16pl.labor.total.cv\",\r\n      \"wkf.acs.emp.16pl.labor.mil.val\",\r\n      \"wkf.acs.emp.16pl.labor.mil.pct\",\r\n      \"wkf.acs.emp.16pl.labor.mil.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.mil.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.mil.moe\",\r\n      \"wkf.acs.emp.16pl.labor.mil.cv\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.val\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.pct\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.moe\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.cv\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.val\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.pct\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.moe\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.cv\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.val\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.pct\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.moe\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.cv\",\r\n      \"trn.acs.cmt.mean.val\",\r\n      \"trn.acs.cmt.mean.ayc\",\r\n      \"trn.acs.cmt.mean.aycp\",\r\n      \"trn.acs.cmt.mean.moe\",\r\n      \"trn.acs.cmt.mean.cv\",\r\n      \"econ.tax.acs.mdretx.total.val\",\r\n      \"econ.tax.acs.mdretx.total.ayc\",\r\n      \"econ.tax.acs.mdretx.total.aycp\",\r\n      \"econ.tax.acs.mdretx.total.moe\",\r\n      \"econ.tax.acs.mdretx.total.cv\",\r\n      \"econ.tax.acs.mdretx.wmtg.val\",\r\n      \"econ.tax.acs.mdretx.wmtg.ayc\",\r\n      \"econ.tax.acs.mdretx.wmtg.aycp\",\r\n      \"econ.tax.acs.mdretx.wmtg.moe\",\r\n      \"econ.tax.acs.mdretx.wmtg.cv\",\r\n      \"econ.tax.acs.mdretx.womtg.val\",\r\n      \"econ.tax.acs.mdretx.womtg.ayc\",\r\n      \"econ.tax.acs.mdretx.womtg.aycp\",\r\n      \"econ.tax.acs.mdretx.womtg.moe\",\r\n      \"econ.tax.acs.mdretx.womtg.cv\"\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geographies\": [\r\n      \"cbsa:burlington-south-burlington-vt-metro-area\"\r\n    ]\r\n  },\r\n  \"options\": {\r\n    \"includeMetadata\": true\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Large number of ACS datapoints and collections",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"data\": {\r\n    \"scope\": {\r\n      \"periods\": \"last5\",\r\n      \"sources\": [\"acs1\", \"acs5\"]\r\n    },\r\n    \"datapoints\": [\r\n      \"dem.acs.pop.total.val\",\r\n      \"dem.acs.pop.total.ayc\",\r\n      \"dem.acs.pop.total.aycp\",\r\n      \"dem.acs.pop.total.moe\",\r\n      \"dem.acs.pop.total.cv\",\r\n      \"dem.acs.pop.male.val\",\r\n      \"dem.acs.pop.male.pct\",\r\n      \"dem.acs.pop.male.ayc\",\r\n      \"dem.acs.pop.male.aycp\",\r\n      \"dem.acs.pop.male.moe\",\r\n      \"dem.acs.pop.male.cv\",\r\n      \"dem.acs.pop.female.val\",\r\n      \"dem.acs.pop.female.pct\",\r\n      \"dem.acs.pop.female.ayc\",\r\n      \"dem.acs.pop.female.aycp\",\r\n      \"dem.acs.pop.female.moe\",\r\n      \"dem.acs.pop.female.cv\",\r\n      \"dem.acs.mdage.total.val\",\r\n      \"dem.acs.mdage.total.ayc\",\r\n      \"dem.acs.mdage.total.aycp\",\r\n      \"dem.acs.mdage.total.moe\",\r\n      \"dem.acs.mdage.total.cv\",\r\n      \"dem.acs.mdage.male.val\",\r\n      \"dem.acs.mdage.male.ayc\",\r\n      \"dem.acs.mdage.male.aycp\",\r\n      \"dem.acs.mdage.male.moe\",\r\n      \"dem.acs.mdage.male.cv\",\r\n      \"dem.acs.mdage.female.val\",\r\n      \"dem.acs.mdage.female.ayc\",\r\n      \"dem.acs.mdage.female.aycp\",\r\n      \"dem.acs.mdage.female.moe\",\r\n      \"dem.acs.mdage.female.cv\",\r\n      \"dem.acs.hhd.total.val\",\r\n      \"dem.acs.hhd.total.ayc\",\r\n      \"dem.acs.hhd.total.aycp\",\r\n      \"dem.acs.hhd.total.moe\",\r\n      \"dem.acs.hhd.total.cv\",\r\n      \"dem.acs.hhd.pcinc.val\",\r\n      \"dem.acs.hhd.pcinc.ayc\",\r\n      \"dem.acs.hhd.pcinc.aycp\",\r\n      \"dem.acs.hhd.pcinc.moe\",\r\n      \"dem.acs.hhd.pcinc.cv\",\r\n      \"dem.acs.hhd.mninc.val\",\r\n      \"dem.acs.hhd.mninc.ayc\",\r\n      \"dem.acs.hhd.mninc.aycp\",\r\n      \"dem.acs.hhd.mninc.moe\",\r\n      \"dem.acs.hhd.mninc.cv\",\r\n      \"dem.acs.hhd.mdinc.val\",\r\n      \"dem.acs.hhd.mdinc.ayc\",\r\n      \"dem.acs.hhd.mdinc.aycp\",\r\n      \"dem.acs.hhd.mdinc.moe\",\r\n      \"dem.acs.hhd.mdinc.cv\",\r\n      \"dem.acs.hsu.total.val\",\r\n      \"dem.acs.hsu.total.moe\",\r\n      \"dem.acs.hsu.total.cv\",\r\n      \"dem.acs.hsu.mdval.val\",\r\n      \"dem.acs.hsu.mdval.moe\",\r\n      \"dem.acs.hsu.mdval.cv\",\r\n      \"dem.acs.hsc.mdcost.total.val\",\r\n      \"dem.acs.hsc.mdcost.total.moe\",\r\n      \"dem.acs.hsc.mdcost.total.cv\",\r\n      \"dem.acs.hsc.mdcost.wmtg.val\",\r\n      \"dem.acs.hsc.mdcost.wmtg.moe\",\r\n      \"dem.acs.hsc.mdcost.wmtg.cv\",\r\n      \"dem.acs.hsc.mdcost.womtg.val\",\r\n      \"dem.acs.hsc.mdcost.womtg.moe\",\r\n      \"dem.acs.hsc.mdcost.womtg.cv\",\r\n      \"dem.acs.hsc.mdrent.val\",\r\n      \"dem.acs.hsc.mdrent.moe\",\r\n      \"dem.acs.hsc.mdrent.cv\",\r\n      \"dem.acs.gmb.1pl.domin.val\",\r\n      \"dem.acs.gmb.1pl.domin.pct\",\r\n      \"dem.acs.gmb.1pl.domin.ayc\",\r\n      \"dem.acs.gmb.1pl.domin.aycp\",\r\n      \"dem.acs.gmb.1pl.domin.moe\",\r\n      \"dem.acs.gmb.1pl.domin.cv\",\r\n      \"dem.acs.gmb.1pl.domout.val\",\r\n      \"dem.acs.gmb.1pl.domout.pct\",\r\n      \"dem.acs.gmb.1pl.domout.ayc\",\r\n      \"dem.acs.gmb.1pl.domout.aycp\",\r\n      \"dem.acs.gmb.1pl.domout.moe\",\r\n      \"dem.acs.gmb.1pl.domout.cv\",\r\n      \"dem.acs.gmb.1pl.domnet.val\",\r\n      \"dem.acs.gmb.1pl.domnet.pct\",\r\n      \"dem.acs.gmb.1pl.domnet.ayc\",\r\n      \"dem.acs.gmb.1pl.domnet.moe\",\r\n      \"dem.acs.gmb.1pl.domnet.cv\",\r\n      \"dem.acs.gmb.15pl.domin.val\",\r\n      \"dem.acs.gmb.15pl.domin.pct\",\r\n      \"dem.acs.gmb.15pl.domin.ayc\",\r\n      \"dem.acs.gmb.15pl.domin.aycp\",\r\n      \"dem.acs.gmb.15pl.domin.moe\",\r\n      \"dem.acs.gmb.15pl.domin.cv\",\r\n      \"dem.acs.gmb.15pl.domout.val\",\r\n      \"dem.acs.gmb.15pl.domout.pct\",\r\n      \"dem.acs.gmb.15pl.domout.ayc\",\r\n      \"dem.acs.gmb.15pl.domout.aycp\",\r\n      \"dem.acs.gmb.15pl.domout.moe\",\r\n      \"dem.acs.gmb.15pl.domout.cv\",\r\n      \"dem.acs.gmb.15pl.domnet.val\",\r\n      \"dem.acs.gmb.15pl.domnet.pct\",\r\n      \"dem.acs.gmb.15pl.domnet.ayc\",\r\n      \"dem.acs.gmb.15pl.domnet.moe\",\r\n      \"dem.acs.gmb.15pl.domnet.cv\",\r\n      \"dem.acs.gmb.25pl.domin.val\",\r\n      \"dem.acs.gmb.25pl.domin.pct\",\r\n      \"dem.acs.gmb.25pl.domin.ayc\",\r\n      \"dem.acs.gmb.25pl.domin.aycp\",\r\n      \"dem.acs.gmb.25pl.domin.moe\",\r\n      \"dem.acs.gmb.25pl.domin.cv\",\r\n      \"dem.acs.gmb.25pl.domout.val\",\r\n      \"dem.acs.gmb.25pl.domout.pct\",\r\n      \"dem.acs.gmb.25pl.domout.ayc\",\r\n      \"dem.acs.gmb.25pl.domout.aycp\",\r\n      \"dem.acs.gmb.25pl.domout.moe\",\r\n      \"dem.acs.gmb.25pl.domout.cv\",\r\n      \"dem.acs.gmb.25pl.domnet.val\",\r\n      \"dem.acs.gmb.25pl.domnet.pct\",\r\n      \"dem.acs.gmb.25pl.domnet.ayc\",\r\n      \"dem.acs.gmb.25pl.domnet.moe\",\r\n      \"dem.acs.gmb.25pl.domnet.cv\",\r\n      \"edu.acs.enr.3pl.k12.val\",\r\n      \"edu.acs.enr.3pl.k12.pct\",\r\n      \"edu.acs.enr.3pl.k12.ayc\",\r\n      \"edu.acs.enr.3pl.k12.aycp\",\r\n      \"edu.acs.enr.3pl.k12.moe\",\r\n      \"edu.acs.enr.3pl.k12.cv\",\r\n      \"edu.acs.enr.3pl.ugrad.val\",\r\n      \"edu.acs.enr.3pl.ugrad.pct\",\r\n      \"edu.acs.enr.3pl.ugrad.ayc\",\r\n      \"edu.acs.enr.3pl.ugrad.aycp\",\r\n      \"edu.acs.enr.3pl.ugrad.moe\",\r\n      \"edu.acs.enr.3pl.ugrad.cv\",\r\n      \"edu.acs.enr.3pl.grad.val\",\r\n      \"edu.acs.enr.3pl.grad.pct\",\r\n      \"edu.acs.enr.3pl.grad.ayc\",\r\n      \"edu.acs.enr.3pl.grad.aycp\",\r\n      \"edu.acs.enr.3pl.grad.moe\",\r\n      \"edu.acs.enr.3pl.grad.cv\",\r\n      \"edu.acs.enr.18-24.clg.val\",\r\n      \"edu.acs.enr.18-24.clg.pct\",\r\n      \"edu.acs.enr.18-24.clg.ayc\",\r\n      \"edu.acs.enr.18-24.clg.aycp\",\r\n      \"edu.acs.enr.18-24.clg.moe\",\r\n      \"edu.acs.enr.18-24.clg.cv\",\r\n      \"edu.acs.att.18-24.0-8.val\",\r\n      \"edu.acs.att.18-24.0-8.pct\",\r\n      \"edu.acs.att.18-24.0-8.ayc\",\r\n      \"edu.acs.att.18-24.0-8.aycp\",\r\n      \"edu.acs.att.18-24.0-8.moe\",\r\n      \"edu.acs.att.18-24.0-8.cv\",\r\n      \"edu.acs.att.18-24.9-12.val\",\r\n      \"edu.acs.att.18-24.9-12.pct\",\r\n      \"edu.acs.att.18-24.9-12.ayc\",\r\n      \"edu.acs.att.18-24.9-12.aycp\",\r\n      \"edu.acs.att.18-24.9-12.moe\",\r\n      \"edu.acs.att.18-24.9-12.cv\",\r\n      \"edu.acs.att.18-24.high.val\",\r\n      \"edu.acs.att.18-24.high.pct\",\r\n      \"edu.acs.att.18-24.high.ayc\",\r\n      \"edu.acs.att.18-24.high.aycp\",\r\n      \"edu.acs.att.18-24.high.moe\",\r\n      \"edu.acs.att.18-24.high.cv\",\r\n      \"edu.acs.att.18-24.assc.val\",\r\n      \"edu.acs.att.18-24.assc.pct\",\r\n      \"edu.acs.att.18-24.assc.ayc\",\r\n      \"edu.acs.att.18-24.assc.aycp\",\r\n      \"edu.acs.att.18-24.assc.moe\",\r\n      \"edu.acs.att.18-24.assc.cv\",\r\n      \"edu.acs.att.18-24.bach.val\",\r\n      \"edu.acs.att.18-24.bach.pct\",\r\n      \"edu.acs.att.18-24.bach.ayc\",\r\n      \"edu.acs.att.18-24.bach.aycp\",\r\n      \"edu.acs.att.18-24.bach.moe\",\r\n      \"edu.acs.att.18-24.bach.cv\",\r\n      \"edu.acs.att.25pl.0-8.val\",\r\n      \"edu.acs.att.25pl.0-8.pct\",\r\n      \"edu.acs.att.25pl.0-8.ayc\",\r\n      \"edu.acs.att.25pl.0-8.aycp\",\r\n      \"edu.acs.att.25pl.0-8.moe\",\r\n      \"edu.acs.att.25pl.0-8.cv\",\r\n      \"edu.acs.att.25pl.9-12.val\",\r\n      \"edu.acs.att.25pl.9-12.pct\",\r\n      \"edu.acs.att.25pl.9-12.ayc\",\r\n      \"edu.acs.att.25pl.9-12.aycp\",\r\n      \"edu.acs.att.25pl.9-12.moe\",\r\n      \"edu.acs.att.25pl.9-12.cv\",\r\n      \"edu.acs.att.25pl.high.val\",\r\n      \"edu.acs.att.25pl.high.pct\",\r\n      \"edu.acs.att.25pl.high.ayc\",\r\n      \"edu.acs.att.25pl.high.aycp\",\r\n      \"edu.acs.att.25pl.high.moe\",\r\n      \"edu.acs.att.25pl.high.cv\",\r\n      \"edu.acs.att.25pl.assc.val\",\r\n      \"edu.acs.att.25pl.assc.pct\",\r\n      \"edu.acs.att.25pl.assc.ayc\",\r\n      \"edu.acs.att.25pl.assc.aycp\",\r\n      \"edu.acs.att.25pl.assc.moe\",\r\n      \"edu.acs.att.25pl.assc.cv\",\r\n      \"edu.acs.att.25pl.bach.val\",\r\n      \"edu.acs.att.25pl.bach.pct\",\r\n      \"edu.acs.att.25pl.bach.ayc\",\r\n      \"edu.acs.att.25pl.bach.aycp\",\r\n      \"edu.acs.att.25pl.bach.moe\",\r\n      \"edu.acs.att.25pl.bach.cv\",\r\n      \"edu.acs.att.25pl.grad.val\",\r\n      \"edu.acs.att.25pl.grad.pct\",\r\n      \"edu.acs.att.25pl.grad.ayc\",\r\n      \"edu.acs.att.25pl.grad.aycp\",\r\n      \"edu.acs.att.25pl.grad.moe\",\r\n      \"edu.acs.att.25pl.grad.cv\",\r\n      \"edu.acs.att.25pl.highpl.val\",\r\n      \"edu.acs.att.25pl.highpl.pct\",\r\n      \"edu.acs.att.25pl.highpl.ayc\",\r\n      \"edu.acs.att.25pl.highpl.aycp\",\r\n      \"edu.acs.att.25pl.highpl.moe\",\r\n      \"edu.acs.att.25pl.highpl.cv\",\r\n      \"edu.acs.att.25pl.bachpl.val\",\r\n      \"edu.acs.att.25pl.bachpl.pct\",\r\n      \"edu.acs.att.25pl.bachpl.ayc\",\r\n      \"edu.acs.att.25pl.bachpl.aycp\",\r\n      \"edu.acs.att.25pl.bachpl.moe\",\r\n      \"edu.acs.att.25pl.bachpl.cv\",\r\n      \"wkf.acs.emp.16pl.total.val\",\r\n      \"wkf.acs.emp.16pl.total.ayc\",\r\n      \"wkf.acs.emp.16pl.total.aycp\",\r\n      \"wkf.acs.emp.16pl.total.moe\",\r\n      \"wkf.acs.emp.16pl.total.cv\",\r\n      \"wkf.acs.emp.16pl.notlabor.val\",\r\n      \"wkf.acs.emp.16pl.notlabor.pct\",\r\n      \"wkf.acs.emp.16pl.notlabor.ayc\",\r\n      \"wkf.acs.emp.16pl.notlabor.aycp\",\r\n      \"wkf.acs.emp.16pl.notlabor.moe\",\r\n      \"wkf.acs.emp.16pl.notlabor.cv\",\r\n      \"wkf.acs.emp.16pl.labor.total.val\",\r\n      \"wkf.acs.emp.16pl.labor.total.pct\",\r\n      \"wkf.acs.emp.16pl.labor.total.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.total.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.total.moe\",\r\n      \"wkf.acs.emp.16pl.labor.total.cv\",\r\n      \"wkf.acs.emp.16pl.labor.mil.val\",\r\n      \"wkf.acs.emp.16pl.labor.mil.pct\",\r\n      \"wkf.acs.emp.16pl.labor.mil.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.mil.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.mil.moe\",\r\n      \"wkf.acs.emp.16pl.labor.mil.cv\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.val\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.pct\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.moe\",\r\n      \"wkf.acs.emp.16pl.labor.civ.total.cv\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.val\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.pct\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.moe\",\r\n      \"wkf.acs.emp.16pl.labor.civ.emp.cv\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.val\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.pct\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.ayc\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.aycp\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.moe\",\r\n      \"wkf.acs.emp.16pl.labor.civ.unemp.cv\",\r\n      \"trn.acs.cmt.mean.val\",\r\n      \"trn.acs.cmt.mean.ayc\",\r\n      \"trn.acs.cmt.mean.aycp\",\r\n      \"trn.acs.cmt.mean.moe\",\r\n      \"trn.acs.cmt.mean.cv\",\r\n      \"econ.tax.acs.mdretx.total.val\",\r\n      \"econ.tax.acs.mdretx.total.ayc\",\r\n      \"econ.tax.acs.mdretx.total.aycp\",\r\n      \"econ.tax.acs.mdretx.total.moe\",\r\n      \"econ.tax.acs.mdretx.total.cv\",\r\n      \"econ.tax.acs.mdretx.wmtg.val\",\r\n      \"econ.tax.acs.mdretx.wmtg.ayc\",\r\n      \"econ.tax.acs.mdretx.wmtg.aycp\",\r\n      \"econ.tax.acs.mdretx.wmtg.moe\",\r\n      \"econ.tax.acs.mdretx.wmtg.cv\",\r\n      \"econ.tax.acs.mdretx.womtg.val\",\r\n      \"econ.tax.acs.mdretx.womtg.ayc\",\r\n      \"econ.tax.acs.mdretx.womtg.aycp\",\r\n      \"econ.tax.acs.mdretx.womtg.moe\",\r\n      \"econ.tax.acs.mdretx.womtg.cv\"\r\n    ],\r\n    \"collections\": [\r\n      {\r\n        \"collection\": \"dem.acs.age\",\r\n        \"datapoints\": [\r\n          \"dem.acs.age.item\",\r\n          \"dem.acs.age.desc\",\r\n          \"dem.acs.age.start\",\r\n          \"dem.acs.age.end\",\r\n          \"dem.acs.age.total.val\",\r\n          \"dem.acs.age.total.pct\",\r\n          \"dem.acs.age.total.ayc\",\r\n          \"dem.acs.age.total.aycp\",\r\n          \"dem.acs.age.total.moe\",\r\n          \"dem.acs.age.total.cv\",\r\n          \"dem.acs.age.male.val\",\r\n          \"dem.acs.age.male.pct\",\r\n          \"dem.acs.age.male.ayc\",\r\n          \"dem.acs.age.male.aycp\",\r\n          \"dem.acs.age.male.moe\",\r\n          \"dem.acs.age.male.cv\",\r\n          \"dem.acs.age.female.val\",\r\n          \"dem.acs.age.female.pct\",\r\n          \"dem.acs.age.female.ayc\",\r\n          \"dem.acs.age.female.aycp\",\r\n          \"dem.acs.age.female.moe\",\r\n          \"dem.acs.age.female.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.race\",\r\n        \"datapoints\": [\r\n          \"dem.acs.race.item\",\r\n          \"dem.acs.race.desc\",\r\n          \"dem.acs.race.level\",\r\n          \"dem.acs.race.parent\",\r\n          \"dem.acs.race.subitems\",\r\n          \"dem.acs.race.total.val\",\r\n          \"dem.acs.race.total.pct\",\r\n          \"dem.acs.race.total.ayc\",\r\n          \"dem.acs.race.total.aycp\",\r\n          \"dem.acs.race.total.moe\",\r\n          \"dem.acs.race.total.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.hsp\",\r\n        \"datapoints\": [\r\n          \"dem.acs.hsp.item\",\r\n          \"dem.acs.hsp.desc\",\r\n          \"dem.acs.hsp.total.val\",\r\n          \"dem.acs.hsp.total.pct\",\r\n          \"dem.acs.hsp.total.ayc\",\r\n          \"dem.acs.hsp.total.aycp\",\r\n          \"dem.acs.hsp.total.moe\",\r\n          \"dem.acs.hsp.total.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.lan\",\r\n        \"datapoints\": [\r\n          \"dem.acs.lan.item\",\r\n          \"dem.acs.lan.desc\",\r\n          \"dem.acs.lan.total.val\",\r\n          \"dem.acs.lan.total.pct\",\r\n          \"dem.acs.lan.total.moe\",\r\n          \"dem.acs.lan.total.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.lanc\",\r\n        \"datapoints\": [\r\n          \"dem.acs.lanc.item\",\r\n          \"dem.acs.lanc.desc\",\r\n          \"dem.acs.lanc.total.val\",\r\n          \"dem.acs.lanc.total.pct\",\r\n          \"dem.acs.lanc.total.moe\",\r\n          \"dem.acs.lanc.total.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.land\",\r\n        \"datapoints\": [\r\n          \"dem.acs.land.item\",\r\n          \"dem.acs.land.desc\",\r\n          \"dem.acs.land.total.val\",\r\n          \"dem.acs.land.total.pct\",\r\n          \"dem.acs.land.total.moe\",\r\n          \"dem.acs.land.total.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.hhd.inc\",\r\n        \"datapoints\": [\r\n          \"dem.acs.hhd.inc.item\",\r\n          \"dem.acs.hhd.inc.desc\",\r\n          \"dem.acs.hhd.inc.start\",\r\n          \"dem.acs.hhd.inc.end\",\r\n          \"dem.acs.hhd.inc.num.val\",\r\n          \"dem.acs.hhd.inc.num.pct\",\r\n          \"dem.acs.hhd.inc.num.ayc\",\r\n          \"dem.acs.hhd.inc.num.aycp\",\r\n          \"dem.acs.hhd.inc.num.moe\",\r\n          \"dem.acs.hhd.inc.num.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.hhd.age\",\r\n        \"datapoints\": [\r\n          \"dem.acs.hhd.age.item\",\r\n          \"dem.acs.hhd.age.desc\",\r\n          \"dem.acs.hhd.age.start\",\r\n          \"dem.acs.hhd.age.end\",\r\n          \"dem.acs.hhd.age.mdinc.val\",\r\n          \"dem.acs.hhd.age.mdinc.ayc\",\r\n          \"dem.acs.hhd.age.mdinc.aycp\",\r\n          \"dem.acs.hhd.age.mdinc.moe\",\r\n          \"dem.acs.hhd.age.mdinc.cv\",\r\n          \"dem.acs.hhd.age.num.val\",\r\n          \"dem.acs.hhd.age.num.pct\",\r\n          \"dem.acs.hhd.age.num.ayc\",\r\n          \"dem.acs.hhd.age.num.aycp\",\r\n          \"dem.acs.hhd.age.num.moe\",\r\n          \"dem.acs.hhd.age.num.cv\"\r\n        ],\r\n        \"collections\": [\r\n          {\r\n            \"collection\": \"dem.acs.hhd.age.inc\",\r\n            \"datapoints\": [\r\n              \"dem.acs.hhd.age.inc.item\",\r\n              \"dem.acs.hhd.age.inc.desc\",\r\n              \"dem.acs.hhd.age.inc.start\",\r\n              \"dem.acs.hhd.age.inc.end\",\r\n              \"dem.acs.hhd.age.inc.num.val\",\r\n              \"dem.acs.hhd.age.inc.num.pct\",\r\n              \"dem.acs.hhd.age.inc.num.ayc\",\r\n              \"dem.acs.hhd.age.inc.num.aycp\",\r\n              \"dem.acs.hhd.age.inc.num.moe\",\r\n              \"dem.acs.hhd.age.inc.num.cv\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.hsv\",\r\n        \"datapoints\": [\r\n          \"dem.acs.hsv.item\",\r\n          \"dem.acs.hsv.desc\",\r\n          \"dem.acs.hsv.start\",\r\n          \"dem.acs.hsv.end\",\r\n          \"dem.acs.hsv.hou.val\",\r\n          \"dem.acs.hsv.hou.pct\",\r\n          \"dem.acs.hsv.hou.moe\",\r\n          \"dem.acs.hsv.hou.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.costhhi\",\r\n        \"datapoints\": [\r\n          \"dem.acs.costhhi.item\",\r\n          \"dem.acs.costhhi.desc\",\r\n          \"dem.acs.costhhi.start\",\r\n          \"dem.acs.costhhi.end\",\r\n          \"dem.acs.costhhi.total.val\",\r\n          \"dem.acs.costhhi.total.pct\",\r\n          \"dem.acs.costhhi.total.moe\",\r\n          \"dem.acs.costhhi.total.cv\",\r\n          \"dem.acs.costhhi.wmtg.val\",\r\n          \"dem.acs.costhhi.wmtg.pct\",\r\n          \"dem.acs.costhhi.wmtg.moe\",\r\n          \"dem.acs.costhhi.wmtg.cv\",\r\n          \"dem.acs.costhhi.womtg.val\",\r\n          \"dem.acs.costhhi.womtg.pct\",\r\n          \"dem.acs.costhhi.womtg.moe\",\r\n          \"dem.acs.costhhi.womtg.cv\",\r\n          \"dem.acs.costhhi.hou.val\",\r\n          \"dem.acs.costhhi.hou.pct\",\r\n          \"dem.acs.costhhi.hou.moe\",\r\n          \"dem.acs.costhhi.hou.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.renthhi\",\r\n        \"datapoints\": [\r\n          \"dem.acs.renthhi.item\",\r\n          \"dem.acs.renthhi.desc\",\r\n          \"dem.acs.renthhi.start\",\r\n          \"dem.acs.renthhi.end\",\r\n          \"dem.acs.renthhi.hou.val\",\r\n          \"dem.acs.renthhi.hou.pct\",\r\n          \"dem.acs.renthhi.hou.moe\",\r\n          \"dem.acs.renthhi.hou.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.gmb.age\",\r\n        \"datapoints\": [\r\n          \"dem.acs.gmb.age.item\",\r\n          \"dem.acs.gmb.age.desc\",\r\n          \"dem.acs.gmb.age.start\",\r\n          \"dem.acs.gmb.age.end\",\r\n          \"dem.acs.gmb.age.liv.val\",\r\n          \"dem.acs.gmb.age.liv.pct\",\r\n          \"dem.acs.gmb.age.liv.ayc\",\r\n          \"dem.acs.gmb.age.liv.aycp\",\r\n          \"dem.acs.gmb.age.liv.moe\",\r\n          \"dem.acs.gmb.age.liv.cv\",\r\n          \"dem.acs.gmb.age.liv1.val\",\r\n          \"dem.acs.gmb.age.liv1.pct\",\r\n          \"dem.acs.gmb.age.liv1.ayc\",\r\n          \"dem.acs.gmb.age.liv1.aycp\",\r\n          \"dem.acs.gmb.age.liv1.moe\",\r\n          \"dem.acs.gmb.age.liv1.cv\",\r\n          \"dem.acs.gmb.age.smhs1.val\",\r\n          \"dem.acs.gmb.age.smhs1.pct\",\r\n          \"dem.acs.gmb.age.smhs1.ayc\",\r\n          \"dem.acs.gmb.age.smhs1.aycp\",\r\n          \"dem.acs.gmb.age.smhs1.moe\",\r\n          \"dem.acs.gmb.age.smhs1.cv\",\r\n          \"dem.acs.gmb.age.smctin.val\",\r\n          \"dem.acs.gmb.age.smctin.pct\",\r\n          \"dem.acs.gmb.age.smctin.ayc\",\r\n          \"dem.acs.gmb.age.smctin.aycp\",\r\n          \"dem.acs.gmb.age.smctin.moe\",\r\n          \"dem.acs.gmb.age.smctin.cv\",\r\n          \"dem.acs.gmb.age.smctout.val\",\r\n          \"dem.acs.gmb.age.smctout.pct\",\r\n          \"dem.acs.gmb.age.smctout.ayc\",\r\n          \"dem.acs.gmb.age.smctout.aycp\",\r\n          \"dem.acs.gmb.age.smctout.moe\",\r\n          \"dem.acs.gmb.age.smctout.cv\",\r\n          \"dem.acs.gmb.age.dfctin.val\",\r\n          \"dem.acs.gmb.age.dfctin.pct\",\r\n          \"dem.acs.gmb.age.dfctin.ayc\",\r\n          \"dem.acs.gmb.age.dfctin.aycp\",\r\n          \"dem.acs.gmb.age.dfctin.moe\",\r\n          \"dem.acs.gmb.age.dfctin.cv\",\r\n          \"dem.acs.gmb.age.dfctout.val\",\r\n          \"dem.acs.gmb.age.dfctout.pct\",\r\n          \"dem.acs.gmb.age.dfctout.ayc\",\r\n          \"dem.acs.gmb.age.dfctout.aycp\",\r\n          \"dem.acs.gmb.age.dfctout.moe\",\r\n          \"dem.acs.gmb.age.dfctout.cv\",\r\n          \"dem.acs.gmb.age.dfstin.val\",\r\n          \"dem.acs.gmb.age.dfstin.pct\",\r\n          \"dem.acs.gmb.age.dfstin.ayc\",\r\n          \"dem.acs.gmb.age.dfstin.aycp\",\r\n          \"dem.acs.gmb.age.dfstin.moe\",\r\n          \"dem.acs.gmb.age.dfstin.cv\",\r\n          \"dem.acs.gmb.age.dfstout.val\",\r\n          \"dem.acs.gmb.age.dfstout.pct\",\r\n          \"dem.acs.gmb.age.dfstout.ayc\",\r\n          \"dem.acs.gmb.age.dfstout.aycp\",\r\n          \"dem.acs.gmb.age.dfstout.moe\",\r\n          \"dem.acs.gmb.age.dfstout.cv\",\r\n          \"dem.acs.gmb.age.abrdin.val\",\r\n          \"dem.acs.gmb.age.abrdin.pct\",\r\n          \"dem.acs.gmb.age.abrdin.ayc\",\r\n          \"dem.acs.gmb.age.abrdin.aycp\",\r\n          \"dem.acs.gmb.age.abrdin.moe\",\r\n          \"dem.acs.gmb.age.abrdin.cv\",\r\n          \"dem.acs.gmb.age.domin.val\",\r\n          \"dem.acs.gmb.age.domin.pct\",\r\n          \"dem.acs.gmb.age.domin.ayc\",\r\n          \"dem.acs.gmb.age.domin.aycp\",\r\n          \"dem.acs.gmb.age.domin.moe\",\r\n          \"dem.acs.gmb.age.domin.cv\",\r\n          \"dem.acs.gmb.age.domout.val\",\r\n          \"dem.acs.gmb.age.domout.pct\",\r\n          \"dem.acs.gmb.age.domout.ayc\",\r\n          \"dem.acs.gmb.age.domout.aycp\",\r\n          \"dem.acs.gmb.age.domout.moe\",\r\n          \"dem.acs.gmb.age.domout.cv\",\r\n          \"dem.acs.gmb.age.domnet.val\",\r\n          \"dem.acs.gmb.age.domnet.pct\",\r\n          \"dem.acs.gmb.age.domnet.ayc\",\r\n          \"dem.acs.gmb.age.domnet.moe\",\r\n          \"dem.acs.gmb.age.domnet.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.gmb.edu\",\r\n        \"datapoints\": [\r\n          \"dem.acs.gmb.edu.item\",\r\n          \"dem.acs.gmb.edu.desc\",\r\n          \"dem.acs.gmb.edu.start\",\r\n          \"dem.acs.gmb.edu.end\",\r\n          \"dem.acs.gmb.edu.liv.val\",\r\n          \"dem.acs.gmb.edu.liv.pct\",\r\n          \"dem.acs.gmb.edu.liv.ayc\",\r\n          \"dem.acs.gmb.edu.liv.aycp\",\r\n          \"dem.acs.gmb.edu.liv.moe\",\r\n          \"dem.acs.gmb.edu.liv.cv\",\r\n          \"dem.acs.gmb.edu.liv1.val\",\r\n          \"dem.acs.gmb.edu.liv1.pct\",\r\n          \"dem.acs.gmb.edu.liv1.ayc\",\r\n          \"dem.acs.gmb.edu.liv1.aycp\",\r\n          \"dem.acs.gmb.edu.liv1.moe\",\r\n          \"dem.acs.gmb.edu.liv1.cv\",\r\n          \"dem.acs.gmb.edu.smhs1.val\",\r\n          \"dem.acs.gmb.edu.smhs1.pct\",\r\n          \"dem.acs.gmb.edu.smhs1.ayc\",\r\n          \"dem.acs.gmb.edu.smhs1.aycp\",\r\n          \"dem.acs.gmb.edu.smhs1.moe\",\r\n          \"dem.acs.gmb.edu.smhs1.cv\",\r\n          \"dem.acs.gmb.edu.smctin.val\",\r\n          \"dem.acs.gmb.edu.smctin.pct\",\r\n          \"dem.acs.gmb.edu.smctin.ayc\",\r\n          \"dem.acs.gmb.edu.smctin.aycp\",\r\n          \"dem.acs.gmb.edu.smctin.moe\",\r\n          \"dem.acs.gmb.edu.smctin.cv\",\r\n          \"dem.acs.gmb.edu.smctout.val\",\r\n          \"dem.acs.gmb.edu.smctout.pct\",\r\n          \"dem.acs.gmb.edu.smctout.ayc\",\r\n          \"dem.acs.gmb.edu.smctout.aycp\",\r\n          \"dem.acs.gmb.edu.smctout.moe\",\r\n          \"dem.acs.gmb.edu.smctout.cv\",\r\n          \"dem.acs.gmb.edu.dfctin.val\",\r\n          \"dem.acs.gmb.edu.dfctin.pct\",\r\n          \"dem.acs.gmb.edu.dfctin.ayc\",\r\n          \"dem.acs.gmb.edu.dfctin.aycp\",\r\n          \"dem.acs.gmb.edu.dfctin.moe\",\r\n          \"dem.acs.gmb.edu.dfctin.cv\",\r\n          \"dem.acs.gmb.edu.dfctout.val\",\r\n          \"dem.acs.gmb.edu.dfctout.pct\",\r\n          \"dem.acs.gmb.edu.dfctout.ayc\",\r\n          \"dem.acs.gmb.edu.dfctout.aycp\",\r\n          \"dem.acs.gmb.edu.dfctout.moe\",\r\n          \"dem.acs.gmb.edu.dfctout.cv\",\r\n          \"dem.acs.gmb.edu.dfstin.val\",\r\n          \"dem.acs.gmb.edu.dfstin.pct\",\r\n          \"dem.acs.gmb.edu.dfstin.ayc\",\r\n          \"dem.acs.gmb.edu.dfstin.aycp\",\r\n          \"dem.acs.gmb.edu.dfstin.moe\",\r\n          \"dem.acs.gmb.edu.dfstin.cv\",\r\n          \"dem.acs.gmb.edu.dfstout.val\",\r\n          \"dem.acs.gmb.edu.dfstout.pct\",\r\n          \"dem.acs.gmb.edu.dfstout.ayc\",\r\n          \"dem.acs.gmb.edu.dfstout.aycp\",\r\n          \"dem.acs.gmb.edu.dfstout.moe\",\r\n          \"dem.acs.gmb.edu.dfstout.cv\",\r\n          \"dem.acs.gmb.edu.abrdin.val\",\r\n          \"dem.acs.gmb.edu.abrdin.pct\",\r\n          \"dem.acs.gmb.edu.abrdin.ayc\",\r\n          \"dem.acs.gmb.edu.abrdin.aycp\",\r\n          \"dem.acs.gmb.edu.abrdin.moe\",\r\n          \"dem.acs.gmb.edu.abrdin.cv\",\r\n          \"dem.acs.gmb.edu.domin.val\",\r\n          \"dem.acs.gmb.edu.domin.pct\",\r\n          \"dem.acs.gmb.edu.domin.ayc\",\r\n          \"dem.acs.gmb.edu.domin.aycp\",\r\n          \"dem.acs.gmb.edu.domin.moe\",\r\n          \"dem.acs.gmb.edu.domin.cv\",\r\n          \"dem.acs.gmb.edu.domout.val\",\r\n          \"dem.acs.gmb.edu.domout.pct\",\r\n          \"dem.acs.gmb.edu.domout.ayc\",\r\n          \"dem.acs.gmb.edu.domout.aycp\",\r\n          \"dem.acs.gmb.edu.domout.moe\",\r\n          \"dem.acs.gmb.edu.domout.cv\",\r\n          \"dem.acs.gmb.edu.domnet.val\",\r\n          \"dem.acs.gmb.edu.domnet.pct\",\r\n          \"dem.acs.gmb.edu.domnet.ayc\",\r\n          \"dem.acs.gmb.edu.domnet.moe\",\r\n          \"dem.acs.gmb.edu.domnet.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"dem.acs.gmb.inc\",\r\n        \"datapoints\": [\r\n          \"dem.acs.gmb.inc.item\",\r\n          \"dem.acs.gmb.inc.desc\",\r\n          \"dem.acs.gmb.inc.start\",\r\n          \"dem.acs.gmb.inc.end\",\r\n          \"dem.acs.gmb.inc.liv.val\",\r\n          \"dem.acs.gmb.inc.liv.pct\",\r\n          \"dem.acs.gmb.inc.liv.ayc\",\r\n          \"dem.acs.gmb.inc.liv.aycp\",\r\n          \"dem.acs.gmb.inc.liv.moe\",\r\n          \"dem.acs.gmb.inc.liv.cv\",\r\n          \"dem.acs.gmb.inc.liv1.val\",\r\n          \"dem.acs.gmb.inc.liv1.pct\",\r\n          \"dem.acs.gmb.inc.liv1.ayc\",\r\n          \"dem.acs.gmb.inc.liv1.aycp\",\r\n          \"dem.acs.gmb.inc.liv1.moe\",\r\n          \"dem.acs.gmb.inc.liv1.cv\",\r\n          \"dem.acs.gmb.inc.smhs1.val\",\r\n          \"dem.acs.gmb.inc.smhs1.pct\",\r\n          \"dem.acs.gmb.inc.smhs1.ayc\",\r\n          \"dem.acs.gmb.inc.smhs1.aycp\",\r\n          \"dem.acs.gmb.inc.smhs1.moe\",\r\n          \"dem.acs.gmb.inc.smhs1.cv\",\r\n          \"dem.acs.gmb.inc.smctin.val\",\r\n          \"dem.acs.gmb.inc.smctin.pct\",\r\n          \"dem.acs.gmb.inc.smctin.ayc\",\r\n          \"dem.acs.gmb.inc.smctin.aycp\",\r\n          \"dem.acs.gmb.inc.smctin.moe\",\r\n          \"dem.acs.gmb.inc.smctin.cv\",\r\n          \"dem.acs.gmb.inc.smctout.val\",\r\n          \"dem.acs.gmb.inc.smctout.pct\",\r\n          \"dem.acs.gmb.inc.smctout.ayc\",\r\n          \"dem.acs.gmb.inc.smctout.aycp\",\r\n          \"dem.acs.gmb.inc.smctout.moe\",\r\n          \"dem.acs.gmb.inc.smctout.cv\",\r\n          \"dem.acs.gmb.inc.dfctin.val\",\r\n          \"dem.acs.gmb.inc.dfctin.pct\",\r\n          \"dem.acs.gmb.inc.dfctin.ayc\",\r\n          \"dem.acs.gmb.inc.dfctin.aycp\",\r\n          \"dem.acs.gmb.inc.dfctin.moe\",\r\n          \"dem.acs.gmb.inc.dfctin.cv\",\r\n          \"dem.acs.gmb.inc.dfctout.val\",\r\n          \"dem.acs.gmb.inc.dfctout.pct\",\r\n          \"dem.acs.gmb.inc.dfctout.ayc\",\r\n          \"dem.acs.gmb.inc.dfctout.aycp\",\r\n          \"dem.acs.gmb.inc.dfctout.moe\",\r\n          \"dem.acs.gmb.inc.dfctout.cv\",\r\n          \"dem.acs.gmb.inc.dfstin.val\",\r\n          \"dem.acs.gmb.inc.dfstin.pct\",\r\n          \"dem.acs.gmb.inc.dfstin.ayc\",\r\n          \"dem.acs.gmb.inc.dfstin.aycp\",\r\n          \"dem.acs.gmb.inc.dfstin.moe\",\r\n          \"dem.acs.gmb.inc.dfstin.cv\",\r\n          \"dem.acs.gmb.inc.dfstout.val\",\r\n          \"dem.acs.gmb.inc.dfstout.pct\",\r\n          \"dem.acs.gmb.inc.dfstout.ayc\",\r\n          \"dem.acs.gmb.inc.dfstout.aycp\",\r\n          \"dem.acs.gmb.inc.dfstout.moe\",\r\n          \"dem.acs.gmb.inc.dfstout.cv\",\r\n          \"dem.acs.gmb.inc.abrdin.val\",\r\n          \"dem.acs.gmb.inc.abrdin.pct\",\r\n          \"dem.acs.gmb.inc.abrdin.ayc\",\r\n          \"dem.acs.gmb.inc.abrdin.aycp\",\r\n          \"dem.acs.gmb.inc.abrdin.moe\",\r\n          \"dem.acs.gmb.inc.abrdin.cv\",\r\n          \"dem.acs.gmb.inc.domin.val\",\r\n          \"dem.acs.gmb.inc.domin.pct\",\r\n          \"dem.acs.gmb.inc.domin.ayc\",\r\n          \"dem.acs.gmb.inc.domin.aycp\",\r\n          \"dem.acs.gmb.inc.domin.moe\",\r\n          \"dem.acs.gmb.inc.domin.cv\",\r\n          \"dem.acs.gmb.inc.domout.val\",\r\n          \"dem.acs.gmb.inc.domout.pct\",\r\n          \"dem.acs.gmb.inc.domout.ayc\",\r\n          \"dem.acs.gmb.inc.domout.aycp\",\r\n          \"dem.acs.gmb.inc.domout.moe\",\r\n          \"dem.acs.gmb.inc.domout.cv\",\r\n          \"dem.acs.gmb.inc.domnet.val\",\r\n          \"dem.acs.gmb.inc.domnet.pct\",\r\n          \"dem.acs.gmb.inc.domnet.ayc\",\r\n          \"dem.acs.gmb.inc.domnet.moe\",\r\n          \"dem.acs.gmb.inc.domnet.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"edu.acs.deg\",\r\n        \"datapoints\": [\r\n          \"edu.acs.deg.item\",\r\n          \"edu.acs.deg.desc\",\r\n          \"edu.acs.deg.level\",\r\n          \"edu.acs.deg.parent\",\r\n          \"edu.acs.deg.subitems\",\r\n          \"edu.acs.deg.num.val\",\r\n          \"edu.acs.deg.num.pct\",\r\n          \"edu.acs.deg.num.ayc\",\r\n          \"edu.acs.deg.num.aycp\",\r\n          \"edu.acs.deg.num.moe\",\r\n          \"edu.acs.deg.num.cv\",\r\n          \"edu.acs.deg.att.val\",\r\n          \"edu.acs.deg.att.pct\",\r\n          \"edu.acs.deg.att.ayc\",\r\n          \"edu.acs.deg.att.aycp\",\r\n          \"edu.acs.deg.att.moe\",\r\n          \"edu.acs.deg.att.cv\"\r\n        ],\r\n        \"collections\": [\r\n          {\r\n            \"collection\": \"edu.acs.deg.age\",\r\n            \"datapoints\": [\r\n              \"edu.acs.deg.age.item\",\r\n              \"edu.acs.deg.age.desc\",\r\n              \"edu.acs.deg.age.start\",\r\n              \"edu.acs.deg.age.end\",\r\n              \"edu.acs.deg.age.total.val\",\r\n              \"edu.acs.deg.age.total.pct\",\r\n              \"edu.acs.deg.age.total.ayc\",\r\n              \"edu.acs.deg.age.total.aycp\",\r\n              \"edu.acs.deg.age.total.moe\",\r\n              \"edu.acs.deg.age.total.cv\",\r\n              \"edu.acs.deg.age.male.val\",\r\n              \"edu.acs.deg.age.male.pct\",\r\n              \"edu.acs.deg.age.male.ayc\",\r\n              \"edu.acs.deg.age.male.aycp\",\r\n              \"edu.acs.deg.age.male.moe\",\r\n              \"edu.acs.deg.age.male.cv\",\r\n              \"edu.acs.deg.age.female.val\",\r\n              \"edu.acs.deg.age.female.pct\",\r\n              \"edu.acs.deg.age.female.ayc\",\r\n              \"edu.acs.deg.age.female.aycp\",\r\n              \"edu.acs.deg.age.female.moe\",\r\n              \"edu.acs.deg.age.female.cv\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"wkf.acs.occ\",\r\n        \"datapoints\": [\r\n          \"wkf.acs.occ.item\",\r\n          \"wkf.acs.occ.desc\",\r\n          \"wkf.acs.occ.level\",\r\n          \"wkf.acs.occ.parent\",\r\n          \"wkf.acs.occ.subitems\",\r\n          \"wkf.acs.occ.all.total.emp.val\",\r\n          \"wkf.acs.occ.all.total.emp.pct\",\r\n          \"wkf.acs.occ.all.total.emp.ayc\",\r\n          \"wkf.acs.occ.all.total.emp.aycp\",\r\n          \"wkf.acs.occ.all.total.emp.moe\",\r\n          \"wkf.acs.occ.all.total.emp.cv\",\r\n          \"wkf.acs.occ.all.total.earn.val\",\r\n          \"wkf.acs.occ.all.total.earn.ayc\",\r\n          \"wkf.acs.occ.all.total.earn.aycp\",\r\n          \"wkf.acs.occ.all.total.earn.moe\",\r\n          \"wkf.acs.occ.all.total.earn.cv\",\r\n          \"wkf.acs.occ.all.male.emp.val\",\r\n          \"wkf.acs.occ.all.male.emp.pct\",\r\n          \"wkf.acs.occ.all.male.emp.ayc\",\r\n          \"wkf.acs.occ.all.male.emp.aycp\",\r\n          \"wkf.acs.occ.all.male.emp.moe\",\r\n          \"wkf.acs.occ.all.male.emp.cv\",\r\n          \"wkf.acs.occ.all.male.earn.val\",\r\n          \"wkf.acs.occ.all.male.earn.ayc\",\r\n          \"wkf.acs.occ.all.male.earn.aycp\",\r\n          \"wkf.acs.occ.all.male.earn.moe\",\r\n          \"wkf.acs.occ.all.male.earn.cv\",\r\n          \"wkf.acs.occ.all.female.emp.val\",\r\n          \"wkf.acs.occ.all.female.emp.pct\",\r\n          \"wkf.acs.occ.all.female.emp.ayc\",\r\n          \"wkf.acs.occ.all.female.emp.aycp\",\r\n          \"wkf.acs.occ.all.female.emp.moe\",\r\n          \"wkf.acs.occ.all.female.emp.cv\",\r\n          \"wkf.acs.occ.all.female.earn.val\",\r\n          \"wkf.acs.occ.all.female.earn.ayc\",\r\n          \"wkf.acs.occ.all.female.earn.aycp\",\r\n          \"wkf.acs.occ.all.female.earn.moe\",\r\n          \"wkf.acs.occ.all.female.earn.cv\",\r\n          \"wkf.acs.occ.ftyr.total.emp.val\",\r\n          \"wkf.acs.occ.ftyr.total.emp.pct\",\r\n          \"wkf.acs.occ.ftyr.total.emp.ayc\",\r\n          \"wkf.acs.occ.ftyr.total.emp.aycp\",\r\n          \"wkf.acs.occ.ftyr.total.emp.moe\",\r\n          \"wkf.acs.occ.ftyr.total.emp.cv\",\r\n          \"wkf.acs.occ.ftyr.total.earn.val\",\r\n          \"wkf.acs.occ.ftyr.total.earn.ayc\",\r\n          \"wkf.acs.occ.ftyr.total.earn.aycp\",\r\n          \"wkf.acs.occ.ftyr.total.earn.moe\",\r\n          \"wkf.acs.occ.ftyr.total.earn.cv\",\r\n          \"wkf.acs.occ.ftyr.male.emp.val\",\r\n          \"wkf.acs.occ.ftyr.male.emp.pct\",\r\n          \"wkf.acs.occ.ftyr.male.emp.ayc\",\r\n          \"wkf.acs.occ.ftyr.male.emp.aycp\",\r\n          \"wkf.acs.occ.ftyr.male.emp.moe\",\r\n          \"wkf.acs.occ.ftyr.male.emp.cv\",\r\n          \"wkf.acs.occ.ftyr.male.earn.val\",\r\n          \"wkf.acs.occ.ftyr.male.earn.ayc\",\r\n          \"wkf.acs.occ.ftyr.male.earn.aycp\",\r\n          \"wkf.acs.occ.ftyr.male.earn.moe\",\r\n          \"wkf.acs.occ.ftyr.male.earn.cv\",\r\n          \"wkf.acs.occ.ftyr.female.emp.val\",\r\n          \"wkf.acs.occ.ftyr.female.emp.pct\",\r\n          \"wkf.acs.occ.ftyr.female.emp.ayc\",\r\n          \"wkf.acs.occ.ftyr.female.emp.aycp\",\r\n          \"wkf.acs.occ.ftyr.female.emp.moe\",\r\n          \"wkf.acs.occ.ftyr.female.emp.cv\",\r\n          \"wkf.acs.occ.ftyr.female.earn.val\",\r\n          \"wkf.acs.occ.ftyr.female.earn.ayc\",\r\n          \"wkf.acs.occ.ftyr.female.earn.aycp\",\r\n          \"wkf.acs.occ.ftyr.female.earn.moe\",\r\n          \"wkf.acs.occ.ftyr.female.earn.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"trn.acs.cmt.time\",\r\n        \"datapoints\": [\r\n          \"trn.acs.cmt.time.item\",\r\n          \"trn.acs.cmt.time.desc\",\r\n          \"trn.acs.cmt.time.start\",\r\n          \"trn.acs.cmt.time.end\",\r\n          \"trn.acs.cmt.time.cmt.val\",\r\n          \"trn.acs.cmt.time.cmt.pct\",\r\n          \"trn.acs.cmt.time.cmt.ayc\",\r\n          \"trn.acs.cmt.time.cmt.aycp\",\r\n          \"trn.acs.cmt.time.cmt.moe\",\r\n          \"trn.acs.cmt.time.cmt.cv\"\r\n        ]\r\n      },\r\n      {\r\n        \"collection\": \"trn.acs.cmt.mode\",\r\n        \"datapoints\": [\r\n          \"trn.acs.cmt.mode.item\",\r\n          \"trn.acs.cmt.mode.desc\",\r\n          \"trn.acs.cmt.mode.level\",\r\n          \"trn.acs.cmt.mode.parent\",\r\n          \"trn.acs.cmt.mode.subitems\",\r\n          \"trn.acs.cmt.mode.wkf.val\",\r\n          \"trn.acs.cmt.mode.wkf.pct\",\r\n          \"trn.acs.cmt.mode.wkf.ayc\",\r\n          \"trn.acs.cmt.mode.wkf.aycp\",\r\n          \"trn.acs.cmt.mode.wkf.moe\",\r\n          \"trn.acs.cmt.mode.wkf.cv\"\r\n        ]\r\n      }\r\n    ]\r\n  },\r\n  \"criteria\": {\r\n    \"geographies\": [\r\n      \"cbsa:burlington-south-burlington-vt-metro-area\"\r\n    ]\r\n  },\r\n  \"options\": {\r\n    \"includeMetadata\": true\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.statebook.com/api/v1/getdata",
+							"protocol": "https",
+							"host": [
+								"api",
+								"statebook",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"getdata"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "demo",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Status test",
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"",
+					"",
+					""
+				]
+			}
+		}
+	]
+}

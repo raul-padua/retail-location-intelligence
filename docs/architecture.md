@@ -1,0 +1,241 @@
+# Architecture: agentic versus deterministic responsibilities
+
+## The governing principle
+
+An agent that can both *decide what to look up* and *decide what is true* has no
+meaningful accuracy guarantee, because the second capability can always paper over
+failures in the first. This system splits those two powers apart and gives the language
+model only the first.
+
+Concretely:
+
+| The agentic layer may | The agentic layer may not |
+| --- | --- |
+| Interpret a business question | Emit a factual value |
+| Classify a request as answerable or not | Emit an Atlas datapoint identifier |
+| Select geographies from an allowlist | Select an arbitrary geography |
+| Select metric ids from the approved registry | Introduce a metric |
+| Order and orchestrate approved tool calls | Change what a tool returns |
+| Explain a validated result | Perform arithmetic |
+| Decide that a question should be refused | Decide that a refusal should be overridden |
+
+Every factual claim in the output originates in an `EvidenceItem`, which exists only
+because an Atlas response produced it. There is no code path that constructs an
+`EvidenceItem` from anything else.
+
+---
+
+## Layers
+
+### 1. Intent and orchestration (`orchestration/`)
+
+The least trusted component, given the narrowest authority. It reads untrusted text, so
+its output is treated as a *proposal* that the pipeline re-validates before acting.
+
+`intent.py` sanitizes input (control characters stripped, length capped at 2,000
+characters) and then classifies it against three pattern families:
+
+- **Instruction-override patterns** — attempts to disable evidence requirements, reveal
+  credentials, or request fabricated numbers. Matching text is refused outright and is
+  never used to influence tool selection.
+- **Company-specific forecast patterns** — ROI, payback, revenue, profitability, NPV, IRR.
+  Atlas describes areas, not businesses, so these are refused with the specific inputs a
+  real answer would require.
+- **Unsupported dimension mentions** — foot traffic, competitors, rent, cannibalization,
+  transaction data. These do not block the analysis; they are recorded as a limitation so
+  the gap is visible rather than silently ignored.
+
+Geography resolution is lookup-only. Free text is matched against an alias table derived
+from the token's licensed regions; an unmatched name raises `UnsupportedGeographyError`
+rather than being coerced into a plausible-looking slug. This is what keeps a
+prompt-injected string from reaching the API as a geography parameter.
+
+Metric selection can only return ids that exist in the registry. A test asserts that even
+a *real Atlas datapoint identifier* is rejected when supplied as a metric id, because the
+identifier namespace and the metric namespace are deliberately separate: the agent works
+in metric ids, and only the registry maps those to Atlas identifiers.
+
+`pipeline.py` runs a fixed sequence — interpret, resolve, select, fetch, validate, score,
+assess sufficiency, explain — appending a `TraceEntry` at each step. The sequence is not
+model-controlled; the model influences only the contents of steps one to three.
+
+### 2. Atlas API client (`api/`)
+
+Owns authentication, timeouts, bounded retries, and error translation. It knows nothing
+about retail or scoring.
+
+- The token is read from the environment, never hardcoded, and lives only in a request
+  header. It is stripped from the `RawCall` record before storage.
+- Retries are bounded (default 2, capped at 5) with exponential backoff, and only for
+  429 and 5xx. A 4xx is a malformed request; retrying it wastes the caller's quota.
+- Atlas can report failures inside an HTTP 200 body, so both the status code and an
+  `error` object are checked.
+- Every call is recorded as a `RawCall` with the request, response, status, attempt count,
+  and elapsed time, credential-redacted. The evidence panel renders these directly.
+
+`parsing.py` normalizes the several documented response shapes — single-geography versus
+multi-geography, `period`/`value` versus `periods`/`values`, scalar versus nested
+collection — into a flat `Observation`. Every consumer works off `Observation`, so no
+other module has to reach into raw JSON. Crucially, `Observation` preserves
+`reported_geography`, the geography Atlas *actually answered with*, which is what makes
+context-shift detection possible.
+
+### 3. Metric registry (`metrics/`)
+
+Maps human-readable retail dimensions to verified Atlas identifiers, with unit,
+direction, weight, source, expected periods, supported geographic levels, normalization
+method, and a written rationale for why a retailer should care.
+
+The structural guarantee lives here: `MetricRegistry.load()` compares every entry against
+`data/atlas_verified_datapoints.json` and raises `UnverifiedMetricError` if any datapoint
+lacks a verification record. A hallucinated identifier cannot become a metric, and a
+metric is the only thing the orchestrator can request. This is defence in depth with the
+API itself, which rejects unknown identifiers with `Unknown datapoint specified`.
+
+### 4. Validation layer (`validation/`)
+
+Decides whether values may share an axis. Detailed rules are listed in the README; the
+design point is that **failures are marked and explained, never dropped**. An excluded
+metric appears in the evidence panel with its status and reason, and its weight
+redistribution is disclosed.
+
+Two rules are worth singling out because they catch failures that a naive implementation
+would report as confident results:
+
+- **Shared parent geography.** County Business Patterns is not published below county
+  level. Ask for retail establishments in Burlington and Winooski and Atlas returns the
+  same Chittenden County figure for both. Without this rule the metric would contribute an
+  identical value to every candidate while appearing to be real evidence.
+- **Counts across geographic levels.** Comparing a city's population to a county's
+  measures which polygon is bigger, not which market is better. Counts are excluded when
+  levels are mixed; rates survive with the mismatch disclosed.
+
+### 5. Deterministic scoring (`scoring/`)
+
+Pure functions over floats. No model involvement, no I/O, no randomness.
+
+Aggregation is bottom-up and every intermediate value is retained on a `ScoreBreakdown`:
+
+```
+raw value -> normalized 0-100 -> weighted within category -> category score
+category scores -> weighted by category weight -> overall score
+```
+
+Weights are renormalized twice, and both adjustments are disclosed: within a category over
+the metrics that survived for that region, and across categories over the categories that
+produced a score. This is what lets a region with a data gap still be scored without
+silently treating the missing metric as a zero.
+
+Edge cases are handled explicitly rather than by exception:
+
+| Case | Behaviour |
+| --- | --- |
+| All candidates share a value | All receive the neutral score of 50, not 0 or 100 |
+| A metric is missing for one region | That region is scored on the rest, weights renormalized |
+| A metric is missing everywhere | Excluded, weight redistributed, adjustment disclosed |
+| Lower is better | Score inverted after normalization |
+| One extreme outlier | `RANK` normalization is available; `MIN_MAX` is the default |
+
+`MIN_MAX` is the default because it preserves the relative size of gaps, which is what a
+reader expects when they see a bar chart. `RANK` is offered for outlier-heavy sets.
+Z-score clamping was considered and rejected: a z-score is bounded by √(n−1), so clamping
+at two standard deviations never activates for the small candidate sets this tool exists
+to compare.
+
+Reproducibility is attested by a SHA-256 fingerprint over the geographies, category
+weights, metric definitions, and every observed value with its period, source, and
+validation status. Two runs over the same evidence produce the same hash; a test asserts
+it.
+
+### 6. Explanation layer (`explanation/`)
+
+Receives the validated evidence package and the scoring output, and nothing else. It never
+sees the user's question as an instruction and never calls Atlas.
+
+The default narrator is template-based, so the product is fully functional with no LLM.
+When `OPENAI_API_KEY` is set, a model is given a **fact sheet** built from the evidence,
+instructed to treat it as data rather than instructions, and forbidden from introducing
+figures. Its output is then verified: every number in the generated text is checked
+against the set of numbers the evidence supports, and the narrative is **discarded in
+favour of the deterministic one** if it introduces any. The rejection is surfaced in the
+UI as the narrative's provenance.
+
+This inverts the usual arrangement. The model is not trusted and then spot-checked; it is
+untrusted, and its output is admissible only if it survives a mechanical check.
+
+#### The assistant, and why a chat surface is the dangerous one
+
+`assistant.py` adds a conversational guide for non-technical readers. It is the component
+most likely to break the guarantee the rest of the system exists to enforce, because a
+model that can converse about a result will eventually be asked to estimate something, and
+answering is the helpful-seeming move. So it gets the narrator's discipline plus two gates
+its input requires.
+
+**Its input is classified before the model is reachable.** Every message runs through the
+same injection and forecast detectors the pipeline uses, and a match is answered
+deterministically with no model call at all. That ordering is the point: a prompt designed
+to talk the model out of its rules never arrives in front of the model. A test asserts
+this by configuring a deliberately invalid model name alongside a key — a refusal proves
+no call occurred, because a call would have failed loudly.
+
+**Questions about data Atlas does not carry are answered, not deflected.** Rent, foot
+traffic, competitors, and cannibalization are the likeliest things an executive asks and
+the likeliest place a fabrication would land. Those are detected and answered from a fixed
+response that says what is missing, why, and where it would come from. Deterministic
+rather than model-written, so the behaviour is identical every time it is demonstrated.
+
+**What the model sees is a context pack, not the system.** It is assembled here from the
+registry, the evidence package, the deterministic scores, the exclusions, and the
+limitations. There is no path by which the assistant reads an Atlas response or computes
+anything, and every value in the pack travels with its datapoint, source, and period
+attached, so a grounded answer is also a citable one.
+
+**Output is verified identically to the narrative.** Numbers not present in the context
+pack cause the reply to be replaced by a deterministic answer, and the substitution is
+shown to the reader rather than hidden.
+
+Without a key the assistant still answers, routing the question to the relevant facts. It
+is plainer, but it is grounded in the same pack, so the product has no dependency on an
+LLM being configured and no behaviour that only exists when one is.
+
+The session key is collected in the sidebar and held in Streamlit session state. It is
+never written to disk, never logged, and never serialized into an exported result;
+`Settings` is frozen and `with_llm` returns a copy, so a key supplied by one browser
+session cannot leak into the process defaults.
+
+---
+
+## Security boundaries
+
+| Concern | Mitigation |
+| --- | --- |
+| Secrets in source control | `.env` is gitignored; only `.env.example` is committed; the token is read from the environment |
+| Credential leakage into logs or UI | `redact()` recursively strips anything matching auth/token/secret/key patterns, plus `Bearer` headers and `auth=` parameters, from every persisted payload |
+| Untrusted input reaching the API | Geographies resolve through an allowlist; metric ids resolve through the registry; neither accepts free text |
+| Prompt injection | Detected before tool selection and, in the assistant, before the model is called at all; matched requests are refused and the attempt is recorded |
+| LLM fabrication | The model receives only a fact sheet or context pack, and its output is numerically verified against the evidence before acceptance |
+| Session credentials | An OpenAI key entered in the UI lives in session state only: never written to disk, logged, or serialized into an exported result |
+| Unbounded resource use | Request timeouts, bounded retries, capped input length |
+| Silent failure | Atlas errors produce a refusal with the failed call in the trace, never a partial answer presented as complete |
+
+---
+
+## What this architecture does not solve
+
+Worth stating plainly, because a credible prototype should name its own gaps:
+
+- **The pattern-based intent classifier is a prototype control, not a security boundary.**
+  It catches the obvious injection and forecast phrasings and will miss novel ones. In
+  production this belongs behind a dedicated classifier with adversarial evaluation, and
+  the deterministic guarantees below it — allowlists, registry gating, output
+  verification — are what actually bound the damage when it misses.
+- **Metric direction encodes a business assumption.** "Lower median age is better" is true
+  for the assumed retailer profile and false for others. It is documented per metric, but
+  it is a judgement, not a fact from the data.
+- **Weighted linear scoring is a communication tool, not a causal model.** It says nothing
+  about whether these indicators predict store performance. That would require outcome
+  data the system does not have.
+- **ACS values are 5-year rolling estimates with margins of error** that widen for smaller
+  places. Margins of error are available in Atlas (`.moe`) and are captured in the model,
+  but they are not yet propagated into the score as confidence intervals. That is the
+  single most valuable next increment to the scoring layer.

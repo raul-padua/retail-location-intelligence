@@ -1,0 +1,502 @@
+{
+  "plan": {
+    "question": "Rank these on population and income only.",
+    "geographies": [
+      {
+        "slug": "city:burlington-vt",
+        "display_name": "Burlington, VT",
+        "geography_type": "city"
+      },
+      {
+        "slug": "city:south-burlington-vt",
+        "display_name": "South Burlington, VT",
+        "geography_type": "city"
+      }
+    ],
+    "metric_ids": [
+      "total_population",
+      "median_household_income"
+    ],
+    "category_weights": {
+      "market_potential": 0.3,
+      "customer_fit": 0.25,
+      "economic_attractiveness": 0.2,
+      "accessibility": 0.1,
+      "growth_outlook": 0.15
+    },
+    "rationale": "Compare 2 candidate region(s) for a National mainstream apparel retailer (GAP-like) using 2 verified Atlas metric(s) across market potential, customer fit, economic attractiveness, accessibility, and growth outlook.",
+    "answerable": true,
+    "interpreted_by": "rule_based"
+  },
+  "evidence": {
+    "package_id": "pkg_d1162cea0c",
+    "geographies": [
+      {
+        "slug": "city:burlington-vt",
+        "display_name": "Burlington, VT",
+        "geography_type": "city"
+      },
+      {
+        "slug": "city:south-burlington-vt",
+        "display_name": "South Burlington, VT",
+        "geography_type": "city"
+      }
+    ],
+    "items": [
+      {
+        "evidence_id": "ev_median_household_income_city_burlington_vt",
+        "metric": {
+          "metric_id": "median_household_income",
+          "display_name": "Median Household Income",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The most direct available proxy for purchasing power in the trade area. Median is preferred to mean because it is less distorted by a small number of very high earners.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+        "raw_value": 71109.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "23f994d54cbb",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_median_household_income_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "median_household_income",
+          "display_name": "Median Household Income",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The most direct available proxy for purchasing power in the trade area. Median is preferred to mean because it is less distorted by a small number of very high earners.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+        "raw_value": 106667.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "23f994d54cbb",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_population_city_burlington_vt",
+        "metric": {
+          "metric_id": "total_population",
+          "display_name": "Total Population",
+          "atlas_datapoint": "dem.acs.pop.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The size of the resident population bounds the addressable customer base for a physical store. It is the coarsest but most reliable proxy for trade-area demand.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.val",
+        "raw_value": 44675.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "23f994d54cbb",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_population_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "total_population",
+          "display_name": "Total Population",
+          "atlas_datapoint": "dem.acs.pop.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The size of the resident population bounds the addressable customer base for a physical store. It is the coarsest but most reliable proxy for trade-area demand.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.val",
+        "raw_value": 20756.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "23f994d54cbb",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      }
+    ],
+    "excluded_metrics": [],
+    "raw_calls": [
+      {
+        "call_id": "23f994d54cbb",
+        "method": "POST",
+        "url": "https://api.statebook.com/api/v1/getdata",
+        "request_body": {
+          "data": {
+            "datapoints": [
+              "dem.acs.hhd.mdinc.val",
+              "dem.acs.pop.total.val"
+            ]
+          },
+          "criteria": {
+            "geographies": [
+              "city:burlington-vt",
+              "city:south-burlington-vt"
+            ]
+          },
+          "options": {
+            "includeMetadata": true,
+            "outputFormat": "raw"
+          }
+        },
+        "response_body": {
+          "resultset": {
+            "geographies": [
+              {
+                "geography": "city:burlington-vt",
+                "data": [
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 71109
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 44675
+                  }
+                ]
+              },
+              {
+                "geography": "city:south-burlington-vt",
+                "data": [
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 106667
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 20756
+                  }
+                ]
+              }
+            ]
+          },
+          "metadata": {
+            "geographies": {
+              "city:burlington-vt": {
+                "type": "city",
+                "name": "Burlington, VT",
+                "description": "Burlington, VT"
+              },
+              "city:south-burlington-vt": {
+                "type": "city",
+                "name": "South Burlington, VT",
+                "description": "South Burlington, VT"
+              }
+            },
+            "datapoints": {
+              "dem.acs.hhd.mdinc.val": {
+                "description": "Household Median Income",
+                "attribution": "US Census, ACS"
+              },
+              "dem.acs.pop.total.val": {
+                "description": "Population",
+                "attribution": "US Census, ACS"
+              }
+            }
+          },
+          "status": {
+            "id": "e6360ebf-5c32-4f79-b271-574b8a82697e",
+            "timestamp": "2026-08-01T22:18:22.453528+00:00",
+            "version": "1.0.0",
+            "license": "The data returned from this StateBook Data API call is restricted and may only be used in accordance with the terms of a current and valid StateBook Data API license. Any other use is strictly prohibited.",
+            "elapsed": 0.052
+          }
+        },
+        "status_code": 200,
+        "elapsed_seconds": 0.194,
+        "attempts": 1,
+        "error": null,
+        "timestamp": "2026-08-01T22:18:22.433349Z"
+      }
+    ],
+    "created_at": "2026-08-01T22:18:22.435898Z"
+  },
+  "recommendation": null,
+  "refusal": {
+    "question": "Rank these on population and income only.",
+    "reason": "The available evidence does not support ranking these regions reliably. Only 2 metric(s) survived validation, below the 3 required for a stable ranking. A score built on so few indicators would swing on any one of them.",
+    "unsupported_because": [
+      "Only 2 metric(s) survived validation, below the 3 required for a stable ranking. A score built on so few indicators would swing on any one of them.",
+      "0 metric(s) were excluded by validation, so the score rests on a narrower base than the model intends."
+    ],
+    "required_inputs": [
+      "Additional Atlas metrics that are published at every candidate region's geographic level.",
+      "A commercial StateBook license covering a wider set of candidate regions.",
+      "Retailer-supplied inputs such as site costs, foot traffic, and competitor presence to break a statistical tie on business grounds."
+    ],
+    "offered_alternative": "The per-metric comparison and full evidence table are still shown below, with every value traceable to its Atlas response. They can be reviewed directly, but they should not be collapsed into a single ranking.",
+    "supported_capabilities": [
+      "Compare observable market indicators across regions licensed by the active token.",
+      "Rank regions on a transparent, reproducible weighted score built only from Atlas values.",
+      "Show the Atlas datapoint identifier, source, period, and geography behind every number.",
+      "Disclose which indicators were unavailable or incomparable, and why."
+    ]
+  },
+  "limitations": [
+    {
+      "title": "Demo token geographic restriction",
+      "detail": "The public demo token only licenses the Burlington-South Burlington, VT metro area (Chittenden, Franklin, and Grand Isle counties and the cities within them). Regions outside that footprint require a commercial StateBook license.",
+      "severity": "caution"
+    },
+    {
+      "title": "Market indicators are not a site-selection decision",
+      "detail": "Atlas describes geographic areas. A real store investment additionally requires site-level rent and build-out cost, observed foot traffic, competitor locations and formats, cannibalization of the existing store network, category margin, supply-chain cost to serve, and the retailer's own transaction data. None of that is available here.",
+      "severity": "caution"
+    },
+    {
+      "title": "Two-region comparison produces extreme normalized scores",
+      "detail": "Min-max normalization places the better region at 100 and the other at 0 on every metric, regardless of whether the gap between them is large or trivial. The ordering is meaningful; the size of the gap is not. Add a third region, or read the raw values in the evidence panel, to judge magnitude.",
+      "severity": "caution"
+    },
+    {
+      "title": "Survey estimates carry sampling error",
+      "detail": "American Community Survey values are 5-year rolling estimates with margins of error that widen for smaller places. Small differences between similarly sized regions may not be statistically meaningful.",
+      "severity": "info"
+    },
+    {
+      "title": "Ranking withheld",
+      "detail": "Only 2 metric(s) survived validation, below the 3 required for a stable ranking. A score built on so few indicators would swing on any one of them.",
+      "severity": "blocking"
+    }
+  ],
+  "weight_adjustments": [],
+  "trace": [
+    {
+      "step": "parse_intent",
+      "detail": "Question sanitized and classified before any tool selection.",
+      "payload": {
+        "sanitized_question": "Rank these on population and income only.",
+        "answerable": true,
+        "refusal_kind": null,
+        "injection_flagged": false,
+        "notes": []
+      },
+      "timestamp": "2026-08-01T22:18:22.232384Z"
+    },
+    {
+      "step": "resolve_geographies",
+      "detail": "Resolved 2 candidate region(s) against the token's allowlist; rejected 0.",
+      "payload": {
+        "resolved": [
+          "city:burlington-vt",
+          "city:south-burlington-vt"
+        ],
+        "rejected": []
+      },
+      "timestamp": "2026-08-01T22:18:22.232393Z"
+    },
+    {
+      "step": "select_metrics",
+      "detail": "Selected 2 approved metric(s); excluded 0 before any API call.",
+      "payload": {
+        "selected": [
+          "total_population",
+          "median_household_income"
+        ],
+        "excluded": []
+      },
+      "timestamp": "2026-08-01T22:18:22.232401Z"
+    },
+    {
+      "step": "atlas_calls",
+      "detail": "Issued 1 Atlas request(s).",
+      "payload": {
+        "calls": [
+          {
+            "call_id": "23f994d54cbb",
+            "url": "https://api.statebook.com/api/v1/getdata",
+            "status_code": 200,
+            "attempts": 1,
+            "elapsed_seconds": 0.194,
+            "error": null
+          }
+        ],
+        "errors": []
+      },
+      "timestamp": "2026-08-01T22:18:22.435766Z"
+    },
+    {
+      "step": "validate_evidence",
+      "detail": "2 metric(s) passed every comparability gate; 0 were rejected during validation.",
+      "payload": {
+        "passed": [
+          "median_household_income",
+          "total_population"
+        ],
+        "rejected": [],
+        "warnings": []
+      },
+      "timestamp": "2026-08-01T22:18:22.435859Z"
+    },
+    {
+      "step": "deterministic_scoring",
+      "detail": "Normalized and weighted 2 metric(s). Reproducibility hash f819ed8201759039.",
+      "payload": {
+        "reproducibility_hash": "f819ed8201759039",
+        "category_weights": {
+          "market_potential": 0.3,
+          "customer_fit": 0.25,
+          "economic_attractiveness": 0.2,
+          "accessibility": 0.1,
+          "growth_outlook": 0.15
+        },
+        "normalizations": {
+          "median_household_income": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 71109.0,
+            "observed_max": 106667.0,
+            "detail": "Min-max scaled over the candidate set: (value - 71109) / 35558 x 100.",
+            "scores": {
+              "city:burlington-vt": 0.0,
+              "city:south-burlington-vt": 100.0
+            }
+          },
+          "total_population": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 20756.0,
+            "observed_max": 44675.0,
+            "detail": "Min-max scaled over the candidate set: (value - 20756) / 23919 x 100.",
+            "scores": {
+              "city:burlington-vt": 100.0,
+              "city:south-burlington-vt": 0.0
+            }
+          }
+        },
+        "weight_adjustments": [],
+        "ranking": [
+          {
+            "rank": 1,
+            "geography": "city:burlington-vt",
+            "overall_score": 60.0
+          },
+          {
+            "rank": 2,
+            "geography": "city:south-burlington-vt",
+            "overall_score": 40.0
+          }
+        ]
+      },
+      "timestamp": "2026-08-01T22:18:22.436338Z"
+    },
+    {
+      "step": "sufficiency_gate",
+      "detail": "Ranking withheld: evidence is insufficient to separate the candidates.",
+      "payload": {
+        "reason": "Only 2 metric(s) survived validation, below the 3 required for a stable ranking. A score built on so few indicators would swing on any one of them."
+      },
+      "timestamp": "2026-08-01T22:18:22.436380Z"
+    }
+  ],
+  "reproducibility_hash": "f819ed8201759039"
+}

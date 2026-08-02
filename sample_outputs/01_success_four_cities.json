@@ -1,0 +1,4158 @@
+{
+  "plan": {
+    "question": "Which of these regions appears most attractive for opening a new apparel store?",
+    "geographies": [
+      {
+        "slug": "city:burlington-vt",
+        "display_name": "Burlington, VT",
+        "geography_type": "city"
+      },
+      {
+        "slug": "city:south-burlington-vt",
+        "display_name": "South Burlington, VT",
+        "geography_type": "city"
+      },
+      {
+        "slug": "city:winooski-vt",
+        "display_name": "Winooski, VT",
+        "geography_type": "city"
+      },
+      {
+        "slug": "city:williston-vt",
+        "display_name": "Williston, VT",
+        "geography_type": "city"
+      }
+    ],
+    "metric_ids": [
+      "mean_commute_time",
+      "bachelors_or_higher_share",
+      "median_age",
+      "undergrad_enrollment_share",
+      "employment_rate",
+      "median_household_income",
+      "per_capita_income",
+      "household_growth_rate",
+      "income_growth_rate",
+      "population_growth_rate",
+      "civilian_labor_force",
+      "total_households",
+      "total_population"
+    ],
+    "category_weights": {
+      "market_potential": 0.3,
+      "customer_fit": 0.25,
+      "economic_attractiveness": 0.2,
+      "accessibility": 0.1,
+      "growth_outlook": 0.15
+    },
+    "rationale": "Compare 4 candidate region(s) for a National mainstream apparel retailer (GAP-like) using 13 verified Atlas metric(s) across market potential, customer fit, economic attractiveness, accessibility, and growth outlook.",
+    "answerable": true,
+    "interpreted_by": "rule_based"
+  },
+  "evidence": {
+    "package_id": "pkg_b06725b14d",
+    "geographies": [
+      {
+        "slug": "city:burlington-vt",
+        "display_name": "Burlington, VT",
+        "geography_type": "city"
+      },
+      {
+        "slug": "city:south-burlington-vt",
+        "display_name": "South Burlington, VT",
+        "geography_type": "city"
+      },
+      {
+        "slug": "city:winooski-vt",
+        "display_name": "Winooski, VT",
+        "geography_type": "city"
+      },
+      {
+        "slug": "city:williston-vt",
+        "display_name": "Williston, VT",
+        "geography_type": "city"
+      }
+    ],
+    "items": [
+      {
+        "evidence_id": "ev_bachelors_or_higher_share_city_burlington_vt",
+        "metric": {
+          "metric_id": "bachelors_or_higher_share",
+          "display_name": "Bachelor's Degree or Higher (25+)",
+          "atlas_datapoint": "edu.acs.att.25pl.bachpl.pct",
+          "category": "customer_fit",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Educational attainment correlates with discretionary spending capacity and with brand-oriented apparel purchasing, independent of headline income.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "edu.acs.att.25pl.bachpl.pct",
+        "raw_value": 0.60467636,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 44.2114,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_bachelors_or_higher_share_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "bachelors_or_higher_share",
+          "display_name": "Bachelor's Degree or Higher (25+)",
+          "atlas_datapoint": "edu.acs.att.25pl.bachpl.pct",
+          "category": "customer_fit",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Educational attainment correlates with discretionary spending capacity and with brand-oriented apparel purchasing, independent of headline income.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "edu.acs.att.25pl.bachpl.pct",
+        "raw_value": 0.6755119500000001,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_bachelors_or_higher_share_city_winooski_vt",
+        "metric": {
+          "metric_id": "bachelors_or_higher_share",
+          "display_name": "Bachelor's Degree or Higher (25+)",
+          "atlas_datapoint": "edu.acs.att.25pl.bachpl.pct",
+          "category": "customer_fit",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Educational attainment correlates with discretionary spending capacity and with brand-oriented apparel purchasing, independent of headline income.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "edu.acs.att.25pl.bachpl.pct",
+        "raw_value": 0.59094101,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 33.3937,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_bachelors_or_higher_share_city_williston_vt",
+        "metric": {
+          "metric_id": "bachelors_or_higher_share",
+          "display_name": "Bachelor's Degree or Higher (25+)",
+          "atlas_datapoint": "edu.acs.att.25pl.bachpl.pct",
+          "category": "customer_fit",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Educational attainment correlates with discretionary spending capacity and with brand-oriented apparel purchasing, independent of headline income.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "edu.acs.att.25pl.bachpl.pct",
+        "raw_value": 0.54854057,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_civilian_labor_force_city_burlington_vt",
+        "metric": {
+          "metric_id": "civilian_labor_force",
+          "display_name": "Civilian Labor Force",
+          "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.25,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The working population is a proxy for daytime presence and for workwear and commuter-driven apparel demand, which resident counts alone understate.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+        "raw_value": 26390.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_civilian_labor_force_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "civilian_labor_force",
+          "display_name": "Civilian Labor Force",
+          "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.25,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The working population is a proxy for daytime presence and for workwear and commuter-driven apparel demand, which resident counts alone understate.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+        "raw_value": 12488.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 32.3866,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_civilian_labor_force_city_winooski_vt",
+        "metric": {
+          "metric_id": "civilian_labor_force",
+          "display_name": "Civilian Labor Force",
+          "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.25,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The working population is a proxy for daytime presence and for workwear and commuter-driven apparel demand, which resident counts alone understate.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+        "raw_value": 5854.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.1216,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_civilian_labor_force_city_williston_vt",
+        "metric": {
+          "metric_id": "civilian_labor_force",
+          "display_name": "Civilian Labor Force",
+          "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.25,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The working population is a proxy for daytime presence and for workwear and commuter-driven apparel demand, which resident counts alone understate.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+        "raw_value": 5829.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_employment_rate_city_burlington_vt",
+        "metric": {
+          "metric_id": "employment_rate",
+          "display_name": "Employed Share of Civilian Labor Force",
+          "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+          "category": "economic_attractiveness",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Employment stability underpins sustained discretionary spend. Apparel is among the first categories cut when local employment weakens.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+        "raw_value": 0.95699128,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_employment_rate_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "employment_rate",
+          "display_name": "Employed Share of Civilian Labor Force",
+          "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+          "category": "economic_attractiveness",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Employment stability underpins sustained discretionary spend. Apparel is among the first categories cut when local employment weakens.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+        "raw_value": 0.96068225,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 12.019,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_employment_rate_city_winooski_vt",
+        "metric": {
+          "metric_id": "employment_rate",
+          "display_name": "Employed Share of Civilian Labor Force",
+          "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+          "category": "economic_attractiveness",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Employment stability underpins sustained discretionary spend. Apparel is among the first categories cut when local employment weakens.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+        "raw_value": 0.98770072,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_employment_rate_city_williston_vt",
+        "metric": {
+          "metric_id": "employment_rate",
+          "display_name": "Employed Share of Civilian Labor Force",
+          "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+          "category": "economic_attractiveness",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Employment stability underpins sustained discretionary spend. Apparel is among the first categories cut when local employment weakens.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+        "raw_value": 0.9835306199999999,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 86.4208,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_household_growth_rate_city_burlington_vt",
+        "metric": {
+          "metric_id": "household_growth_rate",
+          "display_name": "Household Average Yearly Change",
+          "atlas_datapoint": "dem.acs.hhd.total.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Household formation drives new demand for apparel and home-adjacent categories more directly than raw population change.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.total.aycp",
+        "raw_value": 0.02003872,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_household_growth_rate_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "household_growth_rate",
+          "display_name": "Household Average Yearly Change",
+          "atlas_datapoint": "dem.acs.hhd.total.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Household formation drives new demand for apparel and home-adjacent categories more directly than raw population change.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.total.aycp",
+        "raw_value": 0.02153741,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 4.6019,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_household_growth_rate_city_winooski_vt",
+        "metric": {
+          "metric_id": "household_growth_rate",
+          "display_name": "Household Average Yearly Change",
+          "atlas_datapoint": "dem.acs.hhd.total.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Household formation drives new demand for apparel and home-adjacent categories more directly than raw population change.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.total.aycp",
+        "raw_value": 0.05260558,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_household_growth_rate_city_williston_vt",
+        "metric": {
+          "metric_id": "household_growth_rate",
+          "display_name": "Household Average Yearly Change",
+          "atlas_datapoint": "dem.acs.hhd.total.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Household formation drives new demand for apparel and home-adjacent categories more directly than raw population change.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.total.aycp",
+        "raw_value": 0.022619379999999998,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 7.9242,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_income_growth_rate_city_burlington_vt",
+        "metric": {
+          "metric_id": "income_growth_rate",
+          "display_name": "Household Median Income Average Yearly Change",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Rising local incomes expand discretionary budgets. Nominal, so it is not inflation-adjusted and should not be read as real purchasing-power growth.",
+          "notes": "Nominal growth. Not adjusted for inflation.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.aycp",
+        "raw_value": 0.06433322999999999,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 26.6309,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_income_growth_rate_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "income_growth_rate",
+          "display_name": "Household Median Income Average Yearly Change",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Rising local incomes expand discretionary budgets. Nominal, so it is not inflation-adjusted and should not be read as real purchasing-power growth.",
+          "notes": "Nominal growth. Not adjusted for inflation.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.aycp",
+        "raw_value": 0.08767683,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 90.344,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_income_growth_rate_city_winooski_vt",
+        "metric": {
+          "metric_id": "income_growth_rate",
+          "display_name": "Household Median Income Average Yearly Change",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Rising local incomes expand discretionary budgets. Nominal, so it is not inflation-adjusted and should not be read as real purchasing-power growth.",
+          "notes": "Nominal growth. Not adjusted for inflation.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.aycp",
+        "raw_value": 0.09121464,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_income_growth_rate_city_williston_vt",
+        "metric": {
+          "metric_id": "income_growth_rate",
+          "display_name": "Household Median Income Average Yearly Change",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Rising local incomes expand discretionary budgets. Nominal, so it is not inflation-adjusted and should not be read as real purchasing-power growth.",
+          "notes": "Nominal growth. Not adjusted for inflation.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.aycp",
+        "raw_value": 0.05457603,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_mean_commute_time_city_burlington_vt",
+        "metric": {
+          "metric_id": "mean_commute_time",
+          "display_name": "Mean Commute Travel Time",
+          "atlas_datapoint": "trn.acs.cmt.mean.val",
+          "category": "accessibility",
+          "unit": "minutes",
+          "direction": "lower_is_better",
+          "weight": 1.0,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Shorter commutes indicate a more compact, accessible catchment where shoppers can reach a store without a long trip. Reported in minutes.",
+          "notes": "This is the only accessibility indicator the demo token exposes at every geographic level; it is a weak proxy for true trade-area accessibility.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "trn.acs.cmt.mean.val",
+        "raw_value": 18.667038,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 77.5905,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_mean_commute_time_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "mean_commute_time",
+          "display_name": "Mean Commute Travel Time",
+          "atlas_datapoint": "trn.acs.cmt.mean.val",
+          "category": "accessibility",
+          "unit": "minutes",
+          "direction": "lower_is_better",
+          "weight": 1.0,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Shorter commutes indicate a more compact, accessible catchment where shoppers can reach a store without a long trip. Reported in minutes.",
+          "notes": "This is the only accessibility indicator the demo token exposes at every geographic level; it is a weak proxy for true trade-area accessibility.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "trn.acs.cmt.mean.val",
+        "raw_value": 17.74547,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_mean_commute_time_city_winooski_vt",
+        "metric": {
+          "metric_id": "mean_commute_time",
+          "display_name": "Mean Commute Travel Time",
+          "atlas_datapoint": "trn.acs.cmt.mean.val",
+          "category": "accessibility",
+          "unit": "minutes",
+          "direction": "lower_is_better",
+          "weight": 1.0,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Shorter commutes indicate a more compact, accessible catchment where shoppers can reach a store without a long trip. Reported in minutes.",
+          "notes": "This is the only accessibility indicator the demo token exposes at every geographic level; it is a weak proxy for true trade-area accessibility.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "trn.acs.cmt.mean.val",
+        "raw_value": 21.857866,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_mean_commute_time_city_williston_vt",
+        "metric": {
+          "metric_id": "mean_commute_time",
+          "display_name": "Mean Commute Travel Time",
+          "atlas_datapoint": "trn.acs.cmt.mean.val",
+          "category": "accessibility",
+          "unit": "minutes",
+          "direction": "lower_is_better",
+          "weight": 1.0,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Shorter commutes indicate a more compact, accessible catchment where shoppers can reach a store without a long trip. Reported in minutes.",
+          "notes": "This is the only accessibility indicator the demo token exposes at every geographic level; it is a weak proxy for true trade-area accessibility.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "trn.acs.cmt.mean.val",
+        "raw_value": 19.674036,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 53.1036,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_median_age_city_burlington_vt",
+        "metric": {
+          "metric_id": "median_age",
+          "display_name": "Median Age",
+          "atlas_datapoint": "dem.acs.mdage.total.val",
+          "category": "customer_fit",
+          "unit": "years",
+          "direction": "lower_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A mainstream apparel banner skews toward younger adult and family shoppers, so a lower median age is treated as a better fit for this retailer profile.",
+          "notes": "Direction is a profile assumption, not a property of the data. A retailer targeting older shoppers should invert it.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.mdage.total.val",
+        "raw_value": 26.8,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_median_age_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "median_age",
+          "display_name": "Median Age",
+          "atlas_datapoint": "dem.acs.mdage.total.val",
+          "category": "customer_fit",
+          "unit": "years",
+          "direction": "lower_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A mainstream apparel banner skews toward younger adult and family shoppers, so a lower median age is treated as a better fit for this retailer profile.",
+          "notes": "Direction is a profile assumption, not a property of the data. A retailer targeting older shoppers should invert it.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.mdage.total.val",
+        "raw_value": 38.2,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 38.7097,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_median_age_city_winooski_vt",
+        "metric": {
+          "metric_id": "median_age",
+          "display_name": "Median Age",
+          "atlas_datapoint": "dem.acs.mdage.total.val",
+          "category": "customer_fit",
+          "unit": "years",
+          "direction": "lower_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A mainstream apparel banner skews toward younger adult and family shoppers, so a lower median age is treated as a better fit for this retailer profile.",
+          "notes": "Direction is a profile assumption, not a property of the data. A retailer targeting older shoppers should invert it.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.mdage.total.val",
+        "raw_value": 33.3,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 65.0538,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_median_age_city_williston_vt",
+        "metric": {
+          "metric_id": "median_age",
+          "display_name": "Median Age",
+          "atlas_datapoint": "dem.acs.mdage.total.val",
+          "category": "customer_fit",
+          "unit": "years",
+          "direction": "lower_is_better",
+          "weight": 0.3,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A mainstream apparel banner skews toward younger adult and family shoppers, so a lower median age is treated as a better fit for this retailer profile.",
+          "notes": "Direction is a profile assumption, not a property of the data. A retailer targeting older shoppers should invert it.",
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.mdage.total.val",
+        "raw_value": 45.4,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_median_household_income_city_burlington_vt",
+        "metric": {
+          "metric_id": "median_household_income",
+          "display_name": "Median Household Income",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The most direct available proxy for purchasing power in the trade area. Median is preferred to mean because it is less distorted by a small number of very high earners.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+        "raw_value": 71109.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_median_household_income_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "median_household_income",
+          "display_name": "Median Household Income",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The most direct available proxy for purchasing power in the trade area. Median is preferred to mean because it is less distorted by a small number of very high earners.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+        "raw_value": 106667.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 99.1634,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_median_household_income_city_winooski_vt",
+        "metric": {
+          "metric_id": "median_household_income",
+          "display_name": "Median Household Income",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The most direct available proxy for purchasing power in the trade area. Median is preferred to mean because it is less distorted by a small number of very high earners.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+        "raw_value": 79522.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 23.462,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_median_household_income_city_williston_vt",
+        "metric": {
+          "metric_id": "median_household_income",
+          "display_name": "Median Household Income",
+          "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The most direct available proxy for purchasing power in the trade area. Median is preferred to mean because it is less distorted by a small number of very high earners.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.mdinc.val",
+        "raw_value": 106967.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_per_capita_income_city_burlington_vt",
+        "metric": {
+          "metric_id": "per_capita_income",
+          "display_name": "Per Capita Income",
+          "atlas_datapoint": "dem.acs.hhd.pcinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.25,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Complements household income by adjusting for household size, which matters where student or single-person households are concentrated.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.pcinc.val",
+        "raw_value": 40192.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_per_capita_income_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "per_capita_income",
+          "display_name": "Per Capita Income",
+          "atlas_datapoint": "dem.acs.hhd.pcinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.25,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Complements household income by adjusting for household size, which matters where student or single-person households are concentrated.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.pcinc.val",
+        "raw_value": 59566.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 95.2039,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_per_capita_income_city_winooski_vt",
+        "metric": {
+          "metric_id": "per_capita_income",
+          "display_name": "Per Capita Income",
+          "atlas_datapoint": "dem.acs.hhd.pcinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.25,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Complements household income by adjusting for household size, which matters where student or single-person households are concentrated.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.pcinc.val",
+        "raw_value": 44986.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 23.5577,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_per_capita_income_city_williston_vt",
+        "metric": {
+          "metric_id": "per_capita_income",
+          "display_name": "Per Capita Income",
+          "atlas_datapoint": "dem.acs.hhd.pcinc.val",
+          "category": "economic_attractiveness",
+          "unit": "usd",
+          "direction": "higher_is_better",
+          "weight": 0.25,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Complements household income by adjusting for household size, which matters where student or single-person households are concentrated.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.pcinc.val",
+        "raw_value": 60542.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_population_growth_rate_city_burlington_vt",
+        "metric": {
+          "metric_id": "population_growth_rate",
+          "display_name": "Population Average Yearly Change",
+          "atlas_datapoint": "dem.acs.pop.total.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A store is a multi-year commitment, so the direction of the trade area matters as much as its current size.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.aycp",
+        "raw_value": 0.01190833,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 20.9017,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_population_growth_rate_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "population_growth_rate",
+          "display_name": "Population Average Yearly Change",
+          "atlas_datapoint": "dem.acs.pop.total.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A store is a multi-year commitment, so the direction of the trade area matters as much as its current size.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.aycp",
+        "raw_value": 0.01762342,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 43.0592,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_population_growth_rate_city_winooski_vt",
+        "metric": {
+          "metric_id": "population_growth_rate",
+          "display_name": "Population Average Yearly Change",
+          "atlas_datapoint": "dem.acs.pop.total.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A store is a multi-year commitment, so the direction of the trade area matters as much as its current size.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.aycp",
+        "raw_value": 0.0323102,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_population_growth_rate_city_williston_vt",
+        "metric": {
+          "metric_id": "population_growth_rate",
+          "display_name": "Population Average Yearly Change",
+          "atlas_datapoint": "dem.acs.pop.total.aycp",
+          "category": "growth_outlook",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A store is a multi-year commitment, so the direction of the trade area matters as much as its current size.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.aycp",
+        "raw_value": 0.00651714,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_households_city_burlington_vt",
+        "metric": {
+          "metric_id": "total_households",
+          "display_name": "Total Households",
+          "atlas_datapoint": "dem.acs.hhd.total.val",
+          "category": "market_potential",
+          "unit": "households",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Apparel purchasing is substantially a household decision, particularly for children's and family lines, so household count often tracks demand better than headcount alone.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.total.val",
+        "raw_value": 17504.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_households_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "total_households",
+          "display_name": "Total Households",
+          "atlas_datapoint": "dem.acs.hhd.total.val",
+          "category": "market_potential",
+          "unit": "households",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Apparel purchasing is substantially a household decision, particularly for children's and family lines, so household count often tracks demand better than headcount alone.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.total.val",
+        "raw_value": 9466.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 40.0239,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_households_city_winooski_vt",
+        "metric": {
+          "metric_id": "total_households",
+          "display_name": "Total Households",
+          "atlas_datapoint": "dem.acs.hhd.total.val",
+          "category": "market_potential",
+          "unit": "households",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Apparel purchasing is substantially a household decision, particularly for children's and family lines, so household count often tracks demand better than headcount alone.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.total.val",
+        "raw_value": 4102.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_households_city_williston_vt",
+        "metric": {
+          "metric_id": "total_households",
+          "display_name": "Total Households",
+          "atlas_datapoint": "dem.acs.hhd.total.val",
+          "category": "market_potential",
+          "unit": "households",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "Apparel purchasing is substantially a household decision, particularly for children's and family lines, so household count often tracks demand better than headcount alone.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.hhd.total.val",
+        "raw_value": 4421.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 2.3802,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_population_city_burlington_vt",
+        "metric": {
+          "metric_id": "total_population",
+          "display_name": "Total Population",
+          "atlas_datapoint": "dem.acs.pop.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The size of the resident population bounds the addressable customer base for a physical store. It is the coarsest but most reliable proxy for trade-area demand.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.val",
+        "raw_value": 44675.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_population_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "total_population",
+          "display_name": "Total Population",
+          "atlas_datapoint": "dem.acs.pop.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The size of the resident population bounds the addressable customer base for a physical store. It is the coarsest but most reliable proxy for trade-area demand.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.val",
+        "raw_value": 20756.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 34.256,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_population_city_winooski_vt",
+        "metric": {
+          "metric_id": "total_population",
+          "display_name": "Total Population",
+          "atlas_datapoint": "dem.acs.pop.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The size of the resident population bounds the addressable customer base for a physical store. It is the coarsest but most reliable proxy for trade-area demand.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.val",
+        "raw_value": 8293.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_total_population_city_williston_vt",
+        "metric": {
+          "metric_id": "total_population",
+          "display_name": "Total Population",
+          "atlas_datapoint": "dem.acs.pop.total.val",
+          "category": "market_potential",
+          "unit": "people",
+          "direction": "higher_is_better",
+          "weight": 0.4,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "The size of the resident population bounds the addressable customer base for a physical store. It is the coarsest but most reliable proxy for trade-area demand.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "dem.acs.pop.total.val",
+        "raw_value": 10144.0,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 5.0877,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_undergrad_enrollment_share_city_burlington_vt",
+        "metric": {
+          "metric_id": "undergrad_enrollment_share",
+          "display_name": "College / Undergraduate Enrollment Share (3+)",
+          "atlas_datapoint": "edu.acs.enr.3pl.ugrad.pct",
+          "category": "customer_fit",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A large student population signals a concentrated, footfall-heavy, fashion-responsive segment near campus retail corridors.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "edu.acs.enr.3pl.ugrad.pct",
+        "raw_value": 0.29533998,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 100.0,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_undergrad_enrollment_share_city_south_burlington_vt",
+        "metric": {
+          "metric_id": "undergrad_enrollment_share",
+          "display_name": "College / Undergraduate Enrollment Share (3+)",
+          "atlas_datapoint": "edu.acs.enr.3pl.ugrad.pct",
+          "category": "customer_fit",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A large student population signals a concentrated, footfall-heavy, fashion-responsive segment near campus retail corridors.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "edu.acs.enr.3pl.ugrad.pct",
+        "raw_value": 0.03598485,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:south-burlington-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 3.401,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_undergrad_enrollment_share_city_winooski_vt",
+        "metric": {
+          "metric_id": "undergrad_enrollment_share",
+          "display_name": "College / Undergraduate Enrollment Share (3+)",
+          "atlas_datapoint": "edu.acs.enr.3pl.ugrad.pct",
+          "category": "customer_fit",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A large student population signals a concentrated, footfall-heavy, fashion-responsive segment near campus retail corridors.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "edu.acs.enr.3pl.ugrad.pct",
+        "raw_value": 0.09406978,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:winooski-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 25.0352,
+        "weighted_contribution": null
+      },
+      {
+        "evidence_id": "ev_undergrad_enrollment_share_city_williston_vt",
+        "metric": {
+          "metric_id": "undergrad_enrollment_share",
+          "display_name": "College / Undergraduate Enrollment Share (3+)",
+          "atlas_datapoint": "edu.acs.enr.3pl.ugrad.pct",
+          "category": "customer_fit",
+          "unit": "percent",
+          "direction": "higher_is_better",
+          "weight": 0.35,
+          "source": "US Census, ACS",
+          "expected_periods": [
+            "2024"
+          ],
+          "supported_geography_types": [
+            "cbsa",
+            "county",
+            "city"
+          ],
+          "normalization": "min_max",
+          "retail_rationale": "A large student population signals a concentrated, footfall-heavy, fashion-responsive segment near campus retail corridors.",
+          "notes": null,
+          "atlas_collection": null,
+          "atlas_item_datapoint": null,
+          "atlas_item_code": null
+        },
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "atlas_datapoint": "edu.acs.enr.3pl.ugrad.pct",
+        "raw_value": 0.02685371,
+        "period": "2024",
+        "source": "acs5",
+        "reported_geography": "city:williston-vt",
+        "margin_of_error": null,
+        "validation_status": "valid",
+        "validation_notes": [],
+        "call_id": "868d5b1c7fbd",
+        "normalized_value": 0.0,
+        "weighted_contribution": null
+      }
+    ],
+    "excluded_metrics": [
+      {
+        "metric_id": "food_service_establishments",
+        "display_name": "Food Service & Drinking Establishments (NAICS 722)",
+        "atlas_datapoint": "ind.cbp.naics.est.val",
+        "reason": "US Census, County Business Patterns does not publish this datapoint at the city level, so it cannot describe the candidate regions.",
+        "status": "missing",
+        "affected_geographies": [
+          "city:burlington-vt",
+          "city:south-burlington-vt",
+          "city:winooski-vt",
+          "city:williston-vt"
+        ]
+      },
+      {
+        "metric_id": "retail_establishments",
+        "display_name": "Retail Trade Establishments (NAICS 44)",
+        "atlas_datapoint": "ind.cbp.naics.est.val",
+        "reason": "US Census, County Business Patterns does not publish this datapoint at the city level, so it cannot describe the candidate regions.",
+        "status": "missing",
+        "affected_geographies": [
+          "city:burlington-vt",
+          "city:south-burlington-vt",
+          "city:winooski-vt",
+          "city:williston-vt"
+        ]
+      }
+    ],
+    "raw_calls": [
+      {
+        "call_id": "868d5b1c7fbd",
+        "method": "POST",
+        "url": "https://api.statebook.com/api/v1/getdata",
+        "request_body": {
+          "data": {
+            "datapoints": [
+              "dem.acs.hhd.mdinc.aycp",
+              "dem.acs.hhd.mdinc.val",
+              "dem.acs.hhd.pcinc.val",
+              "dem.acs.hhd.total.aycp",
+              "dem.acs.hhd.total.val",
+              "dem.acs.mdage.total.val",
+              "dem.acs.pop.total.aycp",
+              "dem.acs.pop.total.val",
+              "edu.acs.att.25pl.bachpl.pct",
+              "edu.acs.enr.3pl.ugrad.pct",
+              "trn.acs.cmt.mean.val",
+              "wkf.acs.emp.16pl.labor.civ.emp.pct",
+              "wkf.acs.emp.16pl.labor.civ.total.val"
+            ]
+          },
+          "criteria": {
+            "geographies": [
+              "city:burlington-vt",
+              "city:south-burlington-vt",
+              "city:winooski-vt",
+              "city:williston-vt"
+            ]
+          },
+          "options": {
+            "includeMetadata": true,
+            "outputFormat": "raw"
+          }
+        },
+        "response_body": {
+          "resultset": {
+            "geographies": [
+              {
+                "geography": "city:burlington-vt",
+                "data": [
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.06433322999999999
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 71109
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.pcinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 40192
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.total.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.02003872
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 17504
+                  },
+                  {
+                    "datapoint": "dem.acs.mdage.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 26.8
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.01190833
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 44675
+                  },
+                  {
+                    "datapoint": "edu.acs.att.25pl.bachpl.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.60467636
+                  },
+                  {
+                    "datapoint": "edu.acs.enr.3pl.ugrad.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.29533998
+                  },
+                  {
+                    "datapoint": "trn.acs.cmt.mean.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 18.667038
+                  },
+                  {
+                    "datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.95699128
+                  },
+                  {
+                    "datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 26390
+                  }
+                ]
+              },
+              {
+                "geography": "city:south-burlington-vt",
+                "data": [
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.08767683
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 106667
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.pcinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 59566
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.total.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.02153741
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 9466
+                  },
+                  {
+                    "datapoint": "dem.acs.mdage.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 38.2
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.01762342
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 20756
+                  },
+                  {
+                    "datapoint": "edu.acs.att.25pl.bachpl.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.6755119500000001
+                  },
+                  {
+                    "datapoint": "edu.acs.enr.3pl.ugrad.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.03598485
+                  },
+                  {
+                    "datapoint": "trn.acs.cmt.mean.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 17.74547
+                  },
+                  {
+                    "datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.96068225
+                  },
+                  {
+                    "datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 12488
+                  }
+                ]
+              },
+              {
+                "geography": "city:winooski-vt",
+                "data": [
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.09121464
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 79522
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.pcinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 44986
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.total.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.05260558
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 4102
+                  },
+                  {
+                    "datapoint": "dem.acs.mdage.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 33.3
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.0323102
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 8293
+                  },
+                  {
+                    "datapoint": "edu.acs.att.25pl.bachpl.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.59094101
+                  },
+                  {
+                    "datapoint": "edu.acs.enr.3pl.ugrad.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.09406978
+                  },
+                  {
+                    "datapoint": "trn.acs.cmt.mean.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 21.857866
+                  },
+                  {
+                    "datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.98770072
+                  },
+                  {
+                    "datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 5854
+                  }
+                ]
+              },
+              {
+                "geography": "city:williston-vt",
+                "data": [
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.05457603
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.mdinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 106967
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.pcinc.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 60542
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.total.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.022619379999999998
+                  },
+                  {
+                    "datapoint": "dem.acs.hhd.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 4421
+                  },
+                  {
+                    "datapoint": "dem.acs.mdage.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 45.4
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.aycp",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.00651714
+                  },
+                  {
+                    "datapoint": "dem.acs.pop.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 10144
+                  },
+                  {
+                    "datapoint": "edu.acs.att.25pl.bachpl.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.54854057
+                  },
+                  {
+                    "datapoint": "edu.acs.enr.3pl.ugrad.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.02685371
+                  },
+                  {
+                    "datapoint": "trn.acs.cmt.mean.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 19.674036
+                  },
+                  {
+                    "datapoint": "wkf.acs.emp.16pl.labor.civ.emp.pct",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 0.9835306199999999
+                  },
+                  {
+                    "datapoint": "wkf.acs.emp.16pl.labor.civ.total.val",
+                    "period": "2024",
+                    "source": "acs5",
+                    "value": 5829
+                  }
+                ]
+              }
+            ]
+          },
+          "metadata": {
+            "geographies": {
+              "city:burlington-vt": {
+                "type": "city",
+                "name": "Burlington, VT",
+                "description": "Burlington, VT"
+              },
+              "city:south-burlington-vt": {
+                "type": "city",
+                "name": "South Burlington, VT",
+                "description": "South Burlington, VT"
+              },
+              "city:winooski-vt": {
+                "type": "city",
+                "name": "Winooski, VT",
+                "description": "Winooski, VT"
+              },
+              "city:williston-vt": {
+                "type": "city",
+                "name": "Williston, VT",
+                "description": "Williston, VT"
+              }
+            },
+            "datapoints": {
+              "dem.acs.hhd.mdinc.aycp": {
+                "description": "Household Median Income AYC %",
+                "attribution": "US Census, ACS"
+              },
+              "dem.acs.hhd.mdinc.val": {
+                "description": "Household Median Income",
+                "attribution": "US Census, ACS"
+              },
+              "dem.acs.hhd.pcinc.val": {
+                "description": "Per Capita Income",
+                "attribution": "US Census, ACS"
+              },
+              "dem.acs.hhd.total.aycp": {
+                "description": "Total Households AYC %",
+                "attribution": "US Census, ACS"
+              },
+              "dem.acs.hhd.total.val": {
+                "description": "Total Households",
+                "attribution": "US Census, ACS"
+              },
+              "dem.acs.mdage.total.val": {
+                "description": "Median Age",
+                "attribution": "US Census, ACS"
+              },
+              "dem.acs.pop.total.aycp": {
+                "description": "Population AYC %",
+                "attribution": "US Census, ACS"
+              },
+              "dem.acs.pop.total.val": {
+                "description": "Population",
+                "attribution": "US Census, ACS"
+              },
+              "edu.acs.att.25pl.bachpl.pct": {
+                "description": "Bachelor Degree or Higher Attainment (25+) %",
+                "attribution": "US Census, ACS"
+              },
+              "edu.acs.enr.3pl.ugrad.pct": {
+                "description": "College / Undergrad Enrollments (3+) %",
+                "attribution": "US Census, ACS"
+              },
+              "trn.acs.cmt.mean.val": {
+                "description": "Commuters Mean Travel Time",
+                "attribution": "US Census, ACS"
+              },
+              "wkf.acs.emp.16pl.labor.civ.emp.pct": {
+                "description": "Employed Civilian Labor Force %",
+                "attribution": "US Census, ACS"
+              },
+              "wkf.acs.emp.16pl.labor.civ.total.val": {
+                "description": "Civilian Labor Force",
+                "attribution": "US Census, ACS"
+              }
+            }
+          },
+          "status": {
+            "id": "f9ca1092-abbc-433d-b4bf-daf47cdbbf81",
+            "timestamp": "2026-08-01T22:18:21.577400+00:00",
+            "version": "1.0.0",
+            "license": "The data returned from this StateBook Data API call is restricted and may only be used in accordance with the terms of a current and valid StateBook Data API license. Any other use is strictly prohibited.",
+            "elapsed": 0.083
+          }
+        },
+        "status_code": 200,
+        "elapsed_seconds": 0.2267,
+        "attempts": 1,
+        "error": null,
+        "timestamp": "2026-08-01T22:18:21.555944Z"
+      }
+    ],
+    "created_at": "2026-08-01T22:18:21.556827Z"
+  },
+  "recommendation": {
+    "leading_region": {
+      "slug": "city:burlington-vt",
+      "display_name": "Burlington, VT",
+      "geography_type": "city"
+    },
+    "ranked_regions": [
+      {
+        "geography": {
+          "slug": "city:burlington-vt",
+          "display_name": "Burlington, VT",
+          "geography_type": "city"
+        },
+        "rank": 1,
+        "overall_score": 60.33,
+        "category_scores": [
+          {
+            "category": "market_potential",
+            "score": 100.0,
+            "category_weight": 0.3,
+            "effective_category_weight": 0.3,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "civilian_labor_force",
+                "display_name": "Civilian Labor Force",
+                "category": "market_potential",
+                "evidence_id": "ev_civilian_labor_force_city_burlington_vt",
+                "raw_value": 26390.0,
+                "normalized_value": 100.0,
+                "effective_weight": 0.25,
+                "weighted_contribution": 25.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "total_households",
+                "display_name": "Total Households",
+                "category": "market_potential",
+                "evidence_id": "ev_total_households_city_burlington_vt",
+                "raw_value": 17504.0,
+                "normalized_value": 100.0,
+                "effective_weight": 0.35,
+                "weighted_contribution": 35.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "total_population",
+                "display_name": "Total Population",
+                "category": "market_potential",
+                "evidence_id": "ev_total_population_city_burlington_vt",
+                "raw_value": 44675.0,
+                "normalized_value": 100.0,
+                "effective_weight": 0.4,
+                "weighted_contribution": 40.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "customer_fit",
+            "score": 80.474,
+            "category_weight": 0.25,
+            "effective_category_weight": 0.25,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "bachelors_or_higher_share",
+                "display_name": "Bachelor's Degree or Higher (25+)",
+                "category": "customer_fit",
+                "evidence_id": "ev_bachelors_or_higher_share_city_burlington_vt",
+                "raw_value": 0.60467636,
+                "normalized_value": 44.2114,
+                "effective_weight": 0.35,
+                "weighted_contribution": 15.474,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "median_age",
+                "display_name": "Median Age",
+                "category": "customer_fit",
+                "evidence_id": "ev_median_age_city_burlington_vt",
+                "raw_value": 26.8,
+                "normalized_value": 100.0,
+                "effective_weight": 0.3,
+                "weighted_contribution": 30.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "undergrad_enrollment_share",
+                "display_name": "College / Undergraduate Enrollment Share (3+)",
+                "category": "customer_fit",
+                "evidence_id": "ev_undergrad_enrollment_share_city_burlington_vt",
+                "raw_value": 0.29533998,
+                "normalized_value": 100.0,
+                "effective_weight": 0.35,
+                "weighted_contribution": 35.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "economic_attractiveness",
+            "score": 0.0,
+            "category_weight": 0.2,
+            "effective_category_weight": 0.2,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "employment_rate",
+                "display_name": "Employed Share of Civilian Labor Force",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_employment_rate_city_burlington_vt",
+                "raw_value": 0.95699128,
+                "normalized_value": 0.0,
+                "effective_weight": 0.35,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "median_household_income",
+                "display_name": "Median Household Income",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_median_household_income_city_burlington_vt",
+                "raw_value": 71109.0,
+                "normalized_value": 0.0,
+                "effective_weight": 0.4,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "per_capita_income",
+                "display_name": "Per Capita Income",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_per_capita_income_city_burlington_vt",
+                "raw_value": 40192.0,
+                "normalized_value": 0.0,
+                "effective_weight": 0.25,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "accessibility",
+            "score": 77.5905,
+            "category_weight": 0.1,
+            "effective_category_weight": 0.1,
+            "metrics_included": 1,
+            "metrics_total": 1,
+            "contributions": [
+              {
+                "metric_id": "mean_commute_time",
+                "display_name": "Mean Commute Travel Time",
+                "category": "accessibility",
+                "evidence_id": "ev_mean_commute_time_city_burlington_vt",
+                "raw_value": 18.667038,
+                "normalized_value": 77.5905,
+                "effective_weight": 1.0,
+                "weighted_contribution": 77.5905,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "growth_outlook",
+            "score": 16.3499,
+            "category_weight": 0.15,
+            "effective_category_weight": 0.15,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "household_growth_rate",
+                "display_name": "Household Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_household_growth_rate_city_burlington_vt",
+                "raw_value": 0.02003872,
+                "normalized_value": 0.0,
+                "effective_weight": 0.3,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "income_growth_rate",
+                "display_name": "Household Median Income Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_income_growth_rate_city_burlington_vt",
+                "raw_value": 0.06433322999999999,
+                "normalized_value": 26.6309,
+                "effective_weight": 0.3,
+                "weighted_contribution": 7.9893,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "population_growth_rate",
+                "display_name": "Population Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_population_growth_rate_city_burlington_vt",
+                "raw_value": 0.01190833,
+                "normalized_value": 20.9017,
+                "effective_weight": 0.4,
+                "weighted_contribution": 8.3607,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          }
+        ],
+        "evidence_completeness": 1.0,
+        "missing_metric_ids": []
+      },
+      {
+        "geography": {
+          "slug": "city:south-burlington-vt",
+          "display_name": "South Burlington, VT",
+          "geography_type": "city"
+        },
+        "rank": 2,
+        "overall_score": 53.0838,
+        "category_scores": [
+          {
+            "category": "market_potential",
+            "score": 35.8074,
+            "category_weight": 0.3,
+            "effective_category_weight": 0.3,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "civilian_labor_force",
+                "display_name": "Civilian Labor Force",
+                "category": "market_potential",
+                "evidence_id": "ev_civilian_labor_force_city_south_burlington_vt",
+                "raw_value": 12488.0,
+                "normalized_value": 32.3866,
+                "effective_weight": 0.25,
+                "weighted_contribution": 8.0967,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "total_households",
+                "display_name": "Total Households",
+                "category": "market_potential",
+                "evidence_id": "ev_total_households_city_south_burlington_vt",
+                "raw_value": 9466.0,
+                "normalized_value": 40.0239,
+                "effective_weight": 0.35,
+                "weighted_contribution": 14.0084,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "total_population",
+                "display_name": "Total Population",
+                "category": "market_potential",
+                "evidence_id": "ev_total_population_city_south_burlington_vt",
+                "raw_value": 20756.0,
+                "normalized_value": 34.256,
+                "effective_weight": 0.4,
+                "weighted_contribution": 13.7024,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "customer_fit",
+            "score": 47.8033,
+            "category_weight": 0.25,
+            "effective_category_weight": 0.25,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "bachelors_or_higher_share",
+                "display_name": "Bachelor's Degree or Higher (25+)",
+                "category": "customer_fit",
+                "evidence_id": "ev_bachelors_or_higher_share_city_south_burlington_vt",
+                "raw_value": 0.6755119500000001,
+                "normalized_value": 100.0,
+                "effective_weight": 0.35,
+                "weighted_contribution": 35.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "median_age",
+                "display_name": "Median Age",
+                "category": "customer_fit",
+                "evidence_id": "ev_median_age_city_south_burlington_vt",
+                "raw_value": 38.2,
+                "normalized_value": 38.7097,
+                "effective_weight": 0.3,
+                "weighted_contribution": 11.6129,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "undergrad_enrollment_share",
+                "display_name": "College / Undergraduate Enrollment Share (3+)",
+                "category": "customer_fit",
+                "evidence_id": "ev_undergrad_enrollment_share_city_south_burlington_vt",
+                "raw_value": 0.03598485,
+                "normalized_value": 3.401,
+                "effective_weight": 0.35,
+                "weighted_contribution": 1.1903,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "economic_attractiveness",
+            "score": 67.673,
+            "category_weight": 0.2,
+            "effective_category_weight": 0.2,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "employment_rate",
+                "display_name": "Employed Share of Civilian Labor Force",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_employment_rate_city_south_burlington_vt",
+                "raw_value": 0.96068225,
+                "normalized_value": 12.019,
+                "effective_weight": 0.35,
+                "weighted_contribution": 4.2066,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "median_household_income",
+                "display_name": "Median Household Income",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_median_household_income_city_south_burlington_vt",
+                "raw_value": 106667.0,
+                "normalized_value": 99.1634,
+                "effective_weight": 0.4,
+                "weighted_contribution": 39.6654,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "per_capita_income",
+                "display_name": "Per Capita Income",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_per_capita_income_city_south_burlington_vt",
+                "raw_value": 59566.0,
+                "normalized_value": 95.2039,
+                "effective_weight": 0.25,
+                "weighted_contribution": 23.801,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "accessibility",
+            "score": 100.0,
+            "category_weight": 0.1,
+            "effective_category_weight": 0.1,
+            "metrics_included": 1,
+            "metrics_total": 1,
+            "contributions": [
+              {
+                "metric_id": "mean_commute_time",
+                "display_name": "Mean Commute Travel Time",
+                "category": "accessibility",
+                "evidence_id": "ev_mean_commute_time_city_south_burlington_vt",
+                "raw_value": 17.74547,
+                "normalized_value": 100.0,
+                "effective_weight": 1.0,
+                "weighted_contribution": 100.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "growth_outlook",
+            "score": 45.7074,
+            "category_weight": 0.15,
+            "effective_category_weight": 0.15,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "household_growth_rate",
+                "display_name": "Household Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_household_growth_rate_city_south_burlington_vt",
+                "raw_value": 0.02153741,
+                "normalized_value": 4.6019,
+                "effective_weight": 0.3,
+                "weighted_contribution": 1.3806,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "income_growth_rate",
+                "display_name": "Household Median Income Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_income_growth_rate_city_south_burlington_vt",
+                "raw_value": 0.08767683,
+                "normalized_value": 90.344,
+                "effective_weight": 0.3,
+                "weighted_contribution": 27.1032,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "population_growth_rate",
+                "display_name": "Population Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_population_growth_rate_city_south_burlington_vt",
+                "raw_value": 0.01762342,
+                "normalized_value": 43.0592,
+                "effective_weight": 0.4,
+                "weighted_contribution": 17.2237,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          }
+        ],
+        "evidence_completeness": 1.0,
+        "missing_metric_ids": []
+      },
+      {
+        "geography": {
+          "slug": "city:winooski-vt",
+          "display_name": "Winooski, VT",
+          "geography_type": "city"
+        },
+        "rank": 3,
+        "overall_score": 35.0555,
+        "category_scores": [
+          {
+            "category": "market_potential",
+            "score": 0.0304,
+            "category_weight": 0.3,
+            "effective_category_weight": 0.3,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "civilian_labor_force",
+                "display_name": "Civilian Labor Force",
+                "category": "market_potential",
+                "evidence_id": "ev_civilian_labor_force_city_winooski_vt",
+                "raw_value": 5854.0,
+                "normalized_value": 0.1216,
+                "effective_weight": 0.25,
+                "weighted_contribution": 0.0304,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "total_households",
+                "display_name": "Total Households",
+                "category": "market_potential",
+                "evidence_id": "ev_total_households_city_winooski_vt",
+                "raw_value": 4102.0,
+                "normalized_value": 0.0,
+                "effective_weight": 0.35,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "total_population",
+                "display_name": "Total Population",
+                "category": "market_potential",
+                "evidence_id": "ev_total_population_city_winooski_vt",
+                "raw_value": 8293.0,
+                "normalized_value": 0.0,
+                "effective_weight": 0.4,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "customer_fit",
+            "score": 39.9663,
+            "category_weight": 0.25,
+            "effective_category_weight": 0.25,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "bachelors_or_higher_share",
+                "display_name": "Bachelor's Degree or Higher (25+)",
+                "category": "customer_fit",
+                "evidence_id": "ev_bachelors_or_higher_share_city_winooski_vt",
+                "raw_value": 0.59094101,
+                "normalized_value": 33.3937,
+                "effective_weight": 0.35,
+                "weighted_contribution": 11.6878,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "median_age",
+                "display_name": "Median Age",
+                "category": "customer_fit",
+                "evidence_id": "ev_median_age_city_winooski_vt",
+                "raw_value": 33.3,
+                "normalized_value": 65.0538,
+                "effective_weight": 0.3,
+                "weighted_contribution": 19.5161,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "undergrad_enrollment_share",
+                "display_name": "College / Undergraduate Enrollment Share (3+)",
+                "category": "customer_fit",
+                "evidence_id": "ev_undergrad_enrollment_share_city_winooski_vt",
+                "raw_value": 0.09406978,
+                "normalized_value": 25.0352,
+                "effective_weight": 0.35,
+                "weighted_contribution": 8.7623,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "economic_attractiveness",
+            "score": 50.2742,
+            "category_weight": 0.2,
+            "effective_category_weight": 0.2,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "employment_rate",
+                "display_name": "Employed Share of Civilian Labor Force",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_employment_rate_city_winooski_vt",
+                "raw_value": 0.98770072,
+                "normalized_value": 100.0,
+                "effective_weight": 0.35,
+                "weighted_contribution": 35.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "median_household_income",
+                "display_name": "Median Household Income",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_median_household_income_city_winooski_vt",
+                "raw_value": 79522.0,
+                "normalized_value": 23.462,
+                "effective_weight": 0.4,
+                "weighted_contribution": 9.3848,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "per_capita_income",
+                "display_name": "Per Capita Income",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_per_capita_income_city_winooski_vt",
+                "raw_value": 44986.0,
+                "normalized_value": 23.5577,
+                "effective_weight": 0.25,
+                "weighted_contribution": 5.8894,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "accessibility",
+            "score": 0.0,
+            "category_weight": 0.1,
+            "effective_category_weight": 0.1,
+            "metrics_included": 1,
+            "metrics_total": 1,
+            "contributions": [
+              {
+                "metric_id": "mean_commute_time",
+                "display_name": "Mean Commute Travel Time",
+                "category": "accessibility",
+                "evidence_id": "ev_mean_commute_time_city_winooski_vt",
+                "raw_value": 21.857866,
+                "normalized_value": 0.0,
+                "effective_weight": 1.0,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "growth_outlook",
+            "score": 100.0,
+            "category_weight": 0.15,
+            "effective_category_weight": 0.15,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "household_growth_rate",
+                "display_name": "Household Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_household_growth_rate_city_winooski_vt",
+                "raw_value": 0.05260558,
+                "normalized_value": 100.0,
+                "effective_weight": 0.3,
+                "weighted_contribution": 30.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "income_growth_rate",
+                "display_name": "Household Median Income Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_income_growth_rate_city_winooski_vt",
+                "raw_value": 0.09121464,
+                "normalized_value": 100.0,
+                "effective_weight": 0.3,
+                "weighted_contribution": 30.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "population_growth_rate",
+                "display_name": "Population Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_population_growth_rate_city_winooski_vt",
+                "raw_value": 0.0323102,
+                "normalized_value": 100.0,
+                "effective_weight": 0.4,
+                "weighted_contribution": 40.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          }
+        ],
+        "evidence_completeness": 1.0,
+        "missing_metric_ids": []
+      },
+      {
+        "geography": {
+          "slug": "city:williston-vt",
+          "display_name": "Williston, VT",
+          "geography_type": "city"
+        },
+        "rank": 4,
+        "overall_score": 25.5768,
+        "category_scores": [
+          {
+            "category": "market_potential",
+            "score": 2.8681,
+            "category_weight": 0.3,
+            "effective_category_weight": 0.3,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "civilian_labor_force",
+                "display_name": "Civilian Labor Force",
+                "category": "market_potential",
+                "evidence_id": "ev_civilian_labor_force_city_williston_vt",
+                "raw_value": 5829.0,
+                "normalized_value": 0.0,
+                "effective_weight": 0.25,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "total_households",
+                "display_name": "Total Households",
+                "category": "market_potential",
+                "evidence_id": "ev_total_households_city_williston_vt",
+                "raw_value": 4421.0,
+                "normalized_value": 2.3802,
+                "effective_weight": 0.35,
+                "weighted_contribution": 0.8331,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "total_population",
+                "display_name": "Total Population",
+                "category": "market_potential",
+                "evidence_id": "ev_total_population_city_williston_vt",
+                "raw_value": 10144.0,
+                "normalized_value": 5.0877,
+                "effective_weight": 0.4,
+                "weighted_contribution": 2.0351,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "customer_fit",
+            "score": 0.0,
+            "category_weight": 0.25,
+            "effective_category_weight": 0.25,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "bachelors_or_higher_share",
+                "display_name": "Bachelor's Degree or Higher (25+)",
+                "category": "customer_fit",
+                "evidence_id": "ev_bachelors_or_higher_share_city_williston_vt",
+                "raw_value": 0.54854057,
+                "normalized_value": 0.0,
+                "effective_weight": 0.35,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "median_age",
+                "display_name": "Median Age",
+                "category": "customer_fit",
+                "evidence_id": "ev_median_age_city_williston_vt",
+                "raw_value": 45.4,
+                "normalized_value": 0.0,
+                "effective_weight": 0.3,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "undergrad_enrollment_share",
+                "display_name": "College / Undergraduate Enrollment Share (3+)",
+                "category": "customer_fit",
+                "evidence_id": "ev_undergrad_enrollment_share_city_williston_vt",
+                "raw_value": 0.02685371,
+                "normalized_value": 0.0,
+                "effective_weight": 0.35,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "economic_attractiveness",
+            "score": 95.2473,
+            "category_weight": 0.2,
+            "effective_category_weight": 0.2,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "employment_rate",
+                "display_name": "Employed Share of Civilian Labor Force",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_employment_rate_city_williston_vt",
+                "raw_value": 0.9835306199999999,
+                "normalized_value": 86.4208,
+                "effective_weight": 0.35,
+                "weighted_contribution": 30.2473,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "median_household_income",
+                "display_name": "Median Household Income",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_median_household_income_city_williston_vt",
+                "raw_value": 106967.0,
+                "normalized_value": 100.0,
+                "effective_weight": 0.4,
+                "weighted_contribution": 40.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "per_capita_income",
+                "display_name": "Per Capita Income",
+                "category": "economic_attractiveness",
+                "evidence_id": "ev_per_capita_income_city_williston_vt",
+                "raw_value": 60542.0,
+                "normalized_value": 100.0,
+                "effective_weight": 0.25,
+                "weighted_contribution": 25.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "accessibility",
+            "score": 53.1036,
+            "category_weight": 0.1,
+            "effective_category_weight": 0.1,
+            "metrics_included": 1,
+            "metrics_total": 1,
+            "contributions": [
+              {
+                "metric_id": "mean_commute_time",
+                "display_name": "Mean Commute Travel Time",
+                "category": "accessibility",
+                "evidence_id": "ev_mean_commute_time_city_williston_vt",
+                "raw_value": 19.674036,
+                "normalized_value": 53.1036,
+                "effective_weight": 1.0,
+                "weighted_contribution": 53.1036,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          },
+          {
+            "category": "growth_outlook",
+            "score": 2.3773,
+            "category_weight": 0.15,
+            "effective_category_weight": 0.15,
+            "metrics_included": 3,
+            "metrics_total": 3,
+            "contributions": [
+              {
+                "metric_id": "household_growth_rate",
+                "display_name": "Household Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_household_growth_rate_city_williston_vt",
+                "raw_value": 0.022619379999999998,
+                "normalized_value": 7.9242,
+                "effective_weight": 0.3,
+                "weighted_contribution": 2.3773,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "income_growth_rate",
+                "display_name": "Household Median Income Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_income_growth_rate_city_williston_vt",
+                "raw_value": 0.05457603,
+                "normalized_value": 0.0,
+                "effective_weight": 0.3,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              },
+              {
+                "metric_id": "population_growth_rate",
+                "display_name": "Population Average Yearly Change",
+                "category": "growth_outlook",
+                "evidence_id": "ev_population_growth_rate_city_williston_vt",
+                "raw_value": 0.00651714,
+                "normalized_value": 0.0,
+                "effective_weight": 0.4,
+                "weighted_contribution": 0.0,
+                "included": true,
+                "exclusion_reason": null
+              }
+            ]
+          }
+        ],
+        "evidence_completeness": 1.0,
+        "missing_metric_ids": []
+      }
+    ],
+    "narrative": "Burlington, VT ranks first among 4 candidate regions on 13 verified Atlas indicators.\nBurlington, VT leads South Burlington, VT by 7.2 points on a 0-100 scale.\n\n**Ranking**\n1. Burlington, VT - overall score 60.3 out of 100, evidence completeness 100%\n2. South Burlington, VT - overall score 53.1 out of 100, evidence completeness 100%\n3. Winooski, VT - overall score 35.1 out of 100, evidence completeness 100%\n4. Williston, VT - overall score 25.6 out of 100, evidence completeness 100%\n\n**Where the leading region is strongest**\n- Civilian Labor Force (Market Potential): 26,390, which scores 100 of 100 against the candidate set [wkf.acs.emp.16pl.labor.civ.total.val | city:burlington-vt | 2024 | acs5]\n- Total Households (Market Potential): 17,504, which scores 100 of 100 against the candidate set [dem.acs.hhd.total.val | city:burlington-vt | 2024 | acs5]\n- Total Population (Market Potential): 44,675, which scores 100 of 100 against the candidate set [dem.acs.pop.total.val | city:burlington-vt | 2024 | acs5]\n\n**Where the leading region is weakest**\n- Employed Share of Civilian Labor Force (Economic Attractiveness): 95.7%, which scores only 0 of 100 against the candidate set [wkf.acs.emp.16pl.labor.civ.emp.pct | city:burlington-vt | 2024 | acs5]\n- Median Household Income (Economic Attractiveness): $71,109, which scores only 0 of 100 against the candidate set [dem.acs.hhd.mdinc.val | city:burlington-vt | 2024 | acs5]\n- Per Capita Income (Economic Attractiveness): $40,192, which scores only 0 of 100 against the candidate set [dem.acs.hhd.pcinc.val | city:burlington-vt | 2024 | acs5]\n\n**Tradeoffs**\nEach score is a weighted combination of the categories shown in the dashboard, so a region can lead overall while trailing on an individual indicator. The direction of every metric reflects the assumed profile of a National mainstream apparel retailer (GAP-like); changing the category weights in the sidebar recalculates the ranking from the same underlying Atlas values.\n\n**What this does not establish**\nThis comparison ranks observable market characteristics. It does not estimate sales, profitability, or return on investment for any specific store, and it should be treated as one input into a site-selection process rather than a conclusion.",
+    "caveats": [
+      "The public demo token only licenses the Burlington-South Burlington, VT metro area (Chittenden, Franklin, and Grand Isle counties and the cities within them). Regions outside that footprint require a commercial StateBook license.",
+      "Atlas describes geographic areas. A real store investment additionally requires site-level rent and build-out cost, observed foot traffic, competitor locations and formats, cannibalization of the existing store network, category margin, supply-chain cost to serve, and the retailer's own transaction data. None of that is available here.",
+      "Food Service & Drinking Establishments (NAICS 722): US Census, County Business Patterns does not publish this datapoint at the city level, so it cannot describe the candidate regions.; Retail Trade Establishments (NAICS 44): US Census, County Business Patterns does not publish this datapoint at the city level, so it cannot describe the candidate regions.",
+      "American Community Survey values are 5-year rolling estimates with margins of error that widen for smaller places. Small differences between similarly sized regions may not be statistically meaningful."
+    ],
+    "confidence_label": "Moderate - good evidence coverage with a workable but not decisive margin",
+    "evidence_completeness": 1.0,
+    "citations": [
+      "[wkf.acs.emp.16pl.labor.civ.total.val | city:burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.total.val | city:burlington-vt | 2024 | acs5]",
+      "[dem.acs.pop.total.val | city:burlington-vt | 2024 | acs5]",
+      "[wkf.acs.emp.16pl.labor.civ.emp.pct | city:burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.mdinc.val | city:burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.pcinc.val | city:burlington-vt | 2024 | acs5]",
+      "[edu.acs.att.25pl.bachpl.pct | city:burlington-vt | 2024 | acs5]",
+      "[edu.acs.att.25pl.bachpl.pct | city:south-burlington-vt | 2024 | acs5]",
+      "[edu.acs.att.25pl.bachpl.pct | city:winooski-vt | 2024 | acs5]",
+      "[edu.acs.att.25pl.bachpl.pct | city:williston-vt | 2024 | acs5]",
+      "[wkf.acs.emp.16pl.labor.civ.total.val | city:south-burlington-vt | 2024 | acs5]",
+      "[wkf.acs.emp.16pl.labor.civ.total.val | city:winooski-vt | 2024 | acs5]",
+      "[wkf.acs.emp.16pl.labor.civ.total.val | city:williston-vt | 2024 | acs5]",
+      "[wkf.acs.emp.16pl.labor.civ.emp.pct | city:south-burlington-vt | 2024 | acs5]",
+      "[wkf.acs.emp.16pl.labor.civ.emp.pct | city:winooski-vt | 2024 | acs5]",
+      "[wkf.acs.emp.16pl.labor.civ.emp.pct | city:williston-vt | 2024 | acs5]",
+      "[dem.acs.hhd.total.aycp | city:burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.total.aycp | city:south-burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.total.aycp | city:winooski-vt | 2024 | acs5]",
+      "[dem.acs.hhd.total.aycp | city:williston-vt | 2024 | acs5]",
+      "[dem.acs.hhd.mdinc.aycp | city:burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.mdinc.aycp | city:south-burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.mdinc.aycp | city:winooski-vt | 2024 | acs5]",
+      "[dem.acs.hhd.mdinc.aycp | city:williston-vt | 2024 | acs5]",
+      "[trn.acs.cmt.mean.val | city:burlington-vt | 2024 | acs5]",
+      "[trn.acs.cmt.mean.val | city:south-burlington-vt | 2024 | acs5]",
+      "[trn.acs.cmt.mean.val | city:winooski-vt | 2024 | acs5]",
+      "[trn.acs.cmt.mean.val | city:williston-vt | 2024 | acs5]",
+      "[dem.acs.mdage.total.val | city:burlington-vt | 2024 | acs5]",
+      "[dem.acs.mdage.total.val | city:south-burlington-vt | 2024 | acs5]",
+      "[dem.acs.mdage.total.val | city:winooski-vt | 2024 | acs5]",
+      "[dem.acs.mdage.total.val | city:williston-vt | 2024 | acs5]",
+      "[dem.acs.hhd.mdinc.val | city:south-burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.mdinc.val | city:winooski-vt | 2024 | acs5]",
+      "[dem.acs.hhd.mdinc.val | city:williston-vt | 2024 | acs5]",
+      "[dem.acs.hhd.pcinc.val | city:south-burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.pcinc.val | city:winooski-vt | 2024 | acs5]",
+      "[dem.acs.hhd.pcinc.val | city:williston-vt | 2024 | acs5]",
+      "[dem.acs.pop.total.aycp | city:burlington-vt | 2024 | acs5]",
+      "[dem.acs.pop.total.aycp | city:south-burlington-vt | 2024 | acs5]",
+      "[dem.acs.pop.total.aycp | city:winooski-vt | 2024 | acs5]",
+      "[dem.acs.pop.total.aycp | city:williston-vt | 2024 | acs5]",
+      "[dem.acs.hhd.total.val | city:south-burlington-vt | 2024 | acs5]",
+      "[dem.acs.hhd.total.val | city:winooski-vt | 2024 | acs5]",
+      "[dem.acs.hhd.total.val | city:williston-vt | 2024 | acs5]",
+      "[dem.acs.pop.total.val | city:south-burlington-vt | 2024 | acs5]",
+      "[dem.acs.pop.total.val | city:winooski-vt | 2024 | acs5]",
+      "[dem.acs.pop.total.val | city:williston-vt | 2024 | acs5]",
+      "[edu.acs.enr.3pl.ugrad.pct | city:burlington-vt | 2024 | acs5]",
+      "[edu.acs.enr.3pl.ugrad.pct | city:south-burlington-vt | 2024 | acs5]",
+      "[edu.acs.enr.3pl.ugrad.pct | city:winooski-vt | 2024 | acs5]",
+      "[edu.acs.enr.3pl.ugrad.pct | city:williston-vt | 2024 | acs5]"
+    ],
+    "generated_by": "deterministic_template"
+  },
+  "refusal": null,
+  "limitations": [
+    {
+      "title": "Demo token geographic restriction",
+      "detail": "The public demo token only licenses the Burlington-South Burlington, VT metro area (Chittenden, Franklin, and Grand Isle counties and the cities within them). Regions outside that footprint require a commercial StateBook license.",
+      "severity": "caution"
+    },
+    {
+      "title": "Market indicators are not a site-selection decision",
+      "detail": "Atlas describes geographic areas. A real store investment additionally requires site-level rent and build-out cost, observed foot traffic, competitor locations and formats, cannibalization of the existing store network, category margin, supply-chain cost to serve, and the retailer's own transaction data. None of that is available here.",
+      "severity": "caution"
+    },
+    {
+      "title": "2 metric(s) excluded from the score",
+      "detail": "Food Service & Drinking Establishments (NAICS 722): US Census, County Business Patterns does not publish this datapoint at the city level, so it cannot describe the candidate regions.; Retail Trade Establishments (NAICS 44): US Census, County Business Patterns does not publish this datapoint at the city level, so it cannot describe the candidate regions.",
+      "severity": "caution"
+    },
+    {
+      "title": "Survey estimates carry sampling error",
+      "detail": "American Community Survey values are 5-year rolling estimates with margins of error that widen for smaller places. Small differences between similarly sized regions may not be statistically meaningful.",
+      "severity": "info"
+    }
+  ],
+  "weight_adjustments": [],
+  "trace": [
+    {
+      "step": "parse_intent",
+      "detail": "Question sanitized and classified before any tool selection.",
+      "payload": {
+        "sanitized_question": "Which of these regions appears most attractive for opening a new apparel store?",
+        "answerable": true,
+        "refusal_kind": null,
+        "injection_flagged": false,
+        "notes": []
+      },
+      "timestamp": "2026-08-01T22:18:21.289155Z"
+    },
+    {
+      "step": "resolve_geographies",
+      "detail": "Resolved 4 candidate region(s) against the token's allowlist; rejected 0.",
+      "payload": {
+        "resolved": [
+          "city:burlington-vt",
+          "city:south-burlington-vt",
+          "city:winooski-vt",
+          "city:williston-vt"
+        ],
+        "rejected": []
+      },
+      "timestamp": "2026-08-01T22:18:21.289312Z"
+    },
+    {
+      "step": "select_metrics",
+      "detail": "Selected 13 approved metric(s); excluded 2 before any API call.",
+      "payload": {
+        "selected": [
+          "mean_commute_time",
+          "bachelors_or_higher_share",
+          "median_age",
+          "undergrad_enrollment_share",
+          "employment_rate",
+          "median_household_income",
+          "per_capita_income",
+          "household_growth_rate",
+          "income_growth_rate",
+          "population_growth_rate",
+          "civilian_labor_force",
+          "total_households",
+          "total_population"
+        ],
+        "excluded": [
+          {
+            "metric_id": "food_service_establishments",
+            "reason": "US Census, County Business Patterns does not publish this datapoint at the city level, so it cannot describe the candidate regions."
+          },
+          {
+            "metric_id": "retail_establishments",
+            "reason": "US Census, County Business Patterns does not publish this datapoint at the city level, so it cannot describe the candidate regions."
+          }
+        ]
+      },
+      "timestamp": "2026-08-01T22:18:21.289334Z"
+    },
+    {
+      "step": "atlas_calls",
+      "detail": "Issued 1 Atlas request(s).",
+      "payload": {
+        "calls": [
+          {
+            "call_id": "868d5b1c7fbd",
+            "url": "https://api.statebook.com/api/v1/getdata",
+            "status_code": 200,
+            "attempts": 1,
+            "elapsed_seconds": 0.2267,
+            "error": null
+          }
+        ],
+        "errors": []
+      },
+      "timestamp": "2026-08-01T22:18:21.556644Z"
+    },
+    {
+      "step": "validate_evidence",
+      "detail": "13 metric(s) passed every comparability gate; 0 were rejected during validation.",
+      "payload": {
+        "passed": [
+          "bachelors_or_higher_share",
+          "civilian_labor_force",
+          "employment_rate",
+          "household_growth_rate",
+          "income_growth_rate",
+          "mean_commute_time",
+          "median_age",
+          "median_household_income",
+          "per_capita_income",
+          "population_growth_rate",
+          "total_households",
+          "total_population",
+          "undergrad_enrollment_share"
+        ],
+        "rejected": [],
+        "warnings": []
+      },
+      "timestamp": "2026-08-01T22:18:21.556788Z"
+    },
+    {
+      "step": "deterministic_scoring",
+      "detail": "Normalized and weighted 13 metric(s). Reproducibility hash 184b64322705e000.",
+      "payload": {
+        "reproducibility_hash": "184b64322705e000",
+        "category_weights": {
+          "market_potential": 0.3,
+          "customer_fit": 0.25,
+          "economic_attractiveness": 0.2,
+          "accessibility": 0.1,
+          "growth_outlook": 0.15
+        },
+        "normalizations": {
+          "bachelors_or_higher_share": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 0.54854057,
+            "observed_max": 0.6755119500000001,
+            "detail": "Min-max scaled over the candidate set: (value - 0.548541) / 0.126971 x 100.",
+            "scores": {
+              "city:burlington-vt": 44.2114,
+              "city:south-burlington-vt": 100.0,
+              "city:winooski-vt": 33.3937,
+              "city:williston-vt": 0.0
+            }
+          },
+          "civilian_labor_force": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 5829.0,
+            "observed_max": 26390.0,
+            "detail": "Min-max scaled over the candidate set: (value - 5829) / 20561 x 100.",
+            "scores": {
+              "city:burlington-vt": 100.0,
+              "city:south-burlington-vt": 32.3866,
+              "city:winooski-vt": 0.1216,
+              "city:williston-vt": 0.0
+            }
+          },
+          "employment_rate": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 0.95699128,
+            "observed_max": 0.98770072,
+            "detail": "Min-max scaled over the candidate set: (value - 0.956991) / 0.0307094 x 100.",
+            "scores": {
+              "city:burlington-vt": 0.0,
+              "city:south-burlington-vt": 12.019,
+              "city:winooski-vt": 100.0,
+              "city:williston-vt": 86.4208
+            }
+          },
+          "household_growth_rate": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 0.02003872,
+            "observed_max": 0.05260558,
+            "detail": "Min-max scaled over the candidate set: (value - 0.0200387) / 0.0325669 x 100.",
+            "scores": {
+              "city:burlington-vt": 0.0,
+              "city:south-burlington-vt": 4.6019,
+              "city:winooski-vt": 100.0,
+              "city:williston-vt": 7.9242
+            }
+          },
+          "income_growth_rate": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 0.05457603,
+            "observed_max": 0.09121464,
+            "detail": "Min-max scaled over the candidate set: (value - 0.054576) / 0.0366386 x 100.",
+            "scores": {
+              "city:burlington-vt": 26.6309,
+              "city:south-burlington-vt": 90.344,
+              "city:winooski-vt": 100.0,
+              "city:williston-vt": 0.0
+            }
+          },
+          "mean_commute_time": {
+            "method": "min_max",
+            "direction": "lower_is_better",
+            "observed_min": 17.74547,
+            "observed_max": 21.857866,
+            "detail": "Min-max scaled over the candidate set: (value - 17.7455) / 4.1124 x 100. Inverted because lower values are more attractive for this metric.",
+            "scores": {
+              "city:burlington-vt": 77.5905,
+              "city:south-burlington-vt": 100.0,
+              "city:winooski-vt": 0.0,
+              "city:williston-vt": 53.1036
+            }
+          },
+          "median_age": {
+            "method": "min_max",
+            "direction": "lower_is_better",
+            "observed_min": 26.8,
+            "observed_max": 45.4,
+            "detail": "Min-max scaled over the candidate set: (value - 26.8) / 18.6 x 100. Inverted because lower values are more attractive for this metric.",
+            "scores": {
+              "city:burlington-vt": 100.0,
+              "city:south-burlington-vt": 38.7097,
+              "city:winooski-vt": 65.0538,
+              "city:williston-vt": 0.0
+            }
+          },
+          "median_household_income": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 71109.0,
+            "observed_max": 106967.0,
+            "detail": "Min-max scaled over the candidate set: (value - 71109) / 35858 x 100.",
+            "scores": {
+              "city:burlington-vt": 0.0,
+              "city:south-burlington-vt": 99.1634,
+              "city:winooski-vt": 23.462,
+              "city:williston-vt": 100.0
+            }
+          },
+          "per_capita_income": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 40192.0,
+            "observed_max": 60542.0,
+            "detail": "Min-max scaled over the candidate set: (value - 40192) / 20350 x 100.",
+            "scores": {
+              "city:burlington-vt": 0.0,
+              "city:south-burlington-vt": 95.2039,
+              "city:winooski-vt": 23.5577,
+              "city:williston-vt": 100.0
+            }
+          },
+          "population_growth_rate": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 0.00651714,
+            "observed_max": 0.0323102,
+            "detail": "Min-max scaled over the candidate set: (value - 0.00651714) / 0.0257931 x 100.",
+            "scores": {
+              "city:burlington-vt": 20.9017,
+              "city:south-burlington-vt": 43.0592,
+              "city:winooski-vt": 100.0,
+              "city:williston-vt": 0.0
+            }
+          },
+          "total_households": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 4102.0,
+            "observed_max": 17504.0,
+            "detail": "Min-max scaled over the candidate set: (value - 4102) / 13402 x 100.",
+            "scores": {
+              "city:burlington-vt": 100.0,
+              "city:south-burlington-vt": 40.0239,
+              "city:winooski-vt": 0.0,
+              "city:williston-vt": 2.3802
+            }
+          },
+          "total_population": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 8293.0,
+            "observed_max": 44675.0,
+            "detail": "Min-max scaled over the candidate set: (value - 8293) / 36382 x 100.",
+            "scores": {
+              "city:burlington-vt": 100.0,
+              "city:south-burlington-vt": 34.256,
+              "city:winooski-vt": 0.0,
+              "city:williston-vt": 5.0877
+            }
+          },
+          "undergrad_enrollment_share": {
+            "method": "min_max",
+            "direction": "higher_is_better",
+            "observed_min": 0.02685371,
+            "observed_max": 0.29533998,
+            "detail": "Min-max scaled over the candidate set: (value - 0.0268537) / 0.268486 x 100.",
+            "scores": {
+              "city:burlington-vt": 100.0,
+              "city:south-burlington-vt": 3.401,
+              "city:winooski-vt": 25.0352,
+              "city:williston-vt": 0.0
+            }
+          }
+        },
+        "weight_adjustments": [],
+        "ranking": [
+          {
+            "rank": 1,
+            "geography": "city:burlington-vt",
+            "overall_score": 60.33
+          },
+          {
+            "rank": 2,
+            "geography": "city:south-burlington-vt",
+            "overall_score": 53.0838
+          },
+          {
+            "rank": 3,
+            "geography": "city:winooski-vt",
+            "overall_score": 35.0555
+          },
+          {
+            "rank": 4,
+            "geography": "city:williston-vt",
+            "overall_score": 25.5768
+          }
+        ]
+      },
+      "timestamp": "2026-08-01T22:18:21.557586Z"
+    },
+    {
+      "step": "explanation",
+      "detail": "Narrative produced by deterministic_template from the validated evidence package only, citing 52 evidence object(s).",
+      "payload": {
+        "generated_by": "deterministic_template",
+        "citations": [
+          "[wkf.acs.emp.16pl.labor.civ.total.val | city:burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.total.val | city:burlington-vt | 2024 | acs5]",
+          "[dem.acs.pop.total.val | city:burlington-vt | 2024 | acs5]",
+          "[wkf.acs.emp.16pl.labor.civ.emp.pct | city:burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.mdinc.val | city:burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.pcinc.val | city:burlington-vt | 2024 | acs5]",
+          "[edu.acs.att.25pl.bachpl.pct | city:burlington-vt | 2024 | acs5]",
+          "[edu.acs.att.25pl.bachpl.pct | city:south-burlington-vt | 2024 | acs5]",
+          "[edu.acs.att.25pl.bachpl.pct | city:winooski-vt | 2024 | acs5]",
+          "[edu.acs.att.25pl.bachpl.pct | city:williston-vt | 2024 | acs5]",
+          "[wkf.acs.emp.16pl.labor.civ.total.val | city:south-burlington-vt | 2024 | acs5]",
+          "[wkf.acs.emp.16pl.labor.civ.total.val | city:winooski-vt | 2024 | acs5]",
+          "[wkf.acs.emp.16pl.labor.civ.total.val | city:williston-vt | 2024 | acs5]",
+          "[wkf.acs.emp.16pl.labor.civ.emp.pct | city:south-burlington-vt | 2024 | acs5]",
+          "[wkf.acs.emp.16pl.labor.civ.emp.pct | city:winooski-vt | 2024 | acs5]",
+          "[wkf.acs.emp.16pl.labor.civ.emp.pct | city:williston-vt | 2024 | acs5]",
+          "[dem.acs.hhd.total.aycp | city:burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.total.aycp | city:south-burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.total.aycp | city:winooski-vt | 2024 | acs5]",
+          "[dem.acs.hhd.total.aycp | city:williston-vt | 2024 | acs5]",
+          "[dem.acs.hhd.mdinc.aycp | city:burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.mdinc.aycp | city:south-burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.mdinc.aycp | city:winooski-vt | 2024 | acs5]",
+          "[dem.acs.hhd.mdinc.aycp | city:williston-vt | 2024 | acs5]",
+          "[trn.acs.cmt.mean.val | city:burlington-vt | 2024 | acs5]",
+          "[trn.acs.cmt.mean.val | city:south-burlington-vt | 2024 | acs5]",
+          "[trn.acs.cmt.mean.val | city:winooski-vt | 2024 | acs5]",
+          "[trn.acs.cmt.mean.val | city:williston-vt | 2024 | acs5]",
+          "[dem.acs.mdage.total.val | city:burlington-vt | 2024 | acs5]",
+          "[dem.acs.mdage.total.val | city:south-burlington-vt | 2024 | acs5]",
+          "[dem.acs.mdage.total.val | city:winooski-vt | 2024 | acs5]",
+          "[dem.acs.mdage.total.val | city:williston-vt | 2024 | acs5]",
+          "[dem.acs.hhd.mdinc.val | city:south-burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.mdinc.val | city:winooski-vt | 2024 | acs5]",
+          "[dem.acs.hhd.mdinc.val | city:williston-vt | 2024 | acs5]",
+          "[dem.acs.hhd.pcinc.val | city:south-burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.pcinc.val | city:winooski-vt | 2024 | acs5]",
+          "[dem.acs.hhd.pcinc.val | city:williston-vt | 2024 | acs5]",
+          "[dem.acs.pop.total.aycp | city:burlington-vt | 2024 | acs5]",
+          "[dem.acs.pop.total.aycp | city:south-burlington-vt | 2024 | acs5]",
+          "[dem.acs.pop.total.aycp | city:winooski-vt | 2024 | acs5]",
+          "[dem.acs.pop.total.aycp | city:williston-vt | 2024 | acs5]",
+          "[dem.acs.hhd.total.val | city:south-burlington-vt | 2024 | acs5]",
+          "[dem.acs.hhd.total.val | city:winooski-vt | 2024 | acs5]",
+          "[dem.acs.hhd.total.val | city:williston-vt | 2024 | acs5]",
+          "[dem.acs.pop.total.val | city:south-burlington-vt | 2024 | acs5]",
+          "[dem.acs.pop.total.val | city:winooski-vt | 2024 | acs5]",
+          "[dem.acs.pop.total.val | city:williston-vt | 2024 | acs5]",
+          "[edu.acs.enr.3pl.ugrad.pct | city:burlington-vt | 2024 | acs5]",
+          "[edu.acs.enr.3pl.ugrad.pct | city:south-burlington-vt | 2024 | acs5]",
+          "[edu.acs.enr.3pl.ugrad.pct | city:winooski-vt | 2024 | acs5]",
+          "[edu.acs.enr.3pl.ugrad.pct | city:williston-vt | 2024 | acs5]"
+        ],
+        "evidence_package_id": "pkg_b06725b14d"
+      },
+      "timestamp": "2026-08-01T22:18:21.557775Z"
+    }
+  ],
+  "reproducibility_hash": "184b64322705e000"
+}
