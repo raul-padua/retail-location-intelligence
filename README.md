@@ -5,9 +5,14 @@ compare candidate regions for a new store, using real data from the
 [StateBook Atlas API](https://statebook.zendesk.com/hc/en-us/articles/360016198753-Authentication-and-Licensing).
 
 The central design constraint: **deterministic analytical services are the source of
-truth**. The agentic layer interprets the question, picks approved tools, and explains
-results. It cannot invent a value, invent a datapoint identifier, perform arithmetic, or
-present a recommendation that is not traceable to an API response.
+truth**. The agent interprets a business objective, constructs a governed analysis plan,
+asks what it needs to ask, and explains the result. It cannot invent a value, invent a
+datapoint identifier, perform arithmetic, execute an unapproved plan, or present a
+recommendation that is not traceable to an API response.
+
+> The agent does not decide which location is best. It collaborates with the user to define
+> the decision, constructs a governed analytical plan, identifies missing information,
+> orchestrates approved analytical services, and explains the resulting evidence.
 
 > Illustrative scenario only. A GAP-like national apparel retailer is used to make the
 > business framing concrete. This prototype uses no proprietary retailer data and is not
@@ -27,27 +32,54 @@ cp .env.example .env                   # STATEBOOK_API_TOKEN=demo works out of t
 uv run streamlit run app/streamlit_app.py
 ```
 
-Then open http://localhost:8501, pick a preset scenario in the sidebar, and select
-**Run analysis**.
+Then open http://localhost:8501 and describe a decision in your own words, for example:
+
+> *"We are evaluating Burlington, South Burlington, and Winooski for a suburban apparel
+> store targeting middle-income families. Prioritize growth and accessibility over current
+> market size."*
+
+The agent interprets it, asks anything material it could not infer, and proposes a plan.
+Nothing reaches Atlas until you approve that plan.
 
 Run the tests:
 
 ```bash
-uv run pytest                # 103 offline tests against a mocked Atlas transport
+uv run pytest                # 296 offline tests against a mocked Atlas transport
 uv run pytest -m live        # 6 integration tests against the real API
 ```
 
+### The workflow
+
+```
+Describe the decision  ->  Clarify  ->  Review the plan  ->  Approve  ->  Result
+                                             ^                              |
+                                             |                              v
+                                    Confirm a revision  <-  Ask to change something
+```
+
+Five stages, a fixed set of transitions, and an exception for anything else. Execution is
+unreachable from the clarify stage; a plan cannot be approved until it passes deterministic
+validation; a revision creates a new version rather than mutating the current one. The
+rules live in `app/workflow.py` rather than in the widgets, so a browser rerun cannot get
+around them.
+
+Details in [`docs/agentic_planning.md`](docs/agentic_planning.md).
+
 ### Optional: the conversational assistant
 
-Paste an OpenAI key into the top of the sidebar to enable the **Assistant** tab, a chat
-guide for non-technical readers. The key is held in the browser session only; it is never
-written to disk, logged, or included in an exported result.
+Paste an OpenAI key into the top of the sidebar to make the planner and the **Assistant**
+tab conversational. The key is held in the browser session only; it is never written to
+disk, logged, or included in an exported result.
 
-The assistant is bound by the same rules as everything else: it answers only from the
-evidence the analysis produced, refuses instruction-override and forecast questions before
-the model is ever called, and has any reply discarded if it states a figure the evidence
-does not contain. Without a key it still works, assembling answers from the same evidence
-in plainer language.
+The assistant answers from the evidence the analysis produced, refuses instruction-override
+and forecast questions before the model is ever called, and has any reply discarded if it
+states a figure the evidence does not contain.
+
+It can also change the analysis — sort of. Ask it to *"double the importance of household
+income"* or *"drop median age"* and it writes a typed revision proposal showing exactly
+what would change and what the effect would likely be, then waits for you to confirm. A
+chat box attached to a live analysis is a control surface whether or not it was designed as
+one, so it proposes and stops.
 
 ### Configuration
 
@@ -64,15 +96,17 @@ All configuration is environment-based; no credential appears in source. See
 | `RLI_LLM_MODEL` | Model used when a key is present. Overridable in the sidebar. | `gpt-5.6-luna` |
 | `RLI_LOG_LEVEL` | Structured log level. | `INFO` |
 
-**The demo works with no LLM key.** Without one, the narrative and the assistant are
-composed deterministically from the evidence. With a key, a model rewrites text that is
-already grounded, and its output is rejected if it introduces a figure the evidence does
-not contain.
+**The demo works with no LLM key.** Without one, a deterministic planner reads the
+objective by pattern matching, and the narrative and assistant are composed from the
+evidence. Planning, clarification, approval, revision, sensitivity, and comparison all
+behave identically. The language model improves flexibility and phrasing; it is not a
+runtime dependency, and the deterministic planner is the reference implementation rather
+than a degraded mode.
 
-The default model is the cost tier deliberately. The model here never produces a number
-and never decides anything; it rewrites a fact sheet and its output is verified either
-way, so frontier reasoning buys little. Larger models are selectable in the sidebar if the
-phrasing matters for a particular audience.
+The default model is the cost tier deliberately. The model never produces a number and
+never authorizes anything: it proposes a plan whose every field is revalidated, and it
+rewrites a fact sheet whose every figure is verified. Frontier reasoning buys phrasing, not
+accuracy. Larger models are selectable in the sidebar if that matters for an audience.
 
 ---
 
@@ -108,41 +142,54 @@ itself is the last line of defence: an unknown identifier is rejected with
 ## Architecture at a glance
 
 ```
-                 untrusted text
+              business objective (untrusted text)
                        |
-   [1] Intent & orchestration ....... may pick approved geographies and metric ids
-                       |               may NOT emit values, datapoints, or arithmetic
+   [0] Planning ..................... interprets strategy, proposes metrics and weights,
+                       |               asks material questions, names what it cannot do
+                       |               may NOT emit values, datapoints, or a ranking
+   [0b] Plan validation ............. deterministic gate; produces an approvable plan
+                       |
+   [0c] Human approval .............. the only route to an Atlas call
+                       |
+   [1] Intent & orchestration ....... resolves the approved plan into tool calls
+                       |
    [2] Atlas API client ............. auth, timeouts, bounded retries, raw-call capture
                        |
    [3] Metric registry .............. verified datapoints only; refuses to load otherwise
                        |
    [4] Validation layer ............. schema, geography, period, source, unit, coverage
                        |
-   [5] Deterministic scoring ........ normalization, weighting, ranking, reproducibility hash
-                       |
+   [5] Deterministic scoring ........ normalization, weighting, ranking, sensitivity,
+                       |               reproducibility hash
    [6] Explanation layer ............ sees only the validated evidence package
                        |               narrator and assistant, both output-verified
-                  cited narrative
+                       |
+   [7] Revision proposal ............ inert until confirmed; confirming creates version n+1
 ```
 
 Full discussion of which responsibilities are agentic and which are deterministic, and why:
-[`docs/architecture.md`](docs/architecture.md).
+[`docs/architecture.md`](docs/architecture.md). The plan lifecycle, clarification policy,
+and agent authority boundaries: [`docs/agentic_planning.md`](docs/agentic_planning.md).
 
 ### Project layout
 
 ```
-app/             Streamlit interface (six panels plus the assistant)
+app/             Streamlit interface and the typed workflow state machine
 api/             Atlas client, response parsing, geography allowlist
-orchestration/   Intent classification, refusal policy, evidence fetching, pipeline
+planning/        Agentic planner (LLM and deterministic), capability registry,
+                 plan validation, revision proposals
+orchestration/   Intent classification, refusal policy, evidence fetching, pipeline,
+                 plan and result comparison
 metrics/         Approved metric registry and its verification gate
 validation/      Comparability gates
-scoring/         Deterministic normalization and weighted scoring
+scoring/         Deterministic normalization, weighted scoring, strategy profiles,
+                 sensitivity and flip-point analysis
 explanation/     Evidence-bound narrator and chat assistant, both output-verified
 models/          Typed pydantic models shared by every layer
 core/            Environment configuration and credential-redacting logging
 scripts/         Catalogue discovery, datapoint verification, sample and doc generation
-tests/           103 offline tests, 6 live integration tests
-docs/            Architecture, metric registry, demo script, productionization
+tests/           296 offline tests, 6 live integration tests
+docs/            Architecture, agentic planning, metric registry, demo, productionization
 sample_outputs/  Committed successful and refusal outputs
 data/            Discovered candidates and the verification record
 ```
@@ -159,15 +206,18 @@ construction cost, cannibalization, foot traffic, competitor locations, transact
 gross margin, supply-chain cost, marketing assumptions, and an approved forecasting
 methodology), and offers the supported comparison instead.
 
-Five distinct conditions produce a refusal:
+Distinct conditions produce a refusal:
 
 | Condition | Behaviour |
 | --- | --- |
-| Company-specific financial forecast | Refuse, list required inputs, offer the indicator comparison |
-| Prompt injection | Ignore the instruction, refuse, explain that user text is data and never instructions |
+| Company-specific financial forecast | Refuse before a planner runs, list required inputs, offer the indicator comparison |
+| Prompt injection | Refuse before a planner runs; explain that user text is data and never instructions; record the attempt |
 | Fewer than two licensed regions | Refuse, name the rejected inputs and the token's footprint |
 | Atlas unreachable or no token | Refuse; there is no fallback data source and no estimation path |
 | Evidence insufficient to separate candidates | Withhold the ranking, still show the evidence |
+| Requested dimension has no approved metric | Disclose it on the plan with the capability and data source that would supply it |
+| Unavailable future capability requested | Show it as unavailable with its integration path; never simulate a result |
+| Plan not approved, or approval forged | `PlanNotApprovedError` before any request object is constructed |
 
 The last one is the subtle case. With two candidate regions, min-max normalization always
 places one at 100 and the other at 0 on every metric, no matter how trivial the underlying
@@ -192,6 +242,17 @@ See [`sample_outputs/`](sample_outputs/) for committed examples of every case.
   disclosed.
 - **Credentials never leak.** Tokens are stripped from every persisted request, response,
   and log line before storage, and tests assert it.
+- **Every decision has an author.** Each trace entry carries an authority — user-supplied,
+  agent inference, deterministic validation, API evidence, human approval, deterministic
+  calculation, model-generated explanation — so the log answers *who authorized this*, not
+  just *what happened*.
+- **Every analysis has an approved plan behind it.** The executed `AnalysisPlanProposal` is
+  attached to the result, with its assumptions, disclosed gaps, human edits, and approval
+  record.
+- **The answer is stress-tested, not just produced.** Three documented strategy lenses
+  re-score the same evidence, and a flip-point scan reports what it would take to reverse
+  the top two — so you can tell whether the recommendation is a fact about the market or a
+  fact about the weights.
 
 ### Comparability gates
 
@@ -217,10 +278,12 @@ the candidate set:
 | --- | --- |
 | Working local application | `app/streamlit_app.py` |
 | Architecture: agentic vs deterministic | [`docs/architecture.md`](docs/architecture.md) |
+| Agent authority, plan lifecycle, fallbacks | [`docs/agentic_planning.md`](docs/agentic_planning.md) |
 | Verified metric registry | [`docs/metric_registry.md`](docs/metric_registry.md) |
-| Five-minute demo script | [`docs/demo_script.md`](docs/demo_script.md) |
+| Seven-minute demo script | [`docs/demo_script.md`](docs/demo_script.md) |
 | Path to a production platform | [`docs/productionization.md`](docs/productionization.md) |
-| Unit and integration tests | `tests/` |
+| Change log | [`CHANGELOG.md`](CHANGELOG.md) |
+| Unit, integration, and UI tests | `tests/` |
 | Sample successful and refusal outputs | [`sample_outputs/`](sample_outputs/) |
 
 ---

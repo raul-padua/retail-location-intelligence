@@ -57,8 +57,10 @@
           "Question requests a company-specific financial projection."
         ]
       },
-      "timestamp": "2026-08-01T22:18:22.231080Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.419838Z"
     }
   ],
-  "reproducibility_hash": null
+  "reproducibility_hash": null,
+  "proposal": null
 }

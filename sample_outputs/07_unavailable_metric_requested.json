@@ -36,7 +36,7 @@
     "interpreted_by": "rule_based"
   },
   "evidence": {
-    "package_id": "pkg_b6a5102598",
+    "package_id": "pkg_523e5ebce9",
     "geographies": [
       {
         "slug": "city:burlington-vt",
@@ -94,7 +94,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -137,7 +137,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 65.0538,
         "weighted_contribution": null
       },
@@ -180,7 +180,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -223,7 +223,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -266,7 +266,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 23.462,
         "weighted_contribution": null
       },
@@ -309,7 +309,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -352,7 +352,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 20.9017,
         "weighted_contribution": null
       },
@@ -395,7 +395,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -438,7 +438,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -481,7 +481,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -524,7 +524,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -567,7 +567,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "normalized_value": 5.0877,
         "weighted_contribution": null
       }
@@ -588,7 +588,7 @@
     ],
     "raw_calls": [
       {
-        "call_id": "c4de40e6e87e",
+        "call_id": "f83c61026a51",
         "method": "POST",
         "url": "https://api.statebook.com/api/v1/getdata",
         "request_body": {
@@ -742,21 +742,21 @@
             }
           },
           "status": {
-            "id": "a6cebb46-c06b-43f5-b8fc-44646437360a",
-            "timestamp": "2026-08-01T22:18:22.670513+00:00",
+            "id": "a46db521-aa22-403e-acf5-e46a8101ac0c",
+            "timestamp": "2026-08-02T03:53:45.980299+00:00",
             "version": "1.0.0",
             "license": "The data returned from this StateBook Data API call is restricted and may only be used in accordance with the terms of a current and valid StateBook Data API license. Any other use is strictly prohibited.",
-            "elapsed": 0.062
+            "elapsed": 0.066
           }
         },
         "status_code": 200,
-        "elapsed_seconds": 0.2015,
+        "elapsed_seconds": 0.2654,
         "attempts": 1,
         "error": null,
-        "timestamp": "2026-08-01T22:18:22.648174Z"
+        "timestamp": "2026-08-02T03:53:45.891210Z"
       }
     ],
-    "created_at": "2026-08-01T22:18:22.649000Z"
+    "created_at": "2026-08-02T03:53:45.892103Z"
   },
   "recommendation": {
     "leading_region": {
@@ -1131,7 +1131,8 @@
           "The question references pedestrian or vehicle counts at candidate sites, which Atlas does not provide. The comparison proceeds on the indicators that are available and this gap is reported as a limitation."
         ]
       },
-      "timestamp": "2026-08-01T22:18:22.439042Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.621049Z"
     },
     {
       "step": "resolve_geographies",
@@ -1144,7 +1145,8 @@
         ],
         "rejected": []
       },
-      "timestamp": "2026-08-01T22:18:22.439065Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.621057Z"
     },
     {
       "step": "select_metrics",
@@ -1163,7 +1165,8 @@
           }
         ]
       },
-      "timestamp": "2026-08-01T22:18:22.439082Z"
+      "authority": "agent_inference",
+      "timestamp": "2026-08-02T03:53:45.621065Z"
     },
     {
       "step": "atlas_calls",
@@ -1171,17 +1174,18 @@
       "payload": {
         "calls": [
           {
-            "call_id": "c4de40e6e87e",
+            "call_id": "f83c61026a51",
             "url": "https://api.statebook.com/api/v1/getdata",
             "status_code": 200,
             "attempts": 1,
-            "elapsed_seconds": 0.2015,
+            "elapsed_seconds": 0.2654,
             "error": null
           }
         ],
         "errors": []
       },
-      "timestamp": "2026-08-01T22:18:22.648764Z"
+      "authority": "api_evidence",
+      "timestamp": "2026-08-02T03:53:45.891929Z"
     },
     {
       "step": "validate_evidence",
@@ -1196,7 +1200,8 @@
         "rejected": [],
         "warnings": []
       },
-      "timestamp": "2026-08-01T22:18:22.648899Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.892059Z"
     },
     {
       "step": "deterministic_scoring",
@@ -1279,7 +1284,8 @@
           }
         ]
       },
-      "timestamp": "2026-08-01T22:18:22.649878Z"
+      "authority": "deterministic_calculation",
+      "timestamp": "2026-08-02T03:53:45.892720Z"
     },
     {
       "step": "explanation",
@@ -1300,10 +1306,12 @@
           "[dem.acs.pop.total.val | city:winooski-vt | 2024 | acs5]",
           "[dem.acs.pop.total.val | city:williston-vt | 2024 | acs5]"
         ],
-        "evidence_package_id": "pkg_b6a5102598"
+        "evidence_package_id": "pkg_523e5ebce9"
       },
-      "timestamp": "2026-08-01T22:18:22.650123Z"
+      "authority": "explanation_layer",
+      "timestamp": "2026-08-02T03:53:45.892929Z"
     }
   ],
-  "reproducibility_hash": "0d6070afa5a0cdb3"
+  "reproducibility_hash": "0d6070afa5a0cdb3",
+  "proposal": null
 }

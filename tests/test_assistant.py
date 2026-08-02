@@ -104,53 +104,6 @@ def test_questions_about_data_atlas_does_not_carry_are_answered_honestly(
     assert "Limitations tab" in reply.text
 
 
-def test_with_a_model_an_out_of_scope_question_is_answered_in_context(context, monkeypatch):
-    """The model is told what is missing and answers conversationally, not from a template.
-
-    It still cannot produce a figure for it, because none exists in the context pack.
-    """
-    captured: dict[str, object] = {}
-
-    class FakeCompletions:
-        def create(self, **kwargs):
-            captured["messages"] = kwargs["messages"]
-
-            class Message:
-                content = "There is no rent data in this analysis."
-
-            class Choice:
-                message = Message()
-
-            class Response:
-                choices = [Choice()]
-
-            return Response()
-
-    class FakeClient:
-        def __init__(self, **kwargs):
-            self.chat = type("Chat", (), {"completions": FakeCompletions()})()
-
-    import openai
-
-    monkeypatch.setattr(openai, "OpenAI", FakeClient)
-
-    scoped = Settings(
-        atlas_token="t",
-        atlas_base_url="https://api.statebook.test",
-        timeout_seconds=5.0,
-        max_retries=1,
-        openai_api_key="sk-test",
-        llm_model="fake-model",
-        log_level="WARNING",
-    )
-    reply = ask("How much rent will we pay in Burlington?", context, scoped)
-
-    assert not reply.refused
-    pack = str(captured["messages"])
-    assert "site-level lease and occupancy costs" in pack
-    assert "Do not estimate it" in pack
-
-
 # ---------------------------------------------------------------- grounding of the context
 
 

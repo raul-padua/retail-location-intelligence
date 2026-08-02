@@ -70,17 +70,30 @@ _UNSUPPORTED_DIMENSIONS: dict[str, str] = {
 _INJECTION_PATTERNS = [
     r"ignore (?:all |any |the )?(?:previous|prior|above|earlier) instructions?",
     r"disregard (?:all |any |the )?(?:previous|prior|above|your) (?:instructions?|rules?|constraints?)",
+    # Naming a specific control to disable, rather than "instructions" generically.
+    r"\b(?:ignore|disregard|forget|drop)\s+(?:the\s+|your\s+|any\s+)?(?:metric\s+)?(?:registry|allowlist|validation|verification|guardrails?|evidence|rules?|constraints?|approval)\b",
     r"you are now\b",
     r"act as (?:if|though|a)\b.*\b(?:no|without) (?:restrictions?|limits?|rules?)",
-    r"(?:make up|invent|fabricate|hallucinate|guess|estimate)\s+(?:the |some |any |a )?(?:numbers?|data|values?|figures?|statistics?)",
+    # An intervening noun is allowed so "invent store revenue" matches as readily as
+    # "invent numbers"; the object list covers what a retail attacker would ask for.
+    r"(?:make up|invent|fabricate|hallucinate|guess|estimate)\s+(?:\w+\s+){0,2}?(?:numbers?|data|values?|figures?|statistics?|revenue|sales|profits?|traffic|results?|scores?|rankings?)",
     r"without (?:citing|citations?|evidence|sources?|data)",
-    r"(?:skip|bypass|disable|turn off|override)\s+(?:the )?(?:validation|verification|guardrails?|checks?|safety|evidence)",
+    r"(?:skip|bypass|disable|turn off|override)\s+(?:the )?(?:validation|verification|guardrails?|checks?|safety|evidence|approval|review)",
+    # Approval is a control surface now, so attempts to route around it are injections.
+    r"\bwithout\s+(?:human\s+|user\s+|my\s+)?(?:approval|confirmation|sign[- ]?off|review)\b",
+    r"\b(?:auto[- ]?approve|approve\s+(?:it|the plan)\s+(?:yourself|automatically|on my behalf))\b",
+    r"\b(?:run|execute)\s+(?:the\s+)?(?:plan|analysis)\s+without\s+(?:approval|confirmation|review|validation|checks?|evidence)",
     r"pretend (?:that )?(?:you|the data)\b",
     r"just (?:say|tell me|answer)\b.*\b(?:anyway|regardless|even if)",
     r"do not (?:mention|include|show)\s+(?:the )?(?:limitations?|caveats?|missing|uncertainty)",
     r"reveal (?:your|the) (?:system )?prompt",
     r"(?:print|show|output|give|tell)\s+(?:me\s+)?(?:your |the )?(?:api[_ ]?key|auth token|token|credentials?|secret)",
 ]
+
+# The distinct requirements behind those phrases, for anything that needs the list rather
+# than the phrase table: the planner's brief, and the capability registry's mapping from a
+# missing dimension to the future capability that would supply it.
+UNSUPPORTED_DIMENSION_REQUIREMENTS: list[str] = sorted(set(_UNSUPPORTED_DIMENSIONS.values()))
 
 _COMPILED_FORECAST = [re.compile(pattern, re.IGNORECASE) for pattern in _FORECAST_PATTERNS]
 _COMPILED_INJECTION = [re.compile(pattern, re.IGNORECASE) for pattern in _INJECTION_PATTERNS]
@@ -116,12 +129,14 @@ def detect_forecast_request(question: str) -> bool:
 
 
 def detect_unsupported_dimensions(question: str) -> list[str]:
+    # Whole words only. Substring matching would find "rent" inside "current" and tell an
+    # executive asking about current population that the system has no lease-cost data.
     lowered = question.lower()
     return sorted(
         {
             requirement
             for phrase, requirement in _UNSUPPORTED_DIMENSIONS.items()
-            if phrase in lowered
+            if re.search(rf"\b{re.escape(phrase)}", lowered)
         }
     )
 

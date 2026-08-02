@@ -50,7 +50,7 @@
     "interpreted_by": "rule_based"
   },
   "evidence": {
-    "package_id": "pkg_b06725b14d",
+    "package_id": "pkg_d502adc038",
     "geographies": [
       {
         "slug": "city:burlington-vt",
@@ -113,7 +113,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 44.2114,
         "weighted_contribution": null
       },
@@ -156,7 +156,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -199,7 +199,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 33.3937,
         "weighted_contribution": null
       },
@@ -242,7 +242,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -285,7 +285,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -328,7 +328,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 32.3866,
         "weighted_contribution": null
       },
@@ -371,7 +371,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.1216,
         "weighted_contribution": null
       },
@@ -414,7 +414,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -457,7 +457,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -500,7 +500,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 12.019,
         "weighted_contribution": null
       },
@@ -543,7 +543,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -586,7 +586,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 86.4208,
         "weighted_contribution": null
       },
@@ -629,7 +629,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -672,7 +672,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 4.6019,
         "weighted_contribution": null
       },
@@ -715,7 +715,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -758,7 +758,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 7.9242,
         "weighted_contribution": null
       },
@@ -801,7 +801,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 26.6309,
         "weighted_contribution": null
       },
@@ -844,7 +844,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 90.344,
         "weighted_contribution": null
       },
@@ -887,7 +887,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -930,7 +930,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -973,7 +973,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 77.5905,
         "weighted_contribution": null
       },
@@ -1016,7 +1016,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -1059,7 +1059,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -1102,7 +1102,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 53.1036,
         "weighted_contribution": null
       },
@@ -1145,7 +1145,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -1188,7 +1188,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 38.7097,
         "weighted_contribution": null
       },
@@ -1231,7 +1231,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 65.0538,
         "weighted_contribution": null
       },
@@ -1274,7 +1274,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -1317,7 +1317,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -1360,7 +1360,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 99.1634,
         "weighted_contribution": null
       },
@@ -1403,7 +1403,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 23.462,
         "weighted_contribution": null
       },
@@ -1446,7 +1446,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -1489,7 +1489,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -1532,7 +1532,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 95.2039,
         "weighted_contribution": null
       },
@@ -1575,7 +1575,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 23.5577,
         "weighted_contribution": null
       },
@@ -1618,7 +1618,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -1661,7 +1661,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 20.9017,
         "weighted_contribution": null
       },
@@ -1704,7 +1704,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 43.0592,
         "weighted_contribution": null
       },
@@ -1747,7 +1747,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -1790,7 +1790,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -1833,7 +1833,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -1876,7 +1876,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 40.0239,
         "weighted_contribution": null
       },
@@ -1919,7 +1919,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -1962,7 +1962,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 2.3802,
         "weighted_contribution": null
       },
@@ -2005,7 +2005,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -2048,7 +2048,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 34.256,
         "weighted_contribution": null
       },
@@ -2091,7 +2091,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -2134,7 +2134,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 5.0877,
         "weighted_contribution": null
       },
@@ -2177,7 +2177,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -2220,7 +2220,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 3.401,
         "weighted_contribution": null
       },
@@ -2263,7 +2263,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 25.0352,
         "weighted_contribution": null
       },
@@ -2306,7 +2306,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "normalized_value": 0.0,
         "weighted_contribution": null
       }
@@ -2341,7 +2341,7 @@
     ],
     "raw_calls": [
       {
-        "call_id": "868d5b1c7fbd",
+        "call_id": "8ab3290e3227",
         "method": "POST",
         "url": "https://api.statebook.com/api/v1/getdata",
         "request_body": {
@@ -2791,21 +2791,21 @@
             }
           },
           "status": {
-            "id": "f9ca1092-abbc-433d-b4bf-daf47cdbbf81",
-            "timestamp": "2026-08-01T22:18:21.577400+00:00",
+            "id": "d95632d9-1546-49d0-bf5a-bc6a5465faec",
+            "timestamp": "2026-08-02T03:53:44.901748+00:00",
             "version": "1.0.0",
             "license": "The data returned from this StateBook Data API call is restricted and may only be used in accordance with the terms of a current and valid StateBook Data API license. Any other use is strictly prohibited.",
-            "elapsed": 0.083
+            "elapsed": 0.081
           }
         },
         "status_code": 200,
-        "elapsed_seconds": 0.2267,
+        "elapsed_seconds": 0.3143,
         "attempts": 1,
         "error": null,
-        "timestamp": "2026-08-01T22:18:21.555944Z"
+        "timestamp": "2026-08-02T03:53:44.816578Z"
       }
     ],
-    "created_at": "2026-08-01T22:18:21.556827Z"
+    "created_at": "2026-08-02T03:53:44.817576Z"
   },
   "recommendation": {
     "leading_region": {
@@ -3791,7 +3791,8 @@
         "injection_flagged": false,
         "notes": []
       },
-      "timestamp": "2026-08-01T22:18:21.289155Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:44.458717Z"
     },
     {
       "step": "resolve_geographies",
@@ -3805,7 +3806,8 @@
         ],
         "rejected": []
       },
-      "timestamp": "2026-08-01T22:18:21.289312Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:44.459030Z"
     },
     {
       "step": "select_metrics",
@@ -3837,7 +3839,8 @@
           }
         ]
       },
-      "timestamp": "2026-08-01T22:18:21.289334Z"
+      "authority": "agent_inference",
+      "timestamp": "2026-08-02T03:53:44.459075Z"
     },
     {
       "step": "atlas_calls",
@@ -3845,17 +3848,18 @@
       "payload": {
         "calls": [
           {
-            "call_id": "868d5b1c7fbd",
+            "call_id": "8ab3290e3227",
             "url": "https://api.statebook.com/api/v1/getdata",
             "status_code": 200,
             "attempts": 1,
-            "elapsed_seconds": 0.2267,
+            "elapsed_seconds": 0.3143,
             "error": null
           }
         ],
         "errors": []
       },
-      "timestamp": "2026-08-01T22:18:21.556644Z"
+      "authority": "api_evidence",
+      "timestamp": "2026-08-02T03:53:44.817387Z"
     },
     {
       "step": "validate_evidence",
@@ -3879,7 +3883,8 @@
         "rejected": [],
         "warnings": []
       },
-      "timestamp": "2026-08-01T22:18:21.556788Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:44.817547Z"
     },
     {
       "step": "deterministic_scoring",
@@ -4088,7 +4093,8 @@
           }
         ]
       },
-      "timestamp": "2026-08-01T22:18:21.557586Z"
+      "authority": "deterministic_calculation",
+      "timestamp": "2026-08-02T03:53:44.818329Z"
     },
     {
       "step": "explanation",
@@ -4149,10 +4155,12 @@
           "[edu.acs.enr.3pl.ugrad.pct | city:winooski-vt | 2024 | acs5]",
           "[edu.acs.enr.3pl.ugrad.pct | city:williston-vt | 2024 | acs5]"
         ],
-        "evidence_package_id": "pkg_b06725b14d"
+        "evidence_package_id": "pkg_d502adc038"
       },
-      "timestamp": "2026-08-01T22:18:21.557775Z"
+      "authority": "explanation_layer",
+      "timestamp": "2026-08-02T03:53:44.818542Z"
     }
   ],
-  "reproducibility_hash": "184b64322705e000"
+  "reproducibility_hash": "184b64322705e000",
+  "proposal": null
 }

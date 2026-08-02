@@ -37,13 +37,17 @@ from models.metrics import (
     CATEGORY_DESCRIPTIONS,
     CATEGORY_LABELS,
     CATEGORY_WEIGHT_GUIDANCE,
+    MetricCategory,
 )
+from models.plan import AnalysisPlanProposal, PlanRevisionProposal
 from orchestration.intent import (
     detect_forecast_request,
     detect_injection,
     detect_unsupported_dimensions,
     sanitize_question,
 )
+from planning.capabilities import get_capability_registry
+from planning.revision import looks_like_a_revision, propose_revision
 
 logger = get_logger("explanation.assistant")
 
@@ -91,6 +95,12 @@ class AssistantReply:
     generated_by: str
     refused: bool = False
     notes: list[str] = field(default_factory=list)
+    revision: PlanRevisionProposal | None = None
+    """Set when the message asked to change the analysis. Inert until confirmed."""
+
+    @property
+    def proposes_revision(self) -> bool:
+        return self.revision is not None
 
 
 # --------------------------------------------------------------------------- context
@@ -151,12 +161,36 @@ def build_context(
     settings: Settings,
     result: AnalysisResult | None = None,
     scope_note: str = "",
+    plan: AnalysisPlanProposal | None = None,
 ) -> AssistantContext:
     """Assemble everything the assistant is allowed to talk about."""
     context = AssistantContext(has_result=result is not None)
 
     for line in _HOW_IT_WORKS:
         context.add("how_it_works", line)
+
+    capabilities = get_capability_registry()
+    for capability in capabilities.available():
+        context.add(
+            "capabilities",
+            f"{capability.display_name} is available: {capability.description}",
+        )
+    for capability in capabilities.unavailable():
+        context.add(
+            "capabilities",
+            f"{capability.display_name} is NOT available and has never run. "
+            f"{capability.description} It cannot run because "
+            f"{capability.unavailable_because} It would require "
+            + ", ".join(capability.required_data)
+            + (
+                f", from {capability.expected_provider}."
+                if capability.expected_provider
+                else "."
+            ),
+        )
+
+    if plan is not None:
+        _add_plan_facts(context, plan)
 
     context.add(
         "how_it_works",
@@ -206,6 +240,58 @@ def build_context(
 
     _add_result_facts(context, result, registry)
     return context
+
+
+def _add_plan_facts(context: AssistantContext, plan: AnalysisPlanProposal) -> None:
+    """The approved plan, so the assistant can explain *why this analysis* was run."""
+    context.add(
+        "plan",
+        f"This analysis executed plan {plan.plan_id} version {plan.version}, proposed by "
+        f"{plan.planner_provenance.describe()} and approved by "
+        f"{plan.approval_record.approved_by}.",
+    )
+    if plan.planner_rationale:
+        context.add("plan", f"Why this plan was proposed: {plan.planner_rationale}")
+    if plan.revision_summary:
+        context.add(
+            "plan",
+            f"This version was created by a revision request: {plan.revision_summary}",
+        )
+
+    profile = plan.retail_strategy_profile
+    for name, attributed in profile._attributed_fields().items():
+        if attributed.is_known:
+            context.add(
+                "plan",
+                f"Strategy profile, {name.replace('_', ' ')}: {attributed.describe()} "
+                f"({attributed.provenance}).",
+            )
+        elif attributed.note:
+            context.add(
+                "plan",
+                f"Strategy profile, {name.replace('_', ' ')}: not established. "
+                f"{attributed.note}",
+            )
+
+    for assumption in plan.assumptions:
+        context.add(
+            "plan",
+            f"Assumption made to build this plan - {assumption.subject}: "
+            f"{assumption.assumption} Basis: {assumption.basis}",
+        )
+    for requirement in plan.unsupported_requirements:
+        context.add(
+            "capabilities",
+            f"You asked for {requirement.requirement}, which is unavailable. "
+            f"{requirement.why_unavailable} It would require: {requirement.would_require}",
+        )
+    for question in plan.clarification_questions:
+        status = f"answered: {question.answer}" if question.answered else "unanswered"
+        context.add(
+            "plan",
+            f"Clarification asked before running - \"{question.question}\" ({status}). "
+            f"Why it mattered: {question.why_it_matters}",
+        )
 
 
 def _add_result_facts(
@@ -490,30 +576,139 @@ def _unsupported_dimension_reply(dimensions: list[str]) -> AssistantReply:
     """Answer questions about the retail data Atlas simply does not carry.
 
     This is the most likely executive question in a live demo - rent, competitors, foot
-    traffic - and the one where a helpful-sounding guess would do the most damage. It is
-    answered deterministically so the behaviour is identical every time.
+    traffic, cannibalization - and the one where a helpful-sounding guess would do the
+    most damage. It is answered deterministically so the behaviour is identical every
+    time, and it names the capability that would one day satisfy the request together
+    with the inputs that capability needs. Pointing at a real integration path is more
+    useful than a refusal, and unlike a simulated result it is also true.
     """
     listed = dimensions[0] if len(dimensions) == 1 else (
         ", ".join(dimensions[:-1]) + ", and " + dimensions[-1]
     )
+
+    capabilities = get_capability_registry()
+    paths: list[str] = []
+    for dimension in dimensions:
+        capability = capabilities.for_requirement(dimension)
+        if capability is None:
+            continue
+        paths.append(
+            f"**{capability.display_name}** is not built. {capability.unavailable_because} "
+            "It would need "
+            + ", ".join(capability.required_data)
+            + (
+                f", supplied by {capability.expected_provider}."
+                if capability.expected_provider
+                else "."
+            )
+        )
+
+    body = (
+        f"I don't have that. This analysis has no data on {listed}, and I won't "
+        "approximate it from what I do have. There is no result to show you, simulated "
+        "or otherwise.\n\n"
+        "The StateBook Atlas API describes geographic areas using public statistical "
+        "sources: how many people live there, what they earn, how old they are, how "
+        "educated, whether they are working, how far they commute, and how those are "
+        "trending. It carries nothing about property markets, individual businesses, or "
+        "observed movement of people."
+    )
+    if paths:
+        body += "\n\nWhat it would take to answer this properly:\n\n" + "\n\n".join(
+            f"- {path}" for path in paths
+        )
+    body += (
+        "\n\nThat gap is listed on the Limitations tab, because a site decision needs it. "
+        "What I can tell you is how these regions compare on the market fundamentals, "
+        "which is the input those other sources get layered onto."
+    )
+
     return AssistantReply(
-        text=(
-            f"I don't have that. This analysis has no data on {listed}, and I won't "
-            "approximate it from what I do have.\n\n"
-            "The StateBook Atlas API describes geographic areas using public statistical "
-            "sources: how many people live there, what they earn, how old they are, how "
-            "educated, whether they are working, how far they commute, and how those are "
-            "trending. It carries nothing about property markets, individual businesses, or "
-            "observed movement of people.\n\n"
-            "That gap is real and it is listed on the Limitations tab, because a site "
-            "decision needs it. It would come from a commercial real-estate feed, a mobility "
-            "data provider, a competitive-intelligence source, and the retailer's own "
-            "systems. What I can tell you is how these regions compare on the market "
-            "fundamentals, which is the input those other sources get layered onto."
-        ),
+        text=body,
         generated_by="deterministic (question falls outside the available data)",
         refused=True,
-        notes=[f"No approved metric covers {listed}."],
+        notes=[f"No approved metric or capability covers {listed}."],
+    )
+
+
+def _revision_reply(revision: PlanRevisionProposal) -> AssistantReply:
+    """Present a proposed change and stop. Nothing runs until the user confirms."""
+    if not revision.changed_fields:
+        return AssistantReply(
+            text=(
+                "I can't make that change.\n\n"
+                + "\n".join(f"- {part}" for part in revision.unsupported_parts)
+                + "\n\nThe analysis can only be reweighted across the five scoring "
+                "categories, or have approved metrics and licensed regions added and "
+                "removed. Anything outside that would need data the system does not have."
+            ),
+            generated_by="deterministic (revision request outside the approved plan)",
+            refused=True,
+            notes=revision.unsupported_parts,
+            revision=revision,
+        )
+
+    lines = [
+        "That's a change to the analysis, so I've written it up as a proposal rather "
+        "than just doing it. Nothing has run yet.",
+        "",
+        f"**What I understood**  \n{revision.rationale}",
+        "",
+        "**What would change**",
+    ]
+
+    for field_name in revision.changed_fields:
+        before = revision.before_values.get(field_name)
+        after = revision.proposed_values.get(field_name)
+        if field_name == "category_weights":
+            for key, new_value in (after or {}).items():
+                old_value = (before or {}).get(key)
+                if old_value is None or abs(float(new_value) - float(old_value)) < 1e-9:
+                    continue
+                label = CATEGORY_LABELS[MetricCategory(key)]
+                lines.append(f"- {label}: {float(old_value):.0%} to {float(new_value):.0%}")
+        elif field_name == "selected_metric_ids":
+            removed = sorted(set(before or []) - set(after or []))
+            added = sorted(set(after or []) - set(before or []))
+            if removed:
+                lines.append(f"- Metrics removed: {', '.join(removed)}")
+            if added:
+                lines.append(f"- Metrics added: {', '.join(added)}")
+        elif field_name == "candidate_geographies":
+            lines.append(
+                f"- Regions: {', '.join(before or [])} becomes {', '.join(after or [])}"
+            )
+
+    lines += [
+        "",
+        f"**Likely effect**  \n{revision.expected_effect}",
+    ]
+
+    if revision.unsupported_parts:
+        lines += ["", "**What I can't include**"]
+        lines += [f"- {part}" for part in revision.unsupported_parts]
+
+    if not revision.validation.passed:
+        lines += [
+            "",
+            "**This revision would not pass validation**",
+        ]
+        lines += [f"- {check.detail}" for check in revision.validation.failures]
+    elif revision.validation.disclosures:
+        lines += ["", "**Adjustments the validator made**"]
+        lines += [f"- {entry}" for entry in revision.validation.disclosures]
+
+    lines += [
+        "",
+        "Confirm it on the plan panel and I'll create a new version of the plan and rerun "
+        "the analysis. The current result stays available so you can compare them.",
+    ]
+
+    return AssistantReply(
+        text="\n".join(lines),
+        generated_by="deterministic (proposed plan revision, awaiting your confirmation)",
+        notes=["This is a proposal. No analysis has been rerun."],
+        revision=revision,
     )
 
 
@@ -704,11 +899,14 @@ def ask(
     context: AssistantContext,
     settings: Settings,
     history: list[tuple[str, str]] | None = None,
+    plan: AnalysisPlanProposal | None = None,
 ) -> AssistantReply:
     """Answer a user question about the app or the current analysis.
 
     Untrusted text is classified before the model is reachable, and any model output is
-    verified against the context pack before it is returned.
+    verified against the context pack before it is returned. When ``plan`` is supplied,
+    messages that ask to *change* the analysis are answered with a proposal instead of an
+    explanation - and the proposal does nothing until it is confirmed elsewhere.
     """
     sanitized = sanitize_question(question)
     if not sanitized:
@@ -724,6 +922,21 @@ def ask(
     if detect_forecast_request(sanitized):
         log_event(logger, logging.INFO, "assistant_forecast_refused")
         return _refusal_reply("forecast", sanitized)
+
+    # Parsed deterministically, and only ever turned into a proposal. The classifier sits
+    # ahead of the model so that no phrasing of "just change it" can reach a path that
+    # would.
+    if plan is not None and looks_like_a_revision(sanitized):
+        revision = propose_revision(sanitized, plan)
+        if revision is not None and revision.changed_fields:
+            log_event(
+                logger,
+                logging.INFO,
+                "assistant_revision_proposed",
+                revision_id=revision.revision_id,
+                fields=revision.changed_fields,
+            )
+            return _revision_reply(revision)
 
     unsupported = detect_unsupported_dimensions(sanitized)
     if unsupported and not settings.llm_enabled:

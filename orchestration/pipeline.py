@@ -9,6 +9,18 @@ produced:
 
 The orchestrator decides *what to ask for*. It never decides *what is true*: values come
 from the fetcher, comparability from the validator, and arithmetic from the scorer.
+
+Two entry points, and the difference between them is who authorized the run:
+
+* :meth:`AnalysisPipeline.run` executes a request directly. It is the original path, used
+  by tests, the sample generator, and any caller that has already decided what to compare.
+* :meth:`AnalysisPipeline.run_approved` executes an :class:`AnalysisPlanProposal` and
+  refuses unless the plan carries a human approval record and has passed deterministic
+  validation. This is the path the application uses, and it is what makes the agent's
+  proposal inert until somebody says yes.
+
+Both share the same execution body, so there is no second implementation of the analysis
+that could drift away from the guarantees the first one makes.
 """
 
 from __future__ import annotations
@@ -28,11 +40,13 @@ from models.analysis import (
     Limitation,
     LimitationSeverity,
     Refusal,
+    TraceAuthority,
     TraceEntry,
 )
 from models.evidence import EvidencePackage, ExcludedMetric, ValidationStatus
 from models.geography import Geography
-from models.metrics import MetricCategory
+from models.metrics import MetricCategory, MetricDefinition
+from models.plan import AnalysisPlanProposal, PlanNotApprovedError
 from orchestration.intent import (
     SUPPORTED_CAPABILITIES,
     RefusalKind,
@@ -55,6 +69,8 @@ class AnalysisRequest:
     metric_ids: list[str] | None = None
     retailer_profile: str = "National mainstream apparel retailer (GAP-like)"
     use_llm_narrative: bool = True
+    metric_weight_overrides: dict[str, float] | None = None
+    """Per-metric weights replacing the registry default, already validated by the caller."""
 
 
 class AnalysisPipeline:
@@ -71,6 +87,79 @@ class AnalysisPipeline:
         # Injectable so tests can supply a mock transport without monkeypatching.
         self._client_factory = client_factory or (lambda: AtlasClient(self.settings))
 
+    def run_approved(
+        self,
+        proposal: AnalysisPlanProposal,
+        use_llm_narrative: bool = True,
+        planning_trace: list[TraceEntry] | None = None,
+    ) -> AnalysisResult:
+        """Execute an approved plan, and nothing else.
+
+        The guard is first, before any request object is built, so there is no partially
+        constructed execution to unwind. A plan that failed validation, that has an
+        unanswered required question, or that nobody approved raises rather than running:
+        this is a programming error in the caller, not a user-facing refusal, because the
+        UI is expected to never offer the button in the first place.
+        """
+        if not proposal.can_execute:
+            raise PlanNotApprovedError(proposal)
+
+        request = AnalysisRequest(
+            question=proposal.sanitized_request or proposal.original_request,
+            geographies=[geography.slug for geography in proposal.candidate_geographies],
+            category_weights=dict(proposal.category_weights),
+            metric_ids=list(proposal.selected_metric_ids),
+            retailer_profile=_profile_label(proposal),
+            use_llm_narrative=use_llm_narrative,
+            metric_weight_overrides=dict(proposal.metric_weight_overrides),
+        )
+
+        approval_trace = [
+            *(planning_trace or []),
+            TraceEntry(
+                step="plan_approved",
+                detail=(
+                    f"Plan {proposal.plan_id} version {proposal.version} was approved by "
+                    f"{proposal.approval_record.approved_by}. Execution begins from the "
+                    "approved plan, not from the original text."
+                ),
+                authority=TraceAuthority.HUMAN_APPROVAL,
+                payload={
+                    "plan_id": proposal.plan_id,
+                    "version": proposal.version,
+                    "parent_plan_id": proposal.parent_plan_id,
+                    "approved_at": (
+                        proposal.approval_record.approved_at.isoformat()
+                        if proposal.approval_record.approved_at
+                        else None
+                    ),
+                    "human_edits": [
+                        {
+                            "field": edit.field,
+                            "before": edit.before,
+                            "after": edit.after,
+                        }
+                        for edit in proposal.approval_record.edits
+                    ],
+                    "approved_metric_ids": proposal.selected_metric_ids,
+                    "approved_category_weights": {
+                        str(category): round(weight, 4)
+                        for category, weight in proposal.category_weights.items()
+                    },
+                    "metric_weight_overrides": proposal.metric_weight_overrides,
+                    "revision_summary": proposal.revision_summary,
+                },
+            ),
+        ]
+
+        result = self.run(request)
+        return result.model_copy(
+            update={
+                "proposal": proposal.executed(),
+                "trace": [*approval_trace, *result.trace],
+            }
+        )
+
     def run(self, request: AnalysisRequest) -> AnalysisResult:
         trace: list[TraceEntry] = []
         limitations: list[Limitation] = []
@@ -80,6 +169,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="parse_intent",
+                authority=TraceAuthority.VALIDATION,
                 detail=(
                     "Question sanitized and classified before any tool selection."
                     if intent.plan_ok
@@ -116,6 +206,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="resolve_geographies",
+                authority=TraceAuthority.VALIDATION,
                 detail=(
                     f"Resolved {len(geographies)} candidate region(s) against the token's "
                     f"allowlist; rejected {len(rejected)}."
@@ -148,6 +239,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="select_metrics",
+                authority=TraceAuthority.AGENT,
                 detail=(
                     f"Selected {len(metric_ids)} approved metric(s); excluded {len(dropped)} "
                     "before any API call."
@@ -215,6 +307,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="atlas_calls",
+                authority=TraceAuthority.API,
                 detail=f"Issued {len(fetched.calls)} Atlas request(s).",
                 payload={
                     "calls": [
@@ -242,6 +335,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="validate_evidence",
+                authority=TraceAuthority.VALIDATION,
                 detail=(
                     f"{len(outcome.usable_metric_ids)} metric(s) passed every comparability "
                     f"gate; {len(outcome.excluded)} were rejected during validation."
@@ -273,7 +367,7 @@ class AnalysisPipeline:
         # The full planned set is handed to scoring, not just the survivors, so that a
         # metric dropped by validation still appears as an explicit zero-weight row and
         # produces a disclosed weight renormalization.
-        scoring_metrics = {metric_id: self.registry.require(metric_id) for metric_id in metric_ids}
+        scoring_metrics = self._metrics_for_scoring(metric_ids, request.metric_weight_overrides)
         config = ScoringConfig(
             category_weights=request.category_weights or ScoringConfig().category_weights
         )
@@ -296,6 +390,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="deterministic_scoring",
+                authority=TraceAuthority.CALCULATION,
                 detail=(
                     f"Normalized and weighted {len(scoring.normalizations)} metric(s). "
                     f"Reproducibility hash {scoring.reproducibility_hash}."
@@ -372,6 +467,7 @@ class AnalysisPipeline:
             trace.append(
                 TraceEntry(
                     step="sufficiency_gate",
+                    authority=TraceAuthority.VALIDATION,
                     detail="Ranking withheld: evidence is insufficient to separate the candidates.",
                     payload={"reason": scoring.insufficient_reason},
                 )
@@ -400,6 +496,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="explanation",
+                authority=TraceAuthority.EXPLANATION,
                 detail=(
                     f"Narrative produced by {recommendation.generated_by} from the validated "
                     f"evidence package only, citing {len(recommendation.citations)} evidence "
@@ -433,6 +530,28 @@ class AnalysisPipeline:
             trace=trace,
             reproducibility_hash=scoring.reproducibility_hash,
         )
+
+    # ------------------------------------------------------------------ scoring inputs
+
+    def _metrics_for_scoring(
+        self, metric_ids: list[str], overrides: dict[str, float] | None
+    ) -> dict[str, MetricDefinition]:
+        """Resolve metric ids to definitions, applying any approved weight override.
+
+        An override is applied as a copy of the registry definition rather than as a
+        separate scoring parameter, which means it flows into the reproducibility hash
+        automatically: the hash already fingerprints each metric's weight, so two runs
+        that differ only by an override produce different hashes without the hashing
+        code needing to know overrides exist.
+        """
+        metrics: dict[str, MetricDefinition] = {}
+        for metric_id in metric_ids:
+            metric = self.registry.require(metric_id)
+            override = (overrides or {}).get(metric_id)
+            if override is not None and float(override) > 0:
+                metric = metric.model_copy(update={"weight": float(override)})
+            metrics[metric_id] = metric
+        return metrics
 
     # ------------------------------------------------------------------ refusal helpers
 
@@ -567,6 +686,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="sufficiency_gate",
+                authority=TraceAuthority.VALIDATION,
                 detail="Refused: fewer than two candidate regions resolved.",
                 payload={"resolved": [g.slug for g in geographies], "rejected": rejected},
             )
@@ -608,6 +728,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="sufficiency_gate",
+                authority=TraceAuthority.VALIDATION,
                 detail="Refused: no approved metric covers all candidate geographic levels.",
                 payload={"excluded": [entry.metric_id for entry in excluded]},
             )
@@ -645,7 +766,11 @@ class AnalysisPipeline:
             supported_capabilities=SUPPORTED_CAPABILITIES,
         )
         trace.append(
-            TraceEntry(step="atlas_calls", detail="Refused: no API token configured.")
+            TraceEntry(
+                step="atlas_calls",
+                authority=TraceAuthority.VALIDATION,
+                detail="Refused: no API token configured.",
+            )
         )
         return AnalysisResult(
             plan=plan,
@@ -687,6 +812,7 @@ class AnalysisPipeline:
         trace.append(
             TraceEntry(
                 step="atlas_calls",
+                authority=TraceAuthority.API,
                 detail="Refused: Atlas API failure.",
                 payload={"error": message},
             )
@@ -701,5 +827,39 @@ class AnalysisPipeline:
         )
 
 
+def _profile_label(proposal: AnalysisPlanProposal) -> str:
+    """A short retailer description for the narrator, built from the approved profile.
+
+    Only fields that were actually established are used. A field nobody set does not
+    become part of the description, because the narrative would then assert a strategy
+    the executive never chose.
+    """
+    profile = proposal.retail_strategy_profile
+    parts: list[str] = []
+    if profile.store_format.is_known:
+        parts.append(str(profile.store_format.value))
+    parts.append(
+        str(profile.retailer_type.value)
+        if profile.retailer_type.is_known
+        else "mainstream apparel retailer"
+    )
+    if profile.target_customer_segments.is_known:
+        segments = profile.target_customer_segments.value or []
+        if segments:
+            parts.append("targeting " + ", ".join(str(entry) for entry in segments))
+    return " ".join(parts)
+
+
 def run_analysis(request: AnalysisRequest, **kwargs) -> AnalysisResult:
     return AnalysisPipeline(**kwargs).run(request)
+
+
+def run_approved_plan(
+    proposal: AnalysisPlanProposal,
+    use_llm_narrative: bool = True,
+    planning_trace: list[TraceEntry] | None = None,
+    **kwargs,
+) -> AnalysisResult:
+    return AnalysisPipeline(**kwargs).run_approved(
+        proposal, use_llm_narrative=use_llm_narrative, planning_trace=planning_trace
+    )

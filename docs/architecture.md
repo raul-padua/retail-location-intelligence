@@ -12,16 +12,65 @@ Concretely:
 | The agentic layer may | The agentic layer may not |
 | --- | --- |
 | Interpret a business question | Emit a factual value |
+| Interpret a *retail strategy* into a plan proposal | Approve or execute that proposal |
+| Ask a clarifying question | Answer it on the user's behalf |
 | Classify a request as answerable or not | Emit an Atlas datapoint identifier |
 | Select geographies from an allowlist | Select an arbitrary geography |
 | Select metric ids from the approved registry | Introduce a metric |
-| Order and orchestrate approved tool calls | Change what a tool returns |
+| Propose category weights | Apply them without validation |
+| Order and orchestrate approved capabilities | Change what a capability returns |
+| Propose a revision to an approved analysis | Apply one without confirmation |
+| Recommend an unavailable capability as a next step | Behave as though it ran |
 | Explain a validated result | Perform arithmetic |
 | Decide that a question should be refused | Decide that a refusal should be overridden |
 
 Every factual claim in the output originates in an `EvidenceItem`, which exists only
 because an Atlas response produced it. There is no code path that constructs an
 `EvidenceItem` from anything else.
+
+---
+
+## End-to-end flow
+
+```
+Business request (natural language)
+        |
+        v
+Agentic strategy interpretation        planning/planner.py  ->  llm_planner | deterministic
+        |
+        v
+Clarification loop (max 3 material questions per round)
+        |
+        v
+Typed analysis-plan proposal           models/plan.py :: AnalysisPlanProposal
+        |
+        v
+Deterministic plan validation          planning/validation.py
+        |
+        v
+Human approval                         app/workflow.py :: approve_and_run
+        |
+        v
+Governed capability orchestration      planning/capabilities.py
+        |
+        v
+Atlas + deterministic analytical services   api/ -> validation/ -> scoring/
+        |
+        v
+Evidence sufficiency                   scoring/sufficiency
+        |
+        v
+Evidence-bound explanation             explanation/narrator.py
+        |
+        v
+Conversational revision proposal       planning/revision.py  (inert)
+        |
+        v
+Human confirmation and versioned rerun app/workflow.py :: confirm_revision
+```
+
+Only two edges in that diagram can reach Atlas, and both sit immediately below a human
+approval step. Everything above them manipulates a proposal.
 
 ---
 
@@ -58,6 +107,51 @@ in metric ids, and only the registry maps those to Atlas identifiers.
 `pipeline.py` runs a fixed sequence — interpret, resolve, select, fetch, validate, score,
 assess sufficiency, explain — appending a `TraceEntry` at each step. The sequence is not
 model-controlled; the model influences only the contents of steps one to three.
+
+### 1b. Planning (`planning/`)
+
+Where the agent's authority actually lives, and where it is bounded. See
+[`agentic_planning.md`](agentic_planning.md) for the lifecycle in full; the architectural
+points are these.
+
+The planner receives a **capability brief** — supported geographies, approved metric ids
+with their categories, units, directions and retail rationales, the deterministic
+operations available, and the data dimensions known to be absent. It returns a strict
+typed schema. Every field of that schema is then revalidated: metric ids against the
+registry, geographies against the allowlist, weights against a range and a sum, and prose
+fields against two detectors that reject anything looking like an Atlas datapoint
+identifier or a factual figure. A rejected field is recorded on `PlannerProvenance` and
+shown in the UI, because a silent rejection is indistinguishable from a model that never
+misbehaves.
+
+The deterministic planner produces the same object from pattern matching. It is not a
+degraded mode: it is the reference implementation, and the LLM planner's output is merged
+onto a deterministic baseline rather than replacing it. Any failure — invalid JSON, a
+model error, a rejected field — falls back to that baseline.
+
+`capabilities.py` is the governed tool registry. Available capabilities describe what the
+agent may orchestrate; unavailable ones describe foot traffic, competitor locations,
+cannibalization, transaction data, real-estate costs, trade areas, and forecasting, each
+with the data it would require and the provider type that would supply it. The agent may
+recommend one as a next step. There is no code path by which it can claim one ran.
+
+`revision.py` turns a conversational request into a `PlanRevisionProposal` and stops.
+Parsing is deterministic pattern matching for the same reason the flip-point scan is: an
+approximately-correct reading of "reduce" would be worse than no reading at all.
+
+### 1c. Workflow (`app/workflow.py`)
+
+The plan lifecycle as an explicit state machine — `DESCRIBE`, `CLARIFY`, `REVIEW`,
+`EXECUTED`, `REFUSED` — with a fixed transition set and a `WorkflowError` for anything
+else. `approve_and_run` is unreachable from `CLARIFY`; a revision cannot execute without
+passing back through approval; a human edit is recorded as a `PlanEdit` and revalidated
+rather than trusted.
+
+This is deliberately not an autonomous loop. The interesting property of a governed agent
+is not that it decides what to do next, it is that a reader can point at any state and say
+how it got there and who authorized the move. A state machine makes that a matter of
+reading the transition table. It also means the guarantees are tested against the state
+machine rather than against Streamlit, which cannot enforce anything a rerun could bypass.
 
 ### 2. Atlas API client (`api/`)
 
@@ -147,6 +241,24 @@ weights, metric definitions, and every observed value with its period, source, a
 validation status. Two runs over the same evidence produce the same hash; a test asserts
 it.
 
+#### Sensitivity (`scoring/sensitivity.py`)
+
+A single ranking answers "which region wins under these weights". It does not answer the
+question an executive actually has, which is whether that is a fact about the market or a
+fact about the weights. Three documented profiles — growth-focused,
+purchasing-power-focused, accessibility-focused — re-score the same evidence package under
+different weightings, each producing its own reproducibility hash. A flip-point scan then
+walks one category weight at a time to find what it would take to reverse the top two.
+
+None of this is estimated. The profiles run through the same `ScoringService` over the
+same `EvidencePackage`; the flip scan is a deterministic sweep at a fixed resolution. The
+model is never asked how sensitive something is, because a plausible-sounding answer to
+that question is indistinguishable from a correct one.
+
+`orchestration/comparison.py` diffs two plan versions and two results, and attributes the
+change to the deterministic inputs that moved. The model may summarize that diff; it does
+not produce it.
+
 ### 6. Explanation layer (`explanation/`)
 
 Receives the validated evidence package and the scoring output, and nothing else. It never
@@ -203,6 +315,29 @@ never written to disk, never logged, and never serialized into an exported resul
 `Settings` is frozen and `with_llm` returns a copy, so a key supplied by one browser
 session cannot leak into the process defaults.
 
+**The assistant can now propose changes, which is a second control surface.** "Double the
+weight on income" is an instruction, and a chat box that carries it out has quietly become
+a way to change the answer without an approval step. So a message classified as a revision
+request produces a `PlanRevisionProposal` — before/after values, a hedged statement of the
+analytical effect, and a deterministic validation report — and nothing else happens. The
+classifier sits behind the injection and forecast gates, so no phrasing of "just change
+it and run it" reaches a path that would.
+
+---
+
+## The trace as an accountability record
+
+`TraceEntry` carries a `TraceAuthority`, and the eight values distinguish user-supplied
+information, agent inference, deterministic validation, API evidence, human approval,
+deterministic calculation, model-generated explanation, and system bookkeeping.
+
+The reason to label authority rather than just sequence is that the log has to answer a
+different question from "what happened". It has to answer *who or what authorized this*.
+A figure carrying `API` or `CALCULATION` authority came from evidence. One carrying `AGENT`
+authority is a proposal that had to survive validation to matter, and the trace shows the
+validation entry that either accepted or rejected it. The UI filters on the authority so a
+reviewer can read only the decisions a human made, or only the ones the model influenced.
+
 ---
 
 ## Security boundaries
@@ -212,8 +347,12 @@ session cannot leak into the process defaults.
 | Secrets in source control | `.env` is gitignored; only `.env.example` is committed; the token is read from the environment |
 | Credential leakage into logs or UI | `redact()` recursively strips anything matching auth/token/secret/key patterns, plus `Bearer` headers and `auth=` parameters, from every persisted payload |
 | Untrusted input reaching the API | Geographies resolve through an allowlist; metric ids resolve through the registry; neither accepts free text |
-| Prompt injection | Detected before tool selection and, in the assistant, before the model is called at all; matched requests are refused and the attempt is recorded |
-| LLM fabrication | The model receives only a fact sheet or context pack, and its output is numerically verified against the evidence before acceptance |
+| Prompt injection | Detected before planning, before tool selection, and before the assistant's model is called at all; matched requests are refused and the attempt is recorded |
+| LLM fabrication | The model receives only a fact sheet, capability brief, or context pack, and its output is numerically verified against the evidence before acceptance |
+| Planner fabrication | Every field the planner returns is revalidated against the registry and allowlist; prose fields are scanned for datapoint identifiers and factual figures; rejections are recorded on the plan |
+| Execution without authorization | `AnalysisPipeline.run_approved` consults `AnalysisPlanProposal.can_execute`, which requires passing validation, no unanswered required question, `APPROVED` status, *and* an approval record. A forged status alone is refused |
+| Conversational control | A revision request produces an inert proposal; only an explicit confirmation creates a new plan version, and that version re-enters approval |
+| Claiming an unavailable capability | Unavailable capabilities are data, not code paths. There is no function to call, so the failure mode is a recommendation rather than a simulated result |
 | Session credentials | An OpenAI key entered in the UI lives in session state only: never written to disk, logged, or serialized into an exported result |
 | Unbounded resource use | Request timeouts, bounded retries, capped input length |
 | Silent failure | Atlas errors produce a refusal with the failed call in the trace, never a partial answer presented as complete |

@@ -40,7 +40,7 @@
     "interpreted_by": "rule_based"
   },
   "evidence": {
-    "package_id": "pkg_0fe1d98b11",
+    "package_id": "pkg_b4820886b5",
     "geographies": [
       {
         "slug": "city:burlington-vt",
@@ -93,7 +93,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -136,7 +136,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -181,7 +181,7 @@
         "validation_notes": [
           "This metric is a count, and the candidate regions span different geographic levels (city, county). A larger area necessarily reports a larger count, so ranking on it would measure geographic scope rather than market attractiveness."
         ],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": null,
         "weighted_contribution": null
       },
@@ -226,7 +226,7 @@
         "validation_notes": [
           "This metric is a count, and the candidate regions span different geographic levels (city, county). A larger area necessarily reports a larger count, so ranking on it would measure geographic scope rather than market attractiveness."
         ],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": null,
         "weighted_contribution": null
       },
@@ -269,7 +269,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -312,7 +312,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -355,7 +355,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -398,7 +398,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -441,7 +441,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -484,7 +484,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -527,7 +527,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -570,7 +570,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -613,7 +613,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -656,7 +656,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -699,7 +699,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -742,7 +742,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -785,7 +785,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -828,7 +828,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -871,7 +871,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -914,7 +914,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -959,7 +959,7 @@
         "validation_notes": [
           "This metric is a count, and the candidate regions span different geographic levels (city, county). A larger area necessarily reports a larger count, so ranking on it would measure geographic scope rather than market attractiveness."
         ],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": null,
         "weighted_contribution": null
       },
@@ -1004,7 +1004,7 @@
         "validation_notes": [
           "This metric is a count, and the candidate regions span different geographic levels (city, county). A larger area necessarily reports a larger count, so ranking on it would measure geographic scope rather than market attractiveness."
         ],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": null,
         "weighted_contribution": null
       },
@@ -1049,7 +1049,7 @@
         "validation_notes": [
           "This metric is a count, and the candidate regions span different geographic levels (city, county). A larger area necessarily reports a larger count, so ranking on it would measure geographic scope rather than market attractiveness."
         ],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": null,
         "weighted_contribution": null
       },
@@ -1094,7 +1094,7 @@
         "validation_notes": [
           "This metric is a count, and the candidate regions span different geographic levels (city, county). A larger area necessarily reports a larger count, so ranking on it would measure geographic scope rather than market attractiveness."
         ],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": null,
         "weighted_contribution": null
       },
@@ -1137,7 +1137,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -1180,7 +1180,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "normalized_value": 0.0,
         "weighted_contribution": null
       }
@@ -1244,7 +1244,7 @@
     ],
     "raw_calls": [
       {
-        "call_id": "4b51b3b6d2f4",
+        "call_id": "f9751e4fdc5b",
         "method": "POST",
         "url": "https://api.statebook.com/api/v1/getdata",
         "request_body": {
@@ -1516,21 +1516,21 @@
             }
           },
           "status": {
-            "id": "b37d647c-e90f-407a-8381-ee3be29004d5",
-            "timestamp": "2026-08-01T22:18:22.243571+00:00",
+            "id": "b75e1daa-5891-4d54-bb3b-7f823c661c3b",
+            "timestamp": "2026-08-02T03:53:45.499933+00:00",
             "version": "1.0.0",
             "license": "The data returned from this StateBook Data API call is restricted and may only be used in accordance with the terms of a current and valid StateBook Data API license. Any other use is strictly prohibited.",
-            "elapsed": 0.068
+            "elapsed": 0.062
           }
         },
         "status_code": 200,
-        "elapsed_seconds": 0.2137,
+        "elapsed_seconds": 0.1948,
         "attempts": 1,
         "error": null,
-        "timestamp": "2026-08-01T22:18:22.226761Z"
+        "timestamp": "2026-08-02T03:53:45.411684Z"
       }
     ],
-    "created_at": "2026-08-01T22:18:22.227298Z"
+    "created_at": "2026-08-02T03:53:45.412954Z"
   },
   "recommendation": {
     "leading_region": {
@@ -2152,7 +2152,8 @@
         "injection_flagged": false,
         "notes": []
       },
-      "timestamp": "2026-08-01T22:18:22.005894Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.210535Z"
     },
     {
       "step": "resolve_geographies",
@@ -2164,7 +2165,8 @@
         ],
         "rejected": []
       },
-      "timestamp": "2026-08-01T22:18:22.005913Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.210557Z"
     },
     {
       "step": "select_metrics",
@@ -2196,7 +2198,8 @@
           }
         ]
       },
-      "timestamp": "2026-08-01T22:18:22.005941Z"
+      "authority": "agent_inference",
+      "timestamp": "2026-08-02T03:53:45.210598Z"
     },
     {
       "step": "atlas_calls",
@@ -2204,17 +2207,18 @@
       "payload": {
         "calls": [
           {
-            "call_id": "4b51b3b6d2f4",
+            "call_id": "f9751e4fdc5b",
             "url": "https://api.statebook.com/api/v1/getdata",
             "status_code": 200,
             "attempts": 1,
-            "elapsed_seconds": 0.2137,
+            "elapsed_seconds": 0.1948,
             "error": null
           }
         ],
         "errors": []
       },
-      "timestamp": "2026-08-01T22:18:22.227111Z"
+      "authority": "api_evidence",
+      "timestamp": "2026-08-02T03:53:45.412553Z"
     },
     {
       "step": "validate_evidence",
@@ -2263,7 +2267,8 @@
           "College / Undergraduate Enrollment Share (3+): compared across different geographic levels (city, county). This is valid for a rate, but the regions are not peers and one may contain the other."
         ]
       },
-      "timestamp": "2026-08-01T22:18:22.227271Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.412915Z"
     },
     {
       "step": "deterministic_scoring",
@@ -2422,7 +2427,8 @@
           }
         ]
       },
-      "timestamp": "2026-08-01T22:18:22.227821Z"
+      "authority": "deterministic_calculation",
+      "timestamp": "2026-08-02T03:53:45.414003Z"
     },
     {
       "step": "explanation",
@@ -2451,10 +2457,12 @@
           "[dem.acs.pop.total.aycp | county:franklin-county-vt | 2024 | acs5]",
           "[edu.acs.enr.3pl.ugrad.pct | county:franklin-county-vt | 2024 | acs5]"
         ],
-        "evidence_package_id": "pkg_0fe1d98b11"
+        "evidence_package_id": "pkg_b4820886b5"
       },
-      "timestamp": "2026-08-01T22:18:22.227970Z"
+      "authority": "explanation_layer",
+      "timestamp": "2026-08-02T03:53:45.414346Z"
     }
   ],
-  "reproducibility_hash": "d4d4e0c88293a7bd"
+  "reproducibility_hash": "d4d4e0c88293a7bd",
+  "proposal": null
 }

@@ -29,7 +29,7 @@
     "interpreted_by": "rule_based"
   },
   "evidence": {
-    "package_id": "pkg_d1162cea0c",
+    "package_id": "pkg_646356f07e",
     "geographies": [
       {
         "slug": "city:burlington-vt",
@@ -82,7 +82,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "23f994d54cbb",
+        "call_id": "c0fc0e258cf5",
         "normalized_value": 0.0,
         "weighted_contribution": null
       },
@@ -125,7 +125,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "23f994d54cbb",
+        "call_id": "c0fc0e258cf5",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -168,7 +168,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "23f994d54cbb",
+        "call_id": "c0fc0e258cf5",
         "normalized_value": 100.0,
         "weighted_contribution": null
       },
@@ -211,7 +211,7 @@
         "margin_of_error": null,
         "validation_status": "valid",
         "validation_notes": [],
-        "call_id": "23f994d54cbb",
+        "call_id": "c0fc0e258cf5",
         "normalized_value": 0.0,
         "weighted_contribution": null
       }
@@ -219,7 +219,7 @@
     "excluded_metrics": [],
     "raw_calls": [
       {
-        "call_id": "23f994d54cbb",
+        "call_id": "c0fc0e258cf5",
         "method": "POST",
         "url": "https://api.statebook.com/api/v1/getdata",
         "request_body": {
@@ -304,21 +304,21 @@
             }
           },
           "status": {
-            "id": "e6360ebf-5c32-4f79-b271-574b8a82697e",
-            "timestamp": "2026-08-01T22:18:22.453528+00:00",
+            "id": "37d3fd61-931f-4432-9418-ec6bcf4e3585",
+            "timestamp": "2026-08-02T03:53:45.708484+00:00",
             "version": "1.0.0",
             "license": "The data returned from this StateBook Data API call is restricted and may only be used in accordance with the terms of a current and valid StateBook Data API license. Any other use is strictly prohibited.",
-            "elapsed": 0.052
+            "elapsed": 0.05
           }
         },
         "status_code": 200,
-        "elapsed_seconds": 0.194,
+        "elapsed_seconds": 0.192,
         "attempts": 1,
         "error": null,
-        "timestamp": "2026-08-01T22:18:22.433349Z"
+        "timestamp": "2026-08-02T03:53:45.619211Z"
       }
     ],
-    "created_at": "2026-08-01T22:18:22.435898Z"
+    "created_at": "2026-08-02T03:53:45.619625Z"
   },
   "recommendation": null,
   "refusal": {
@@ -380,7 +380,8 @@
         "injection_flagged": false,
         "notes": []
       },
-      "timestamp": "2026-08-01T22:18:22.232384Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.421909Z"
     },
     {
       "step": "resolve_geographies",
@@ -392,7 +393,8 @@
         ],
         "rejected": []
       },
-      "timestamp": "2026-08-01T22:18:22.232393Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.421934Z"
     },
     {
       "step": "select_metrics",
@@ -404,7 +406,8 @@
         ],
         "excluded": []
       },
-      "timestamp": "2026-08-01T22:18:22.232401Z"
+      "authority": "agent_inference",
+      "timestamp": "2026-08-02T03:53:45.421945Z"
     },
     {
       "step": "atlas_calls",
@@ -412,17 +415,18 @@
       "payload": {
         "calls": [
           {
-            "call_id": "23f994d54cbb",
+            "call_id": "c0fc0e258cf5",
             "url": "https://api.statebook.com/api/v1/getdata",
             "status_code": 200,
             "attempts": 1,
-            "elapsed_seconds": 0.194,
+            "elapsed_seconds": 0.192,
             "error": null
           }
         ],
         "errors": []
       },
-      "timestamp": "2026-08-01T22:18:22.435766Z"
+      "authority": "api_evidence",
+      "timestamp": "2026-08-02T03:53:45.619542Z"
     },
     {
       "step": "validate_evidence",
@@ -435,7 +439,8 @@
         "rejected": [],
         "warnings": []
       },
-      "timestamp": "2026-08-01T22:18:22.435859Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.619589Z"
     },
     {
       "step": "deterministic_scoring",
@@ -487,7 +492,8 @@
           }
         ]
       },
-      "timestamp": "2026-08-01T22:18:22.436338Z"
+      "authority": "deterministic_calculation",
+      "timestamp": "2026-08-02T03:53:45.619970Z"
     },
     {
       "step": "sufficiency_gate",
@@ -495,8 +501,10 @@
       "payload": {
         "reason": "Only 2 metric(s) survived validation, below the 3 required for a stable ranking. A score built on so few indicators would swing on any one of them."
       },
-      "timestamp": "2026-08-01T22:18:22.436380Z"
+      "authority": "deterministic_validation",
+      "timestamp": "2026-08-02T03:53:45.620027Z"
     }
   ],
-  "reproducibility_hash": "f819ed8201759039"
+  "reproducibility_hash": "f819ed8201759039",
+  "proposal": null
 }
