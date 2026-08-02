@@ -1,5 +1,96 @@
 # Change log
 
+## 0.3.0 — Next.js client over a governed API
+
+The frontend moves from Streamlit to Next.js. No rule changed, which was the point: the
+guarantees were already in the state machine and the pipeline, so replacing the interface
+was a transport exercise rather than a rewrite of anything that decides something.
+
+One property did have to be rebuilt. In a single Python process, `PlanStatus.APPROVED` was
+unforgeable because nobody outside the process could construct one. Across a network, that
+has to be re-earned, and it is re-earned by never accepting state from the client at all.
+
+### Added
+
+**An HTTP API (`server/`)**
+
+- `server/app.py` — FastAPI over the existing workflow. Each route resolves a session,
+  calls exactly one transition, and projects the result. There is no business logic in it.
+- `server/sessions.py` — a thread-safe, LRU-capped session store holding `WorkflowState`
+  server-side. The client receives a 128-bit opaque id and nothing else. **No route accepts
+  a plan object**, so a client cannot assert approval, edit a validation report, or hand
+  back a plan with `status` flipped. `tests/test_api.py` asserts this against the generated
+  OpenAPI schema so a future route cannot quietly reintroduce one.
+  Locking is per session, not per store. A session's own transitions serialize — a
+  double-clicked approve gets one 200 and one 409, never two versions for one decision —
+  while a slow Atlas run in one session leaves every other session free. A single shared
+  lock passes all the behavioural tests and still stalls the server behind its slowest
+  request, so the test asserts the property directly: a mocked transport waits on a
+  two-party barrier that can only be satisfied if both sessions are inside the pipeline at
+  once. Eviction skips sessions that are mid-request and overshoots the cap instead.
+- `server/views.py` — the projection layer. Computed properties (`can_approve`,
+  `is_usable`, `completeness`) are evaluated in Python and sent as fields rather than
+  reimplemented in TypeScript, so "approvable" has one definition rather than two free to
+  drift apart.
+- `server/schemas.py` — typed request bodies. The catalog endpoint serves the presets,
+  objective examples, and model choices that were previously constants inside the UI file,
+  which keeps the licensed-geography list on the server that enforces it.
+
+**A Next.js client (`web/`)**
+
+- TypeScript, Tailwind, and Recharts. Stage screens for describe, clarify, review, and
+  refused; result panels for the recommendation, dashboard, evidence, plan, trace,
+  limitations, registry, sensitivity, versions, and the assistant.
+- `web/src/lib/types.ts` mirrors the server's projections as compile-time contracts.
+- `scripts/generate_web_fixtures.py` drives the real FastAPI app against the same mocked
+  Atlas transport the Python tests use and emits **typed** fixtures. Because each fixture is
+  annotated, `npm run typecheck` compares the actual projection against the declared
+  contract and turns schema drift into a build failure instead of an `undefined` in a panel.
+- `scripts/dev.sh` runs both processes.
+
+### Changed
+
+- `app/workflow.py` → `orchestration/workflow.py`. The state machine was never UI code, and
+  leaving it in a directory named `app/` next to a deleted Streamlit script would have
+  implied otherwise.
+- The OpenAI key is entered in the browser, sent per-request as an `X-OpenAI-Key` header,
+  and used to build a request-scoped `Settings` copy. It is never written to local storage,
+  the session store, disk, a log, or an exported result. The browser calls the API directly
+  rather than proxying through a Next.js route handler, which would add a second process
+  holding the key and a second log it could surface in, for no benefit here.
+- Removed `streamlit`, `pandas`, `altair`, and `watchdog`.
+- The CORS allowlist is configurable via `RLI_CORS_ORIGINS`, and `scripts/dev.sh` derives it
+  from `WEB_PORT`. It was hardcoded to port 3000, so running the client anywhere else failed
+  every request in preflight and surfaced in the UI as "cannot reach the analysis service" —
+  a symptom that points at the wrong process entirely. A wildcard is still not accepted: the
+  API takes an OpenAI key in a header, so any-origin access would forward credentials.
+- The narrator and assistant emit `**bold**`, which the previous frontend rendered as
+  markdown and this one was printing literally. Added a two-construct renderer rather than a
+  markdown library, since some of that text comes from a model and a real markdown parser
+  would also happily render links and raw HTML.
+- Copy that referred to editing weights "in the sidebar" now describes the plan-edit and
+  revision paths, which is where weights are actually changed.
+
+### Tests
+
+312 offline Python (up from 296) and 24 frontend.
+
+| Suite | Covers |
+| --- | --- |
+| `tests/test_api.py` | Every transition over HTTP, the approval gate, session isolation, header-scoped credentials, concurrent access, and the absence of any plan-accepting route |
+| `web/src/components/Workspace.test.tsx` | Stage routing, the disabled approve control, provenance rendering, revision confirmation, result panels, and credential handling |
+| `web/scripts/browser_smoke.mjs` | The full arc in a real browser against a running API, failing on any console error. Not part of `npm test`; it needs both processes up |
+
+`tests/test_ui.py` is gone; `tests/test_workflow.py` covered the guarantees it was really
+testing, and it now does so without a UI in the way.
+
+### Known limitations
+
+- The session store is in-memory and unauthenticated: single-process only, lost on restart,
+  and holding a session id is the only credential needed to resume one. It is deliberately
+  small and single-purpose so that swapping it for shared storage behind an identity is a
+  contained change.
+
 ## 0.2.0 — Agentic planning, approval, and revision
 
 The first version could answer a question. This one can work out what the question is.

@@ -1,21 +1,25 @@
 # Python
+#
+# The packaging directories are anchored with a leading slash on purpose. Unanchored,
+# `lib/` matches at any depth and silently swallows `web/src/lib/` - the API client and the
+# shared types - which is a broken checkout that looks fine locally.
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
+/build/
+/develop-eggs/
+/dist/
+/downloads/
+/eggs/
+/.eggs/
+/lib/
+/lib64/
+/parts/
+/sdist/
+/var/
+/wheels/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -62,8 +66,13 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-# Streamlit
-.streamlit/
+# Next.js frontend
+web/node_modules/
+web/.next/
+web/out/
+web/next-env.d.ts
+web/.env*.local
+web/*.tsbuildinfo
 
 # Sample outputs (optional - you may want to commit these)
 # sample_outputs/

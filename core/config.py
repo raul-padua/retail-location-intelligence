@@ -53,8 +53,9 @@ class Settings:
         """Return a copy carrying a session-supplied key and model.
 
         The UI collects the key at runtime rather than requiring a ``.env`` edit. It is
-        held in Streamlit session state for the life of the browser session and is never
-        written to disk, logged, or included in an exported result.
+        held in the browser tab, sent per request as a header, and used to build a copy of
+        the settings for the life of that request. It is never written to the server's
+        session store, to disk, to a log, or to an exported result.
         """
         cleaned_key = (api_key or "").strip() or None
         cleaned_model = (model or "").strip() or self.llm_model

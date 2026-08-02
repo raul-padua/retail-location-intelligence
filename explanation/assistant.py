@@ -131,9 +131,9 @@ _HOW_IT_WORKS = [
         "registry lists the approved indicators."
     ),
     (
-        "Category weights in the sidebar are the executive's to set. Changing them "
-        "recalculates the ranking from the same Atlas values and produces a new "
-        "reproducibility hash."
+        "Category weights are the executive's to set, either by editing the plan before "
+        "approval or by requesting a revision here. Changing them recalculates the ranking "
+        "from the same Atlas values and produces a new reproducibility hash."
     ),
     (
         "The reproducibility hash is a fingerprint of every input to the score: the regions, "

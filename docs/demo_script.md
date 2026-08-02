@@ -8,8 +8,10 @@ this is trustworthy, not how it is built.
 ```bash
 cd retail-location-intelligence
 cp .env.example .env            # STATEBOOK_API_TOKEN=demo
-uv run streamlit run app/streamlit_app.py
+./scripts/dev.sh                # API on :8000, client on :3000
 ```
+
+Open http://localhost:3000.
 
 Optionally paste an OpenAI key at the top of the sidebar. The demo works fully without
 one, and there is a moment below where turning it off is the strongest thing you can do.

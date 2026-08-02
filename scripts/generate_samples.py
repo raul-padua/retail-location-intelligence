@@ -17,8 +17,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from app import workflow  # noqa: E402
-from app.workflow import WorkflowState  # noqa: E402
+from orchestration import workflow  # noqa: E402
+from orchestration.workflow import WorkflowState  # noqa: E402
 from models.analysis import AUTHORITY_LABELS, AnalysisResult  # noqa: E402
 from models.metrics import CATEGORY_LABELS  # noqa: E402
 from orchestration.pipeline import AnalysisPipeline, AnalysisRequest  # noqa: E402
@@ -228,7 +228,7 @@ def planning_markdown(state: WorkflowState) -> str:
     lines = [
         "# Sample output: the planning and revision arc",
         "",
-        "Produced by driving `app/workflow.py` end to end with no language model "
+        "Produced by driving `orchestration/workflow.py` end to end with no language model "
         "configured, so everything below came from the deterministic planner.",
         "",
         f"**Objective as written**  \n> {PLANNING_OBJECTIVE}",

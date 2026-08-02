@@ -244,8 +244,8 @@ def _deterministic_narrative(sheet: FactSheet, retailer_profile: str) -> str:
         "\n**Tradeoffs**\nEach score is a weighted combination of the categories shown in the "
         "dashboard, so a region can lead overall while trailing on an individual indicator. "
         f"The direction of every metric reflects the assumed profile of a {retailer_profile}; "
-        "changing the category weights in the sidebar recalculates the ranking from the same "
-        "underlying Atlas values."
+        "revising the category weights produces a new plan version, which recalculates the "
+        "ranking from the same underlying Atlas values."
     )
 
     parts.append(

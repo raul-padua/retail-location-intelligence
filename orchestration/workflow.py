@@ -12,8 +12,10 @@ plan that failed validation. A revision cannot run without passing back through 
 These are enforced here rather than in the UI, which is why the UI is not the thing under
 test.
 
-The module holds no Streamlit import on purpose. Streamlit owns the widgets and the
-session dictionary; this owns the rules.
+The module knows nothing about how it is driven. It has been rendered by Streamlit and is
+now rendered by a Next.js client over HTTP, and neither of those changed a rule in here -
+which is the property that made swapping the frontend a transport question rather than a
+safety question. The UI owns pixels; this owns what may follow what.
 """
 
 from __future__ import annotations

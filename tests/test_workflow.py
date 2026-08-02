@@ -1,17 +1,18 @@
 """The stages the user moves through, and the ones they cannot.
 
-These are the UI-level tests. They drive the state machine rather than Streamlit, because
-the rules being tested belong to the state machine: Streamlit's job is to render whichever
-stage it is handed and to disable the buttons the state says are unavailable. If the guard
-lived in the widget, a rerun would be enough to bypass it.
+These drive the state machine directly rather than any interface, because the rules being
+tested belong to the state machine. The frontend's job is to render whichever stage it is
+handed and to disable the controls the state says are unavailable; if a guard lived in a
+button instead, a crafted request would be enough to bypass it. ``tests/test_api.py``
+covers the HTTP surface, and the web tests cover the rendering.
 """
 
 from __future__ import annotations
 
 import pytest
 
-from app import workflow
-from app.workflow import Stage, WorkflowError, WorkflowState
+from orchestration import workflow
+from orchestration.workflow import Stage, WorkflowError, WorkflowState
 from models.metrics import MetricCategory
 from models.plan import PlanStatus
 from orchestration.pipeline import AnalysisPipeline

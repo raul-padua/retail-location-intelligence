@@ -48,7 +48,7 @@ Typed analysis-plan proposal           models/plan.py :: AnalysisPlanProposal
 Deterministic plan validation          planning/validation.py
         |
         v
-Human approval                         app/workflow.py :: approve_and_run
+Human approval                         orchestration/workflow.py :: approve_and_run
         |
         v
 Governed capability orchestration      planning/capabilities.py
@@ -66,7 +66,7 @@ Evidence-bound explanation             explanation/narrator.py
 Conversational revision proposal       planning/revision.py  (inert)
         |
         v
-Human confirmation and versioned rerun app/workflow.py :: confirm_revision
+Human confirmation and versioned rerun orchestration/workflow.py :: confirm_revision
 ```
 
 Only two edges in that diagram can reach Atlas, and both sit immediately below a human
@@ -139,7 +139,7 @@ recommend one as a next step. There is no code path by which it can claim one ra
 Parsing is deterministic pattern matching for the same reason the flip-point scan is: an
 approximately-correct reading of "reduce" would be worse than no reading at all.
 
-### 1c. Workflow (`app/workflow.py`)
+### 1c. Workflow (`orchestration/workflow.py`)
 
 The plan lifecycle as an explicit state machine — `DESCRIBE`, `CLARIFY`, `REVIEW`,
 `EXECUTED`, `REFUSED` — with a fixed transition set and a `WorkflowError` for anything
@@ -151,7 +151,38 @@ This is deliberately not an autonomous loop. The interesting property of a gover
 is not that it decides what to do next, it is that a reader can point at any state and say
 how it got there and who authorized the move. A state machine makes that a matter of
 reading the transition table. It also means the guarantees are tested against the state
-machine rather than against Streamlit, which cannot enforce anything a rerun could bypass.
+machine rather than against an interface, which cannot enforce anything a crafted request
+could bypass.
+
+The module has now been driven by two entirely different frontends without a rule changing
+in it, which is the clearest evidence available that the boundary is in the right place.
+
+### 1d. HTTP transport (`server/`)
+
+A thin FastAPI layer. Each endpoint resolves a session, calls exactly one transition, and
+projects the result; the rules stay in the state machine.
+
+The split introduced one problem the single-process build did not have. When the workflow
+state lived in the Python process, `PlanStatus.APPROVED` was unforgeable because nobody
+outside the process could construct one. Over HTTP, that has to be re-established, and it
+is re-established by refusing to accept state at all: the client holds an opaque session
+id, the server holds the plan, and every route is a request to attempt a transition. There
+is no endpoint that takes an `AnalysisPlanProposal`, and `tests/test_api.py` asserts that
+against the generated OpenAPI schema so a future route cannot quietly reintroduce one.
+
+Locking is per session rather than per store, which is a correctness point disguised as a
+performance one. Serializing a session's own transitions is what stops a double-clicked
+approve from running the pipeline twice against one human decision. Serializing *across*
+sessions buys nothing and costs everything: an Atlas run takes seconds, and a shared lock
+would put every other user behind it, which the browser reports the same way it reports a
+dead server.
+
+`server/views.py` is the projection layer. Most domain types are Pydantic and serialize
+themselves, but a `@property` does not, and computed values like `can_approve`,
+`is_usable`, and `completeness` are exactly what the UI needs in order to disable a control
+or grey out a row. Each is evaluated in Python and transmitted as a field rather than
+reimplemented in TypeScript, so there is one definition of "approvable" rather than two
+free to drift apart.
 
 ### 2. Atlas API client (`api/`)
 
@@ -310,10 +341,16 @@ Without a key the assistant still answers, routing the question to the relevant 
 is plainer, but it is grounded in the same pack, so the product has no dependency on an
 LLM being configured and no behaviour that only exists when one is.
 
-The session key is collected in the sidebar and held in Streamlit session state. It is
-never written to disk, never logged, and never serialized into an exported result;
-`Settings` is frozen and `with_llm` returns a copy, so a key supplied by one browser
-session cannot leak into the process defaults.
+The session key is collected in the sidebar and held in the browser tab. It travels to the
+API as an `X-OpenAI-Key` header and is used to build a `Settings` copy scoped to that one
+request. It is never written to the server's session store, to disk, to a log, or into an
+exported result; `Settings` is frozen and `with_llm` returns a copy, so a key supplied by
+one browser cannot leak into the process defaults or into another user's session.
+
+The browser calls the API directly rather than proxying through a Next.js route handler,
+which is a deliberate choice about credential surface: a proxy would add a second process
+holding the key in memory and a second request log it could appear in, in exchange for
+nothing this application needs.
 
 **The assistant can now propose changes, which is a second control surface.** "Double the
 weight on income" is an instruction, and a chat box that carries it out has quietly become
@@ -353,7 +390,9 @@ reviewer can read only the decisions a human made, or only the ones the model in
 | Execution without authorization | `AnalysisPipeline.run_approved` consults `AnalysisPlanProposal.can_execute`, which requires passing validation, no unanswered required question, `APPROVED` status, *and* an approval record. A forged status alone is refused |
 | Conversational control | A revision request produces an inert proposal; only an explicit confirmation creates a new plan version, and that version re-enters approval |
 | Claiming an unavailable capability | Unavailable capabilities are data, not code paths. There is no function to call, so the failure mode is a recommendation rather than a simulated result |
-| Session credentials | An OpenAI key entered in the UI lives in session state only: never written to disk, logged, or serialized into an exported result |
+| Session credentials | An OpenAI key entered in the UI lives in the browser tab and one request scope only: never in local storage, the server session store, disk, a log, or an exported result |
+| Client-forged state | The client holds an opaque session id, never a plan. No route accepts a plan object, so approval cannot be asserted from outside the server |
+| Cross-session access | Session ids are 128-bit `secrets.token_urlsafe` values and every route resolves state by id; an unknown id is a 404, never an implicit new session |
 | Unbounded resource use | Request timeouts, bounded retries, capped input length |
 | Silent failure | Atlas errors produce a refusal with the failed call in the trace, never a partial answer presented as complete |
 
@@ -374,6 +413,12 @@ Worth stating plainly, because a credible prototype should name its own gaps:
 - **Weighted linear scoring is a communication tool, not a causal model.** It says nothing
   about whether these indicators predict store performance. That would require outcome
   data the system does not have.
+- **The session store is in-memory and unauthenticated.** It is a dict behind a lock with
+  an LRU cap, which is correct for a single-process prototype and wrong for anything
+  multi-replica. Sessions do not survive a restart, and holding a session id is the only
+  credential required to resume one. Real deployment needs shared storage and an identity
+  in front of it; `server/sessions.py` is small and single-purpose precisely so that
+  swapping it is a contained change.
 - **ACS values are 5-year rolling estimates with margins of error** that widen for smaller
   places. Margins of error are available in Atlas (`.moe`) and are captured in the model,
   but they are not yet propagated into the score as confidence intervals. That is the

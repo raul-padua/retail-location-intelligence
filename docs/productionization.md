@@ -106,15 +106,15 @@ but it makes no claim to predict performance. The production path is:
 
 | Area | Prototype | Production |
 | --- | --- | --- |
-| Runtime | Streamlit, single process | API service plus a separate web client; the pipeline is already a pure function over a request |
+| Runtime | FastAPI plus a Next.js client, both single-instance | The same two services, horizontally scaled; the pipeline is already a pure function over a request, so the only thing blocking replicas is the in-memory session store |
 | Persistence | In-memory, JSON artifacts | Analysis runs, evidence packages, and raw calls stored immutably and addressed by the reproducibility hash |
 | Caching | None | Response cache keyed by datapoint, geography, and period; Atlas billing is per call, so this is a cost control as much as a latency one |
 | Metric registry | Python constants gated by a verification file | Versioned registry with review workflow, effective dates, and re-verification in CI against the live API |
 | Identity | None | SSO, per-tenant data entitlements mirroring the license scope the allowlist already models |
 | Observability | Structured JSON logs | Traces per analysis run, plus alerting on refusal-rate and validation-exclusion-rate drift, which are the leading indicators of upstream data change |
-| Plan storage | In-session workflow state | Plans, versions, approvals, and revisions persisted as an immutable lineage, addressed by plan id and version |
+| Plan storage | In-memory server-side sessions, LRU-capped, lost on restart | Plans, versions, approvals, and revisions persisted as an immutable lineage, addressed by plan id and version, in shared storage behind an authenticated identity |
 | Approval | Single user, in-session | Role-based approval, delegation, and an exportable authorization record per executed analysis |
-| Testing | 289 offline, 6 live | The live suite becomes a scheduled contract test; a golden-output suite pins scoring behaviour across releases |
+| Testing | 312 offline Python, 24 frontend, 6 live | The live suite becomes a scheduled contract test; a golden-output suite pins scoring behaviour across releases; the generated frontend fixtures become a CI drift check rather than a manual regeneration |
 
 ### Governance
 

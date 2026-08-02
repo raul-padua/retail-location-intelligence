@@ -25,14 +25,14 @@ recommendation that is not traceable to an API response.
 ```bash
 cd retail-location-intelligence
 
-uv sync --group dev                    # creates .venv and installs everything
+uv sync --group dev                    # creates .venv and installs the Python side
 
 cp .env.example .env                   # STATEBOOK_API_TOKEN=demo works out of the box
 
-uv run streamlit run app/streamlit_app.py
+./scripts/dev.sh                       # installs web deps on first run, starts both
 ```
 
-Then open http://localhost:8501 and describe a decision in your own words, for example:
+Then open http://localhost:3000 and describe a decision in your own words, for example:
 
 > *"We are evaluating Burlington, South Burlington, and Winooski for a suburban apparel
 > store targeting middle-income families. Prioritize growth and accessibility over current
@@ -41,12 +41,27 @@ Then open http://localhost:8501 and describe a decision in your own words, for e
 The agent interprets it, asks anything material it could not infer, and proposes a plan.
 Nothing reaches Atlas until you approve that plan.
 
+The two halves can also be run separately, which is what you want if you are working on
+one of them:
+
+```bash
+uv run uvicorn server.app:app --port 8000 --reload   # API, OpenAPI docs at /docs
+cd web && npm run dev                                # client on :3000
+```
+
 Run the tests:
 
 ```bash
-uv run pytest                # 296 offline tests against a mocked Atlas transport
+uv run pytest                # 312 offline tests against a mocked Atlas transport
 uv run pytest -m live        # 6 integration tests against the real API
+cd web && npm test           # 24 frontend tests
+cd web && npm run typecheck  # also checks the API contract; see below
 ```
+
+With both servers already running, `cd web && npm run smoke` walks the whole arc in a real
+browser — describe, plan, approve, every result tab, and a revision request — and fails on
+any console error. The component tests prove the panels agree with the server's
+projections; only this proves the two processes agree with each other.
 
 ### The workflow
 
@@ -60,16 +75,30 @@ Describe the decision  ->  Clarify  ->  Review the plan  ->  Approve  ->  Result
 Five stages, a fixed set of transitions, and an exception for anything else. Execution is
 unreachable from the clarify stage; a plan cannot be approved until it passes deterministic
 validation; a revision creates a new version rather than mutating the current one. The
-rules live in `app/workflow.py` rather than in the widgets, so a browser rerun cannot get
-around them.
+rules live in `orchestration/workflow.py` rather than in the interface, so no amount of
+clicking — or curling — gets around them.
 
 Details in [`docs/agentic_planning.md`](docs/agentic_planning.md).
 
+### Why the plan lives on the server
+
+The frontend is a browser client, which means the workflow state had to go somewhere a
+caller cannot reach. It stays in the API process, keyed by an opaque session id, and every
+endpoint is a request to *attempt a transition* rather than to install a state.
+
+There is deliberately no route that accepts a plan. If there were, anyone with `curl` could
+post one carrying `"status": "approved"` and the gate the whole architecture rests on would
+become decorative. `tests/test_api.py` asserts this against the generated OpenAPI schema,
+so a future endpoint cannot reintroduce the hole by accident.
+
 ### Optional: the conversational assistant
 
-Paste an OpenAI key into the top of the sidebar to make the planner and the **Assistant**
-tab conversational. The key is held in the browser session only; it is never written to
-disk, logged, or included in an exported result.
+Paste an OpenAI key into the sidebar to make the planner and the **Assistant** tab
+conversational. The key is held in the browser tab, sent as a per-request header, and used
+to build a settings copy for the life of that request. It is never written to the server's
+session store, to disk, to a log, or to an exported result — and because the browser calls
+the API directly rather than through a Next.js route handler, there is no second process
+that could log it.
 
 The assistant answers from the evidence the analysis produced, refuses instruction-override
 and forecast questions before the model is ever called, and has any reply discarded if it
@@ -95,6 +124,7 @@ All configuration is environment-based; no credential appears in source. See
 | `OPENAI_API_KEY` | Optional. Enables the narrator and the assistant. Can also be pasted into the sidebar. | unset |
 | `RLI_LLM_MODEL` | Model used when a key is present. Overridable in the sidebar. | `gpt-5.6-luna` |
 | `RLI_LOG_LEVEL` | Structured log level. | `INFO` |
+| `NEXT_PUBLIC_API_BASE` | Where the client looks for the API. Visible in the browser bundle, so never a credential. | `http://localhost:8000` |
 
 **The demo works with no LLM key.** Without one, a deterministic planner reads the
 objective by pattern matching, and the narrative and assistant are composed from the
@@ -174,12 +204,13 @@ and agent authority boundaries: [`docs/agentic_planning.md`](docs/agentic_planni
 ### Project layout
 
 ```
-app/             Streamlit interface and the typed workflow state machine
+web/             Next.js client: stage screens, result panels, typed API client
+server/          FastAPI transport: session store, DTO projections, per-request settings
 api/             Atlas client, response parsing, geography allowlist
 planning/        Agentic planner (LLM and deterministic), capability registry,
                  plan validation, revision proposals
-orchestration/   Intent classification, refusal policy, evidence fetching, pipeline,
-                 plan and result comparison
+orchestration/   Workflow state machine, intent classification, refusal policy,
+                 evidence fetching, pipeline, plan and result comparison
 metrics/         Approved metric registry and its verification gate
 validation/      Comparability gates
 scoring/         Deterministic normalization, weighted scoring, strategy profiles,
@@ -187,11 +218,29 @@ scoring/         Deterministic normalization, weighted scoring, strategy profile
 explanation/     Evidence-bound narrator and chat assistant, both output-verified
 models/          Typed pydantic models shared by every layer
 core/            Environment configuration and credential-redacting logging
-scripts/         Catalogue discovery, datapoint verification, sample and doc generation
-tests/           296 offline tests, 6 live integration tests
+scripts/         Catalogue discovery, datapoint verification, sample, doc and fixture
+                 generation, and the dev runner
+tests/           312 offline tests, 6 live integration tests
 docs/            Architecture, agentic planning, metric registry, demo, productionization
 sample_outputs/  Committed successful and refusal outputs
 data/            Discovered candidates and the verification record
+```
+
+### Keeping the two halves honest
+
+A client/server split introduces a failure mode a single process does not have: the
+backend renames a field, the frontend keeps reading the old one, and a panel quietly
+renders `undefined` instead of failing.
+
+`scripts/generate_web_fixtures.py` drives the real FastAPI app against the same mocked
+Atlas transport the Python tests use and writes the responses to
+`web/src/test/fixtures.generated.ts` as **typed** TypeScript. Because each fixture is
+annotated `WorkflowState` or `Catalog`, `npm run typecheck` compares the actual projection
+against the frontend's declared contract, and drift becomes a build failure. Regenerate
+after touching anything in `server/views.py`:
+
+```bash
+uv run python scripts/generate_web_fixtures.py
 ```
 
 ---
@@ -276,14 +325,15 @@ the candidate set:
 
 | Deliverable | Location |
 | --- | --- |
-| Working local application | `app/streamlit_app.py` |
+| Working local application | `./scripts/dev.sh` — Next.js client in `web/`, API in `server/` |
 | Architecture: agentic vs deterministic | [`docs/architecture.md`](docs/architecture.md) |
 | Agent authority, plan lifecycle, fallbacks | [`docs/agentic_planning.md`](docs/agentic_planning.md) |
 | Verified metric registry | [`docs/metric_registry.md`](docs/metric_registry.md) |
 | Seven-minute demo script | [`docs/demo_script.md`](docs/demo_script.md) |
 | Path to a production platform | [`docs/productionization.md`](docs/productionization.md) |
 | Change log | [`CHANGELOG.md`](CHANGELOG.md) |
-| Unit, integration, and UI tests | `tests/` |
+| Unit, integration, and API tests | `tests/` |
+| Frontend tests and API contract check | `web/src/**/*.test.tsx`, `npm run typecheck` |
 | Sample successful and refusal outputs | [`sample_outputs/`](sample_outputs/) |
 
 ---
