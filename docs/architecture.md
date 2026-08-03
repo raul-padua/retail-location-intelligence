@@ -72,6 +72,10 @@ Human confirmation and versioned rerun orchestration/workflow.py :: confirm_revi
 Only two edges in that diagram can reach Atlas, and both sit immediately below a human
 approval step. Everything above them manipulates a proposal.
 
+After an approved Atlas run, exploratory tools may load public-market archetypes, run the
+NorthStar simulator, or search analog stores. Those paths never rewrite Atlas evidence and
+never claim unavailable capabilities (foot traffic, ROI forecasting, etc.) executed.
+
 ---
 
 ## Layers
@@ -360,6 +364,41 @@ analytical effect, and a deterministic validation report — and nothing else ha
 classifier sits behind the injection and forecast gates, so no phrasing of "just change
 it and run it" reaches a path that would.
 
+### 7. Map-first client (`web/`)
+
+The Next.js workspace is presentation around the same state machine. Map markers are
+server-projected centroids; scores and rankings are never recomputed in TypeScript.
+Resizable columns are chrome only. Post-execute tabs (Archetypes, Retailer simulation,
+Analog stores) call deterministic Python services and render projections with
+`DataClass` badges.
+
+### 8. Public market discovery (`market_discovery/`)
+
+A versioned county clustering artifact under `data/market_discovery/v1/`. Features are
+ACS-shaped and labeled `PUBLIC_MARKET_DATA`. K-means membership is deterministic for a
+fixed seed and config hash; the agent capability `market.archetype_analysis` may look up
+and explain results but cannot invent membership. See
+[`market_discovery.md`](market_discovery.md) and
+[`clustering_methodology.md`](clustering_methodology.md).
+
+### 9. Synthetic retailer twin (`retailer_simulation/`)
+
+Seeded equation-based **NorthStar Apparel** generation anchored to a public benchmark
+catalog with verification states (`VERIFIED` / `DEMO_DEFAULT` / `UNVERIFIED_DISABLED`).
+Disabled benchmarks never affect generation. Outputs are always
+`SIMULATED_RETAILER_DATA`. Stores can be enriched with host-county archetypes so the UI
+can profile fictional peers in markets like the selected candidate — demo context, not a
+forecast. Capability: `retailer.scenario_simulation`. See
+[`synthetic_retailer.md`](synthetic_retailer.md).
+
+### 10. Analog-store matching (`analog_matching/`)
+
+Nearest-neighbor look-alikes between a candidate market and synthetic stores using
+**public market features only**. Sales and margin are excluded from the match vector
+(outcome leakage forbidden) and appear only after ranking, always labeled simulated.
+Capability: `retailer.analog_store_search`. See [`analog_matching.md`](analog_matching.md)
+and [`data_provenance.md`](data_provenance.md).
+
 ---
 
 ## The trace as an accountability record
@@ -390,6 +429,8 @@ reviewer can read only the decisions a human made, or only the ones the model in
 | Execution without authorization | `AnalysisPipeline.run_approved` consults `AnalysisPlanProposal.can_execute`, which requires passing validation, no unanswered required question, `APPROVED` status, *and* an approval record. A forged status alone is refused |
 | Conversational control | A revision request produces an inert proposal; only an explicit confirmation creates a new plan version, and that version re-enters approval |
 | Claiming an unavailable capability | Unavailable capabilities are data, not code paths. There is no function to call, so the failure mode is a recommendation rather than a simulated result |
+| Mixing data classes | Every wire payload for public or simulated numbers carries `DataClass`; UI badges make silent combination a review failure |
+| Outcome leakage into analogs | Matching feature registry excludes sales/margin; tests assert forbidden ids are absent |
 | Session credentials | An OpenAI key entered in the UI lives in the browser tab and one request scope only: never in local storage, the server session store, disk, a log, or an exported result |
 | Client-forged state | The client holds an opaque session id, never a plan. No route accepts a plan object, so approval cannot be asserted from outside the server |
 | Cross-session access | Session ids are 128-bit `secrets.token_urlsafe` values and every route resolves state by id; an unknown id is a 404, never an implicit new session |

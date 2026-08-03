@@ -32,7 +32,15 @@ cp .env.example .env                   # STATEBOOK_API_TOKEN=demo works out of t
 ./scripts/dev.sh                       # installs web deps on first run, starts both
 ```
 
-Then open http://localhost:3000 and describe a decision in your own words, for example:
+Then open http://localhost:3000. The workspace is map-first: candidate markets appear on a
+street-level basemap and in a tray; the right-hand intelligence panel shows the selected
+market and the current workflow stage (describe → clarify → review → result). After a run,
+the Archetypes tab shows public-county market clusters (deterministic; not store forecasts).
+The Retailer simulation tab runs the fictional **NorthStar Apparel** network; the **Analog
+stores** tab ranks those synthetic stores against the selected candidate using public ACS
+features only (performance labels are always simulated).
+
+Describe a decision in your own words, for example:
 
 > *"We are evaluating Burlington, South Burlington, and Winooski for a suburban apparel
 > store targeting middle-income families. Prioritize growth and accessibility over current
@@ -52,9 +60,9 @@ cd web && npm run dev                                # client on :3000
 Run the tests:
 
 ```bash
-uv run pytest                # 312 offline tests against a mocked Atlas transport
-uv run pytest -m live        # 6 integration tests against the real API
-cd web && npm test           # 24 frontend tests
+uv run pytest                # offline tests against a mocked Atlas transport
+uv run pytest -m live        # integration tests against the real API
+cd web && npm test           # frontend component tests
 cd web && npm run typecheck  # also checks the API contract; see below
 ```
 
@@ -125,6 +133,8 @@ All configuration is environment-based; no credential appears in source. See
 | `RLI_LLM_MODEL` | Model used when a key is present. Overridable in the sidebar. | `gpt-5.6-luna` |
 | `RLI_LOG_LEVEL` | Structured log level. | `INFO` |
 | `NEXT_PUBLIC_API_BASE` | Where the client looks for the API. Visible in the browser bundle, so never a credential. | `http://localhost:8000` |
+| `NEXT_PUBLIC_MAP_STYLE_URL` | Optional MapLibre style URL. Unset → street-level Carto Voyager basemap (no token). | unset |
+| `RLI_CORS_ORIGINS` | Comma-separated browser origins allowed to call the API (no wildcards). | `http://localhost:3000`, `http://127.0.0.1:3000` |
 
 **The demo works with no LLM key.** Without one, a deterministic planner reads the
 objective by pattern matching, and the narrative and assistant are composed from the
@@ -195,35 +205,59 @@ itself is the last line of defence: an unknown identifier is rejected with
                        |               narrator and assistant, both output-verified
                        |
    [7] Revision proposal ............ inert until confirmed; confirming creates version n+1
+                       |
+   Post-execute exploratory tools (no rewrite of Atlas truth)
+                       |
+   [8] Market archetypes ............ public-county K-means artifact; agent explains only
+   [9] NorthStar simulation ......... seeded fictional retailer twin; always labeled simulated
+  [10] Analog-store search .......... public-feature look-alikes vs synthetic stores
 ```
+
+Every analytical number on the wire carries a `DataClass` provenance badge (`ATLAS_EVIDENCE`,
+`PUBLIC_MARKET_DATA`, `SIMULATED_RETAILER_DATA`, …). Charts and narratives must not silently
+mix classes.
 
 Full discussion of which responsibilities are agentic and which are deterministic, and why:
 [`docs/architecture.md`](docs/architecture.md). The plan lifecycle, clarification policy,
 and agent authority boundaries: [`docs/agentic_planning.md`](docs/agentic_planning.md).
 
+### Product layers after approval
+
+| Layer | What it is | What it is not |
+| --- | --- | --- |
+| Atlas comparison | Licensed StateBook evidence + deterministic scores | A sales forecast |
+| Market archetypes | Deterministic K-means on public ACS-shaped county features | Store performance |
+| Retailer simulation | Seeded **NorthStar Apparel** twin with public benchmark anchors | Real GAP / retailer data |
+| Analog stores | Look-alike synthetic stores by public market features | A prediction for the new site |
+
+Docs: [`docs/market_discovery.md`](docs/market_discovery.md),
+[`docs/clustering_methodology.md`](docs/clustering_methodology.md),
+[`docs/synthetic_retailer.md`](docs/synthetic_retailer.md),
+[`docs/analog_matching.md`](docs/analog_matching.md),
+[`docs/data_provenance.md`](docs/data_provenance.md).
+
 ### Project layout
 
 ```
-web/             Next.js client: stage screens, result panels, typed API client
-server/          FastAPI transport: session store, DTO projections, per-request settings
-api/             Atlas client, response parsing, geography allowlist
-planning/        Agentic planner (LLM and deterministic), capability registry,
-                 plan validation, revision proposals
-orchestration/   Workflow state machine, intent classification, refusal policy,
-                 evidence fetching, pipeline, plan and result comparison
-metrics/         Approved metric registry and its verification gate
-validation/      Comparability gates
-scoring/         Deterministic normalization, weighted scoring, strategy profiles,
-                 sensitivity and flip-point analysis
-explanation/     Evidence-bound narrator and chat assistant, both output-verified
-models/          Typed pydantic models shared by every layer
-core/            Environment configuration and credential-redacting logging
-scripts/         Catalogue discovery, datapoint verification, sample, doc and fixture
-                 generation, and the dev runner
-tests/           312 offline tests, 6 live integration tests
-docs/            Architecture, agentic planning, metric registry, demo, productionization
-sample_outputs/  Committed successful and refusal outputs
-data/            Discovered candidates and the verification record
+web/                  Next.js map-first workspace: stages, panels, MapLibre, typed client
+server/               FastAPI transport: sessions, DTO projections, discovery/simulation/analog APIs
+api/                  Atlas client, response parsing, geography allowlist + map centroids
+planning/             Planner, capability registry, plan validation, revision proposals
+orchestration/        Workflow state machine, intent, fetcher, pipeline, comparison
+metrics/              Approved metric registry and verification gate
+validation/           Comparability gates
+scoring/              Normalization, weighted scoring, sensitivity
+explanation/          Evidence-bound narrator and chat assistant
+market_discovery/     Public-county feature registry, clustering pipeline, artifact loader
+retailer_simulation/  NorthStar Apparel generator, benchmarks, reconciliation, enrichment
+analog_matching/      Look-alike matching (public features only; no outcome leakage)
+models/               Shared pydantic models, including DataClass provenance
+core/                 Environment configuration and credential-redacting logging
+scripts/              Catalogue discovery, samples, fixtures, market-discovery build, dev runner
+tests/                Offline Python suite (+ live Atlas marker)
+docs/                 Architecture, planning, metrics, phases 2–4, demo, productionization
+sample_outputs/       Committed successful and refusal Atlas-workflow outputs
+data/                 Atlas verification record; market_discovery/v1; retailer_simulation benchmarks
 ```
 
 ### Keeping the two halves honest
@@ -243,6 +277,11 @@ after touching anything in `server/views.py`:
 uv run python scripts/generate_web_fixtures.py
 ```
 
+Rebuild the market-discovery clustering artifact after changing features or the pipeline:
+
+```bash
+uv run python scripts/build_market_discovery_artifact.py
+```
 ---
 
 ## The refusal behaviour
@@ -282,7 +321,9 @@ See [`sample_outputs/`](sample_outputs/) for committed examples of every case.
 
 - **Every value carries provenance.** Each `EvidenceItem` records the Atlas datapoint id,
   the geography requested, the geography Atlas actually answered with, the period, the
-  source, the validation status, and the id of the API call it came from.
+  source, the validation status, and the id of the API call it came from. Post-execute
+  public and simulated numbers carry an explicit `DataClass` badge so they cannot be
+  mistaken for Atlas evidence.
 - **Every score is reproducible.** The scoring service emits a SHA-256 fingerprint over
   the geographies, weights, metric definitions, and observed values. The same inputs
   always produce the same hash and the same ranking.
@@ -328,8 +369,12 @@ the candidate set:
 | Working local application | `./scripts/dev.sh` — Next.js client in `web/`, API in `server/` |
 | Architecture: agentic vs deterministic | [`docs/architecture.md`](docs/architecture.md) |
 | Agent authority, plan lifecycle, fallbacks | [`docs/agentic_planning.md`](docs/agentic_planning.md) |
+| Data-class provenance | [`docs/data_provenance.md`](docs/data_provenance.md) |
+| Market archetypes / clustering | [`docs/market_discovery.md`](docs/market_discovery.md), [`docs/clustering_methodology.md`](docs/clustering_methodology.md) |
+| NorthStar synthetic retailer | [`docs/synthetic_retailer.md`](docs/synthetic_retailer.md) |
+| Analog-store matching | [`docs/analog_matching.md`](docs/analog_matching.md) |
 | Verified metric registry | [`docs/metric_registry.md`](docs/metric_registry.md) |
-| Seven-minute demo script | [`docs/demo_script.md`](docs/demo_script.md) |
+| Demo script (full map → analogs arc) | [`docs/demo_script.md`](docs/demo_script.md) |
 | Path to a production platform | [`docs/productionization.md`](docs/productionization.md) |
 | Change log | [`CHANGELOG.md`](CHANGELOG.md) |
 | Unit, integration, and API tests | `tests/` |

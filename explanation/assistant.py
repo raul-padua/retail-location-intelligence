@@ -162,6 +162,7 @@ def build_context(
     result: AnalysisResult | None = None,
     scope_note: str = "",
     plan: AnalysisPlanProposal | None = None,
+    analog_search: dict | None = None,
 ) -> AssistantContext:
     """Assemble everything the assistant is allowed to talk about."""
     context = AssistantContext(has_result=result is not None)
@@ -237,6 +238,17 @@ def build_context(
             "What can it not tell me?",
         ]
         return context
+
+    if analog_search:
+        for line in analog_search.get("context_pack", []):
+            context.add("analog_matching", line)
+        strength = analog_search.get("analogy_strength")
+        if strength:
+            context.add(
+                "analog_matching",
+                f"Last analog search analogy strength was {strength}. "
+                "Performance figures in that search are simulated NorthStar data only.",
+            )
 
     _add_result_facts(context, result, registry)
     return context

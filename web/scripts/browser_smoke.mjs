@@ -72,7 +72,7 @@ try {
   const tabs = await page.getByRole("tab").allTextContents();
   console.log(`  --  tabs: ${tabs.join(" · ")}`);
 
-  for (const label of ["Sensitivity", "Evidence", "Decision log", "Assistant"]) {
+  for (const label of ["Sensitivity", "Evidence", "Decision log", "Assistant", "Archetypes"]) {
     const tab = page.getByRole("tab", { name: new RegExp(label, "i") }).first();
     if (!(await tab.count())) continue;
     await step(`${label} tab renders`, async () => {

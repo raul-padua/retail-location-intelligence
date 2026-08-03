@@ -42,6 +42,12 @@ class Session:
     chat: list[dict] = field(default_factory=list)
     """Assistant transcript. Server-held so a reload does not lose the conversation."""
 
+    retailer_simulation: dict | None = None
+    """Last explicit NorthStar simulation run for this session (wire projection)."""
+
+    analog_matching: dict | None = None
+    """Last analog-store search for this session (wire projection)."""
+
     lock: threading.RLock = field(default_factory=threading.RLock, repr=False, compare=False)
     """Serializes work on *this* session. See ``SessionStore`` for why it is not shared."""
 

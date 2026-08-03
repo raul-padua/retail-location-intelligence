@@ -1,0 +1,318 @@
+{
+  "artifact_version": "v1",
+  "centroids_scaled": [
+    [
+      0.7620043109913357,
+      0.09295821856145588,
+      -0.8384515961463633,
+      -0.9937880393761404,
+      0.013848931532030666,
+      -0.2859467712533031,
+      -0.0361593730243337,
+      -0.08204018169427325,
+      -1.1148255483968006
+    ],
+    [
+      0.18030008243291257,
+      1.865023601080259,
+      0.2897695726096607,
+      0.7908460120308172,
+      -0.7032949063016265,
+      1.3740585214924688,
+      -2.1749261759239964,
+      1.4181009589731208,
+      0.14339295865585858
+    ],
+    [
+      -0.04853421789166267,
+      -0.04786417796927283,
+      -0.11290447186339984,
+      0.4031963876998882,
+      -0.8713286088902653,
+      0.8268107187134265,
+      -0.2525607358809607,
+      -0.6325506920309315,
+      0.7582788725372452
+    ],
+    [
+      -0.06943785189777288,
+      -0.1136834101471252,
+      1.1837668397149528,
+      0.6864788054801825,
+      0.7423950563270594,
+      -0.673585704300794,
+      0.8085272799927001,
+      0.5569924187045198,
+      0.5204938097551193
+    ],
+    [
+      -2.624997611616775,
+      -2.273098249787928,
+      -0.843943313160262,
+      -1.1772213114954375,
+      1.607168504292164,
+      -1.5699601550077638,
+      1.2634510339090759,
+      -1.1272761373201419,
+      -0.6188321659064769
+    ]
+  ],
+  "config_hash": "5a4d926c3aebe032",
+  "data_class": "public_market_data",
+  "dropped_correlated": [
+    "pct_renter_occupied"
+  ],
+  "feature_ids": [
+    "population_total",
+    "population_density",
+    "median_household_income",
+    "pct_bachelor_or_higher",
+    "median_age",
+    "pct_age_25_44",
+    "pct_owner_occupied",
+    "mean_commute_minutes",
+    "labor_force_participation"
+  ],
+  "feature_set_version": "acs5_2022_apparel_v1",
+  "features": [
+    {
+      "acs_variables": [
+        "B01003_001E"
+      ],
+      "caveats": "Administrative county population, not trade-area catchment.",
+      "display_name": "Total population",
+      "feature_id": "population_total",
+      "higher_is": "larger resident base",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Market size for store-count and format screening.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "log1p",
+      "unit": "people"
+    },
+    {
+      "acs_variables": [
+        "B01003_001E"
+      ],
+      "caveats": "Uses county land area from the artifact; water area excluded where known.",
+      "display_name": "Population density",
+      "feature_id": "population_density",
+      "higher_is": "denser settlement",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Urban vs dispersed demand patterns and format fit.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "log1p",
+      "unit": "people per sq mi"
+    },
+    {
+      "acs_variables": [
+        "B19013_001E"
+      ],
+      "caveats": "Household median; does not capture visitor or student spend.",
+      "display_name": "Median household income",
+      "feature_id": "median_household_income",
+      "higher_is": "higher income",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Spending-power proxy for mid/premium apparel.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "identity",
+      "unit": "USD"
+    },
+    {
+      "acs_variables": [
+        "B15003_022E",
+        "B15003_023E",
+        "B15003_024E",
+        "B15003_025E",
+        "B15003_001E"
+      ],
+      "caveats": "Constructed as (bachelor+master+professional+doctorate) / age-25+ total.",
+      "display_name": "Share bachelor's or higher (age 25+)",
+      "feature_id": "pct_bachelor_or_higher",
+      "higher_is": "higher education share",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Education mix often correlates with brand affinity for apparel.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "identity",
+      "unit": "percent"
+    },
+    {
+      "acs_variables": [
+        "B01002_001E"
+      ],
+      "caveats": "County-wide median; intra-county campus pockets are smoothed away.",
+      "display_name": "Median age",
+      "feature_id": "median_age",
+      "higher_is": "older population",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Age structure for assortment and marketing tone.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "identity",
+      "unit": "years"
+    },
+    {
+      "acs_variables": [
+        "B01001_001E"
+      ],
+      "caveats": "Fixture may use a pre-aggregated share when full age table is unavailable.",
+      "display_name": "Share age 25\u201344",
+      "feature_id": "pct_age_25_44",
+      "higher_is": "larger prime-age share",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Prime working-age cohort for fashion apparel demand.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "identity",
+      "unit": "percent"
+    },
+    {
+      "acs_variables": [
+        "B25003_002E",
+        "B25003_001E"
+      ],
+      "caveats": "High owner share can mean suburban format, not higher spend.",
+      "display_name": "Owner-occupied housing share",
+      "feature_id": "pct_owner_occupied",
+      "higher_is": "more owner-occupied",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Tenure mix as a stability / suburbanization signal.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "identity",
+      "unit": "percent"
+    },
+    {
+      "acs_variables": [
+        "B08303_001E"
+      ],
+      "caveats": "Workers' mean travel time; not a drive-time trade area.",
+      "display_name": "Mean commute time",
+      "feature_id": "mean_commute_minutes",
+      "higher_is": "longer average commute",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Time-budget and destination-retail accessibility proxy.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "identity",
+      "unit": "minutes"
+    },
+    {
+      "acs_variables": [
+        "B23025_002E",
+        "B23025_001E"
+      ],
+      "caveats": "Civilian labor force / population 16+; students and retirees dilute it.",
+      "display_name": "Labor-force participation rate",
+      "feature_id": "labor_force_participation",
+      "higher_is": "higher participation",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Workforce engagement as a daytime-economy signal.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "identity",
+      "unit": "percent"
+    },
+    {
+      "acs_variables": [
+        "B25003_003E",
+        "B25003_001E"
+      ],
+      "caveats": "Complement of owner share when both are present; kept for interpretability.",
+      "display_name": "Renter-occupied housing share",
+      "feature_id": "pct_renter_occupied",
+      "higher_is": "more renter-occupied",
+      "missing_policy": "median_impute",
+      "period": "ACS 5-year 2022",
+      "retail_rationale": "Renter share often tracks denser, younger urban cores.",
+      "source_url": "https://www.census.gov/programs-surveys/acs",
+      "transform": "identity",
+      "unit": "percent"
+    }
+  ],
+  "k": 5,
+  "min_population": 50000,
+  "model_version": "kmeans_zscore_v1",
+  "n_counties_fit": 39,
+  "n_counties_total": 41,
+  "pca_components": [
+    [
+      0.3113752724895388,
+      0.4356956247802294,
+      0.1514539500815912,
+      0.27042986038504024,
+      -0.3864126808170792,
+      0.4461526543749195,
+      -0.412014277149775,
+      0.25761420533567725,
+      0.18071070687214388
+    ],
+    [
+      -0.2403798166542999,
+      -0.13535389954435872,
+      0.5520335036369579,
+      0.5107399720828928,
+      0.1785431927901629,
+      -0.04024399096788609,
+      0.23469946009502946,
+      0.00736950602457481,
+      0.5192929430617924
+    ]
+  ],
+  "pca_mean": [
+    5.693451408334136e-18,
+    3.2879681883129638e-16,
+    -2.7328566760003855e-16,
+    1.7365026795419115e-16,
+    -7.97083197166779e-17,
+    -2.846725704167068e-18,
+    1.0604053248022329e-16,
+    1.9126438324872488e-17,
+    2.2517600319961507e-15
+  ],
+  "provenance_notes": [
+    "Fixture counties are ACS-shaped public-market features for offline demos.",
+    "Feature ids and ACS variable references are in the feature registry.",
+    "K-means membership is deterministic for this seed and config hash.",
+    "Counties below min_population are assigned by nearest centroid after fit."
+  ],
+  "quality": {
+    "candidate_scores": {
+      "4": 0.27229132486686164,
+      "5": 0.30549313713869136,
+      "6": 0.2938313835647418,
+      "7": 0.28480858794600916,
+      "8": 0.26471119728074566
+    },
+    "inertia": 119.86150538263058,
+    "k": 5,
+    "selection_rule": "maximize silhouette over k in [['population_total', 'population_density', 'pct_age_25_44'],['median_age', 'pct_owner_occupied']] with seed=42; ties prefer smaller k",
+    "silhouette": 0.30549313713869136
+  },
+  "scaler_mean": [
+    13.871208840728695,
+    7.590566558056755,
+    89031.35871001851,
+    45.04358974358974,
+    38.53076923076923,
+    28.994871794871795,
+    58.91025641025641,
+    29.02051282051282,
+    66.92820512820512
+  ],
+  "scaler_scale": [
+    1.1177588355205317,
+    1.42822718965374,
+    25110.09428786005,
+    10.060631444519718,
+    3.0296952411815075,
+    3.73355874213857,
+    12.602844507405601,
+    4.128399422088077,
+    3.115877348393244
+  ],
+  "seed": 42
+}

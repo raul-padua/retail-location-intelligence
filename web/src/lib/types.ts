@@ -45,10 +45,28 @@ export type TraceAuthority =
 
 export type LimitationSeverity = "info" | "caution" | "blocking";
 
+export type DataClass =
+  | "atlas_evidence"
+  | "public_market_data"
+  | "public_company_benchmark"
+  | "simulated_retailer_data"
+  | "user_supplied_proprietary_data"
+  | "user_assumption"
+  | "agent_interpretation";
+
+export interface DataClassBadge {
+  data_class: DataClass;
+  label: string;
+  short_note: string;
+}
+
 export interface Geography {
   slug: string;
   display_name: string;
   geography_type: string;
+  lat?: number | null;
+  lon?: number | null;
+  data_class?: DataClassBadge;
 }
 
 export interface MetricDefinition {
@@ -108,6 +126,7 @@ export interface Catalog {
   capabilities: Capability[];
   strategy_profiles: StrategyProfileInfo[];
   geographies: Geography[];
+  data_classes: DataClassBadge[];
   presets: { label: string; slugs: string[] }[];
   objective_examples: { label: string; objective: string }[];
   llm_models: { id: string; caption: string }[];
@@ -308,6 +327,7 @@ export interface EvidenceItem {
   is_usable: boolean;
   geography_context_shifted: boolean;
   citation: string;
+  data_class?: DataClassBadge;
 }
 
 export interface ExcludedMetric {
@@ -342,6 +362,7 @@ export interface EvidencePackage {
   completeness: number;
   usable_count: number;
   raw_call_count: number;
+  data_class?: DataClassBadge;
 }
 
 export interface ScoreBreakdown {
@@ -374,6 +395,7 @@ export interface RankedRegion {
   category_scores: CategoryScore[];
   evidence_completeness: number;
   missing_metric_ids: string[];
+  data_class?: DataClassBadge;
 }
 
 export interface Recommendation {
@@ -608,4 +630,311 @@ export interface AssistantAskResponse {
   reply: AssistantReply;
   messages: ChatMessage[];
   state: WorkflowState;
+}
+
+export interface MarketDiscoveryArtifact {
+  artifact_version: string;
+  feature_set_version: string;
+  model_version: string;
+  seed: number;
+  config_hash: string;
+  k: number;
+  min_population: number;
+  n_counties_fit: number;
+  n_counties_total: number;
+  data_class: DataClassBadge;
+  quality: {
+    k: number;
+    inertia: number;
+    silhouette: number;
+    selection_rule: string;
+    candidate_scores: Record<string, number>;
+  };
+  provenance_notes: string[];
+  feature_ids: string[];
+  dropped_correlated: string[];
+  features: MarketFeatureDef[];
+}
+
+export interface MarketFeatureDef {
+  feature_id: string;
+  display_name: string;
+  acs_variables: string[];
+  source_url: string;
+  period: string;
+  unit: string;
+  transform: string;
+  retail_rationale: string;
+  missing_policy: string;
+  caveats: string;
+  higher_is: string;
+}
+
+export interface ArchetypeCluster {
+  cluster_id: string;
+  label: string;
+  member_count: number;
+  centroid_features: Record<string, number>;
+  distinctive_high: string[];
+  distinctive_low: string[];
+  data_class: DataClassBadge;
+}
+
+export interface ArchetypeMarket {
+  geoid: string;
+  name: string;
+  cluster_id: string;
+  label: string;
+  distance_to_centroid: number;
+  pca_x: number;
+  pca_y: number;
+  lat: number;
+  lon: number;
+  population: number;
+  in_clustering_universe: boolean;
+  assignment_method: string;
+  data_class: DataClassBadge;
+  atlas_slugs: string[];
+}
+
+export interface ArchetypePeer {
+  geoid: string;
+  name: string;
+  cluster_id: string;
+  label: string;
+  distance: number;
+  population: number;
+}
+
+export interface MarketArchetypeProfile {
+  market_id: string;
+  geoid: string;
+  name: string;
+  cluster_id: string;
+  label: string;
+  profile: Record<string, number | null>;
+  centroid_profile: Record<string, number>;
+  nearest_markets: ArchetypePeer[];
+  distance_to_centroid: number;
+  pca_x: number;
+  pca_y: number;
+  quality: MarketDiscoveryArtifact["quality"];
+  caveats: string[];
+  data_class: DataClassBadge;
+  assignment_method: string;
+  atlas_slug: string | null;
+}
+
+export interface PcaPoint {
+  geoid: string;
+  name: string;
+  cluster_id: string;
+  label: string;
+  pca_x: number;
+  pca_y: number;
+  population: number;
+  in_clustering_universe: boolean;
+  data_class: DataClassBadge;
+}
+
+export interface RetailerSimulationMeta {
+  simulator_version: string;
+  brand: string;
+  benchmark_version: string;
+  data_class: DataClassBadge;
+  provenance_notes: string[];
+}
+
+export interface RetailerBenchmark {
+  metric: string;
+  value: number;
+  unit: string;
+  source_name: string;
+  source_url: string | null;
+  source_period: string | null;
+  verification_state: "VERIFIED" | "DEMO_DEFAULT" | "UNVERIFIED_DISABLED";
+  usage: string;
+  data_class: DataClassBadge;
+}
+
+export interface RetailerBenchmarkCatalog {
+  version: string;
+  brand: string;
+  provenance_notes: string[];
+  benchmarks: RetailerBenchmark[];
+  active_count: number;
+  disabled_count: number;
+  data_class: DataClassBadge;
+}
+
+export interface RetailerScenarioWire {
+  store_count: number;
+  format_mix: Record<string, number>;
+  seed: number;
+  sales_target_usd: number;
+  margin_min_pct: number;
+  margin_max_pct: number;
+  data_class: DataClassBadge;
+}
+
+export interface SimulatedStore {
+  store_id: string;
+  name: string;
+  format: string;
+  city: string;
+  state: string;
+  lat: number;
+  lon: number;
+  sq_ft: number;
+  annual_sales_usd: number;
+  gross_margin_pct: number;
+  host_geoid?: string | null;
+  host_name?: string | null;
+  host_cluster_id?: string | null;
+  data_class: DataClassBadge;
+}
+
+export interface SimilarMarketProfile {
+  cluster_id: string | null;
+  cluster_label: string | null;
+  focus_market_name: string | null;
+  store_count: number;
+  median_annual_sales_usd: number | null;
+  iqr_annual_sales_usd: { q1: number; q3: number } | null;
+  median_gross_margin_pct: number | null;
+  store_ids: string[];
+  note: string;
+  data_class: DataClassBadge;
+}
+
+export interface MonthlyPerformance {
+  month: number;
+  label: string;
+  total_sales_usd: number;
+  store_count: number;
+  data_class: DataClassBadge;
+}
+
+export interface SegmentShare {
+  segment_id: string;
+  label: string;
+  share_pct: number;
+  data_class: DataClassBadge;
+}
+
+export interface ReconciliationLine {
+  metric: string;
+  target: number;
+  generated: number;
+  tolerance_pct: number;
+  passed: boolean;
+  note: string;
+  data_class: DataClassBadge;
+}
+
+export interface RetailerSimulationArtifact {
+  brand: string;
+  simulator_version: string;
+  seed: number;
+  scenario: RetailerScenarioWire;
+  stores: SimulatedStore[];
+  monthly: MonthlyPerformance[];
+  segments: SegmentShare[];
+  reconciliation: ReconciliationLine[];
+  assumptions: string[];
+  provenance_notes: string[];
+  data_class: DataClassBadge;
+  reconciliation_passed: boolean;
+  similar_market_profile?: SimilarMarketProfile | null;
+}
+
+export interface RetailerSimulationRunRequest {
+  store_count?: number;
+  format_mix?: Record<string, number>;
+  seed?: number;
+  sales_target_usd?: number;
+  focus_market_id?: string | null;
+  margin_min_pct?: number;
+  margin_max_pct?: number;
+}
+
+export interface FeatureContribution {
+  feature_id: string;
+  display_name: string;
+  candidate_value: number | null;
+  store_value: number | null;
+  weight: number;
+  signed_contribution: number;
+}
+
+export interface AnalogPerformanceSummary {
+  median_annual_sales_usd: number;
+  iqr_annual_sales_usd: [number, number];
+  median_gross_margin_pct: number;
+  iqr_gross_margin_pct: [number, number];
+  data_class: DataClassBadge;
+}
+
+export interface AnalogMatch {
+  store_id: string;
+  store_name: string;
+  format: string;
+  host_geoid: string;
+  host_name: string;
+  similarity: number;
+  distance: number;
+  contributions: FeatureContribution[];
+  mismatches: string[];
+  performance_summary: AnalogPerformanceSummary | null;
+  data_class: DataClassBadge;
+}
+
+export interface AnalogAggregateRange {
+  min_similarity: number;
+  max_similarity: number;
+  median_similarity: number;
+  data_class: DataClassBadge;
+}
+
+export interface AnalogSearchResult {
+  candidate_market_id: string;
+  candidate_geoid: string;
+  candidate_name: string;
+  candidate_cluster_id: string;
+  matches: AnalogMatch[];
+  aggregate_range: AnalogAggregateRange | null;
+  analogy_strength: "strong" | "moderate" | "weak" | "insufficient";
+  warnings: string[];
+  feature_ids: string[];
+  matcher_version: string;
+  feature_set_version: string;
+  context_pack: string[];
+  data_class: DataClassBadge;
+  data_class_notes?: {
+    candidate_profile: DataClassBadge;
+    match_features: DataClassBadge;
+    performance_summary: DataClassBadge;
+  };
+}
+
+export interface AnalogMatchingMeta {
+  matcher_version: string;
+  feature_set_version: string;
+  matching_features: Array<Record<string, unknown>>;
+  thresholds: {
+    min_strong_similarity: number;
+    min_moderate_similarity: number;
+    min_peer_count: number;
+    default_top_k: number;
+    max_top_k: number;
+  };
+  data_class: DataClassBadge;
+  provenance_notes: string[];
+}
+
+export interface AnalogMatchingSearchRequest {
+  market_id: string;
+  top_k?: number;
+  preferred_format?: string | null;
+  scenario?: RetailerSimulationRunRequest;
 }

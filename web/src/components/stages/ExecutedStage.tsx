@@ -3,10 +3,10 @@
 /**
  * Step 5. The result, and every panel needed to interrogate it.
  *
- * Tab order is the order a sceptical reader works through: the answer, then a way to argue
- * with it, then how sensitive it is, then what changed, then the underlying values, the
- * plan that authorized them, the log of who did what, and finally what the whole thing
- * could not do.
+ * Tab order is the map-first narrative: the answer, the comparison in market context,
+ * reserved slots for later discovery/simulation/analog phases, then evidence, assumptions,
+ * and the decision log. Secondary analytical panels (plan, sensitivity, versions) remain
+ * available so nothing from the previous workspace was removed.
  */
 
 import { useState } from "react";
@@ -16,6 +16,10 @@ import clsx from "clsx";
 import { api } from "@/lib/api";
 import { useSession } from "@/lib/session";
 import { Badge, Banner, Button, EmptyState } from "../ui";
+import { ArchetypesPanel } from "../panels/ArchetypesPanel";
+import { AnalogsPanel } from "../panels/AnalogsPanel";
+import { SimulationPanel } from "../panels/SimulationPanel";
+import { AssumptionsPanel } from "../panels/AssumptionsPanel";
 import { AssistantPanel } from "../panels/AssistantPanel";
 import { DashboardPanel } from "../panels/DashboardPanel";
 import { EvidencePanel } from "../panels/EvidencePanel";
@@ -26,20 +30,25 @@ import { RegistryPanel } from "../panels/RegistryPanel";
 import { SensitivityPanel } from "../panels/SensitivityPanel";
 import { TracePanel } from "../panels/TracePanel";
 import { VersionsPanel } from "../panels/VersionsPanel";
+import { ProvenanceBadge } from "../ProvenanceBadge";
 
 type TabId =
   | "recommendation"
-  | "assistant"
   | "dashboard"
+  | "archetypes"
+  | "simulation"
+  | "analogs"
+  | "evidence"
+  | "assumptions"
+  | "trace"
+  | "assistant"
   | "sensitivity"
   | "versions"
-  | "evidence"
   | "plan"
-  | "trace"
   | "limitations"
   | "registry";
 
-export function ExecutedStage() {
+export function ExecutedStage({ compact }: { compact?: boolean }) {
   const { state, sessionId } = useSession();
   const [tab, setTab] = useState<TabId>("recommendation");
   const [exporting, setExporting] = useState(false);
@@ -51,16 +60,21 @@ export function ExecutedStage() {
 
   const result = current.result;
   const refused = result.refused;
+  const evidenceClass = result.evidence?.data_class;
 
   const tabs: { id: TabId; label: string; hidden?: boolean }[] = [
-    { id: "recommendation", label: "Recommendation" },
+    { id: "recommendation", label: "Executive summary" },
+    { id: "dashboard", label: "Market comparison", hidden: refused },
+    { id: "archetypes", label: "Archetypes" },
+    { id: "simulation", label: "Retailer simulation" },
+    { id: "analogs", label: "Analog stores" },
+    { id: "evidence", label: "Evidence" },
+    { id: "assumptions", label: "Assumptions" },
+    { id: "trace", label: "Decision log" },
     { id: "assistant", label: "Assistant" },
-    { id: "dashboard", label: "Comparison", hidden: refused },
     { id: "sensitivity", label: "Sensitivity", hidden: refused },
     { id: "versions", label: "Versions", hidden: refused },
-    { id: "evidence", label: "Evidence" },
     { id: "plan", label: "Plan" },
-    { id: "trace", label: "Decision log" },
     { id: "limitations", label: "Limitations" },
     { id: "registry", label: "Registry" },
   ];
@@ -85,7 +99,7 @@ export function ExecutedStage() {
   };
 
   return (
-    <div className="space-y-5">
+    <div className={clsx("space-y-4", compact && "space-y-3")}>
       {state?.notice ? <Banner tone="accent">{state.notice}</Banner> : null}
 
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -94,6 +108,7 @@ export function ExecutedStage() {
             {refused ? "Ranking withheld" : "Analysis complete"}
           </Badge>
           <Badge>Version {current.version}</Badge>
+          <ProvenanceBadge badge={evidenceClass} />
           {state && state.versions.length > 1 ? (
             <Badge tone="accent">{state.versions.length} versions</Badge>
           ) : null}
@@ -103,7 +118,11 @@ export function ExecutedStage() {
         </Button>
       </div>
 
-      <nav className="flex flex-wrap gap-1 border-b border-slate-200" role="tablist">
+      <nav
+        className="flex flex-wrap gap-1 border-b border-slate-200"
+        role="tablist"
+        aria-label="Result views"
+      >
         {tabs
           .filter((entry) => !entry.hidden)
           .map((entry) => (
@@ -114,7 +133,7 @@ export function ExecutedStage() {
               aria-selected={tab === entry.id}
               onClick={() => setTab(entry.id)}
               className={clsx(
-                "-mb-px border-b-2 px-3 py-2 text-sm font-medium transition",
+                "-mb-px border-b-2 px-2.5 py-2 text-xs font-medium transition sm:text-sm",
                 tab === entry.id
                   ? "border-blue-600 text-blue-700"
                   : "border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700",
@@ -127,13 +146,17 @@ export function ExecutedStage() {
 
       <div role="tabpanel">
         {tab === "recommendation" ? <RecommendationPanel result={result} /> : null}
-        {tab === "assistant" ? <AssistantPanel /> : null}
         {tab === "dashboard" ? <DashboardPanel result={result} /> : null}
+        {tab === "archetypes" ? <ArchetypesPanel /> : null}
+        {tab === "simulation" ? <SimulationPanel /> : null}
+        {tab === "analogs" ? <AnalogsPanel /> : null}
+        {tab === "evidence" ? <EvidencePanel result={result} /> : null}
+        {tab === "assumptions" ? <AssumptionsPanel result={result} /> : null}
+        {tab === "trace" ? <TracePanel result={result} /> : null}
+        {tab === "assistant" ? <AssistantPanel /> : null}
         {tab === "sensitivity" ? <SensitivityPanel /> : null}
         {tab === "versions" ? <VersionsPanel /> : null}
-        {tab === "evidence" ? <EvidencePanel result={result} /> : null}
         {tab === "plan" ? <PlanView plan={current.plan} /> : null}
-        {tab === "trace" ? <TracePanel result={result} /> : null}
         {tab === "limitations" ? <LimitationsPanel result={result} /> : null}
         {tab === "registry" ? <RegistryPanel /> : null}
       </div>

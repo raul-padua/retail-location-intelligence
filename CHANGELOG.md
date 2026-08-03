@@ -1,5 +1,99 @@
 # Change log
 
+## 0.7.0 — Analog store matching (Phase 4)
+
+Deterministic analog-store search: public ACS county features match candidate markets to
+NorthStar Apparel simulated stores. Performance summaries attach only after ranking.
+
+### Added
+
+- `analog_matching/` — matching-feature registry, host-county assignment, weighted Euclidean
+  distance, analogy-strength assessment, query service.
+- Capability `retailer.analog_store_search` (available).
+- API: `/api/analog-matching/{meta,search}` and session-scoped
+  `/api/sessions/{id}/analog-matching/{search,}`.
+- Analog stores panel replacing the Phase 4 placeholder: ranked cards, contribution chart,
+  filters, simulated-performance banner, context pack.
+- Docs: `docs/analog_matching.md`; assistant context includes last analog search summary.
+- Session field `analog_matching` for last search projection.
+
+### Tests
+
+344 offline Python (+11 analog matching); 33 frontend (+2 analog panel).
+
+## 0.6.0 — NorthStar Apparel simulation (Phase 3)
+
+Seeded, equation-based fictional retailer simulator with public aggregate anchors. All
+outputs are explicitly simulated — never real GAP or retailer store performance.
+
+### Added
+
+- `data/retailer_simulation/public_benchmarks.yaml` — benchmarks with
+  `VERIFIED` / `DEMO_DEFAULT` / `UNVERIFIED_DISABLED` states (disabled never affect generation).
+- `retailer_simulation/` — typed `RetailerScenario`, deterministic generator, reconciliation,
+  benchmark loader, query service.
+- Capability `retailer.scenario_simulation` (available).
+- API: `/api/retailer-simulation/{meta,benchmarks,defaults,run}` and session-scoped
+  `/api/sessions/{id}/retailer-simulation/{run,}`.
+- Simulation panel replacing the Phase 3 placeholder: simulated banner, sources, assumptions,
+  store list, monthly/segment charts, seed/version, reconciliation.
+- Docs: `docs/synthetic_retailer.md`, `docs/data_provenance.md`.
+
+### Tests
+
+333 offline Python (+9 retailer simulation); 31 frontend (+2 simulation panel).
+
+## 0.5.0 — Market archetypes & deterministic clustering (Phase 2)
+
+Public-county market discovery with explainable K-means archetypes. The agent can request
+and explain membership; it never computes it. Atlas comparison scoring is unchanged.
+
+### Added
+
+- `market_discovery/` — feature registry, matrix pipeline, K-means + canonical ids, artifact
+  loader, Atlas slug → county bridge, query service.
+- Versioned artifact `data/market_discovery/v1/` and
+  `scripts/build_market_discovery_artifact.py`.
+- Capability `market.archetype_analysis` (available, deterministic).
+- API: `/api/market-discovery/{artifact,clusters,markets,pca,markets/{id}}`.
+- Archetypes panel: profile, peers, cluster cards, PCA scatter, methodology drawer.
+- Map marker colors follow public-market archetypes when a county mapping exists.
+- Docs: `docs/market_discovery.md`, `docs/clustering_methodology.md`.
+
+### Map detail
+
+- Default basemap switches from sparse MapLibre demotiles to street-level Carto Voyager
+  (no token) with tighter Burlington-area framing.
+
+### Tests
+
+324 offline Python (+9 market discovery); 29 frontend (harness stubs market-discovery).
+
+## 0.4.0 — Map-first decision workspace (Phase 1)
+
+The Next.js client becomes a map-first retail decision workspace. No analytical rule
+changed: markers are presentation of server-projected geographies, and scores still come
+only from approved deterministic services.
+
+### Added
+
+- `models/provenance.py` — `DataClass` enum distinguishing Atlas evidence, public market
+  data, public company benchmarks, simulated retailer data, proprietary (future), user
+  assumptions, and agent interpretation. Surfaced on the wire as labeled badges.
+- Demo geography centroids in `api/geographies.py` for map markers (not analytical inputs).
+- MapLibre market map with a no-token demo style fallback and an accessible list fallback
+  for environments without WebGL (including tests).
+- Decision workspace shell: sidebar rail, map + candidate tray, intelligence panel with
+  selection sync.
+- Result tabs remapped for the Phase 1–4 narrative: Executive summary, Market comparison,
+  Archetypes / Retailer simulation / Analog stores (placeholders), Evidence, Assumptions,
+  Decision log — plus the existing secondary panels.
+- `NEXT_PUBLIC_MAP_STYLE_URL` for optional custom MapLibre styles.
+
+### Tests
+
+315 offline Python (+3 geography/map projection), 29 frontend.
+
 ## 0.3.0 — Next.js client over a governed API
 
 The frontend moves from Streamlit to Next.js. No rule changed, which was the point: the

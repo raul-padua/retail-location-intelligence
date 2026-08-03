@@ -114,7 +114,7 @@ but it makes no claim to predict performance. The production path is:
 | Observability | Structured JSON logs | Traces per analysis run, plus alerting on refusal-rate and validation-exclusion-rate drift, which are the leading indicators of upstream data change |
 | Plan storage | In-memory server-side sessions, LRU-capped, lost on restart | Plans, versions, approvals, and revisions persisted as an immutable lineage, addressed by plan id and version, in shared storage behind an authenticated identity |
 | Approval | Single user, in-session | Role-based approval, delegation, and an exportable authorization record per executed analysis |
-| Testing | 312 offline Python, 24 frontend, 6 live | The live suite becomes a scheduled contract test; a golden-output suite pins scoring behaviour across releases; the generated frontend fixtures become a CI drift check rather than a manual regeneration |
+| Testing | 315 offline Python, 29 frontend, 6 live | The live suite becomes a scheduled contract test; a golden-output suite pins scoring behaviour across releases; the generated frontend fixtures become a CI drift check rather than a manual regeneration |
 
 ### Governance
 

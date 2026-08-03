@@ -12,6 +12,10 @@ dependencies = [
     # The UI is a Next.js app in web/, so the Python side is a headless HTTP service.
     "fastapi>=0.115.0",
     "uvicorn[standard]>=0.32.0",
+    "numpy>=2.4.6",
+    "pyyaml>=6.0.0",
+    "pandas>=3.0.5",
+    "scikit-learn>=1.9.0",
 ]
 
 [dependency-groups]

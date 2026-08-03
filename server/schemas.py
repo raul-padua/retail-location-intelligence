@@ -55,6 +55,35 @@ class ConfirmRevisionRequest(BaseModel):
     use_llm_narrative: bool = True
 
 
+class RetailerSimulationRunRequest(BaseModel):
+    """Explicit scenario inputs. The agent cannot mutate these silently."""
+
+    store_count: int = Field(default=48, ge=1, le=500)
+    format_mix: dict[str, float] = Field(
+        default_factory=lambda: {"mall": 0.35, "strip": 0.40, "outlet": 0.25}
+    )
+    seed: int = Field(default=42)
+    sales_target_usd: float = Field(default=200_000_000.0, gt=0)
+    margin_min_pct: float = Field(default=34.0, ge=0.0, le=100.0)
+    margin_max_pct: float = Field(default=42.0, ge=0.0, le=100.0)
+    focus_market_id: str | None = Field(
+        default=None,
+        description=(
+            "Optional Atlas slug or county GEOID. When set, the response includes a "
+            "similar-market profile of simulated stores in the same public archetype."
+        ),
+    )
+
+
+class AnalogMatchingSearchRequest(BaseModel):
+    """Search synthetic NorthStar stores for public-market analogs."""
+
+    market_id: str = Field(min_length=1)
+    top_k: int = Field(default=5, ge=1, le=20)
+    preferred_format: str | None = None
+    scenario: RetailerSimulationRunRequest | None = None
+
+
 __all__ = [
     "AnswerRequest",
     "ApproveRequest",
@@ -63,4 +92,6 @@ __all__ = [
     "DescribeRequest",
     "EditRequest",
     "RejectRequest",
+    "AnalogMatchingSearchRequest",
+    "RetailerSimulationRunRequest",
 ]

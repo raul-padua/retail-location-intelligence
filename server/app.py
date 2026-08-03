@@ -29,6 +29,22 @@ from fastapi import Depends, FastAPI, Header, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.geographies import DEMO_TOKEN_SCOPE_NOTE
+from analog_matching.service import (
+    AnalogMatchingService,
+    get_analog_matching_service,
+    search_view,
+)
+from market_discovery.geography_bridge import GeographyLevelMismatch
+from market_discovery.service import (
+    MarketDiscoveryService,
+    UnknownMarketError,
+    get_market_discovery_service,
+)
+from retailer_simulation.models import RetailerScenario
+from retailer_simulation.service import (
+    RetailerSimulationService,
+    get_retailer_simulation_service,
+)
 from orchestration import workflow
 from orchestration.workflow import Stage, WorkflowError, WorkflowState
 from core.config import MissingTokenError, Settings, get_settings
@@ -46,7 +62,9 @@ from server.schemas import (
     ConfirmRevisionRequest,
     DescribeRequest,
     EditRequest,
+    AnalogMatchingSearchRequest,
     RejectRequest,
+    RetailerSimulationRunRequest,
 )
 from server.sessions import Session, SessionStore, UnknownSessionError, get_store
 from server.views import (
@@ -79,6 +97,18 @@ def get_metric_registry() -> MetricRegistry:
 
 def get_capabilities() -> CapabilityRegistry:
     return get_capability_registry()
+
+
+def get_discovery() -> MarketDiscoveryService:
+    return get_market_discovery_service()
+
+
+def get_retailer_simulation() -> RetailerSimulationService:
+    return get_retailer_simulation_service()
+
+
+def get_analog_matching() -> AnalogMatchingService:
+    return get_analog_matching_service()
 
 
 def request_settings(
@@ -123,7 +153,7 @@ PipelineDep = Annotated[PipelineFactory, Depends(get_pipeline_factory)]
 
 app = FastAPI(
     title="Retail Location Intelligence API",
-    version="0.3.0",
+    version="0.7.0",
     description=(
         "Governed workflow API. The agent proposes; deterministic services decide; "
         "a human approves before anything runs."
@@ -225,6 +255,243 @@ def catalog(
         return catalog_view(registry, capabilities)
     except UnverifiedMetricError as error:
         raise HTTPException(status_code=500, detail=str(error)) from error
+
+
+# -------------------------------------------------------------- market discovery
+
+
+@app.get("/api/market-discovery/artifact")
+def market_discovery_artifact(
+    discovery: Annotated[MarketDiscoveryService, Depends(get_discovery)],
+) -> dict:
+    """Metadata for the frozen public-county clustering artifact."""
+    return discovery.meta()
+
+
+@app.get("/api/market-discovery/clusters")
+def market_discovery_clusters(
+    discovery: Annotated[MarketDiscoveryService, Depends(get_discovery)],
+) -> dict:
+    return {"clusters": discovery.clusters(), "artifact": discovery.meta()}
+
+
+@app.get("/api/market-discovery/markets")
+def market_discovery_markets(
+    discovery: Annotated[MarketDiscoveryService, Depends(get_discovery)],
+) -> dict:
+    return {"markets": discovery.markets(), "artifact": discovery.meta()}
+
+
+@app.get("/api/market-discovery/pca")
+def market_discovery_pca(
+    discovery: Annotated[MarketDiscoveryService, Depends(get_discovery)],
+) -> dict:
+    return {"points": discovery.pca_points(), "artifact": discovery.meta()}
+
+
+@app.get("/api/market-discovery/markets/{market_id}")
+def market_discovery_market(
+    market_id: str,
+    discovery: Annotated[MarketDiscoveryService, Depends(get_discovery)],
+    peers: int = 5,
+) -> dict:
+    """County archetype profile. ``market_id`` may be a GEOID or Atlas demo slug."""
+    try:
+        return discovery.market_profile_view(market_id, peer_count=max(1, min(peers, 20)))
+    except GeographyLevelMismatch as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+    except UnknownMarketError as error:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No market archetype for {market_id!r}.",
+        ) from error
+
+
+# ----------------------------------------------------------- retailer simulation
+
+
+def _scenario_from_request(body: RetailerSimulationRunRequest) -> RetailerScenario:
+    return RetailerScenario(
+        store_count=body.store_count,
+        format_mix=body.format_mix,
+        seed=body.seed,
+        sales_target_usd=body.sales_target_usd,
+        margin_min_pct=body.margin_min_pct,
+        margin_max_pct=body.margin_max_pct,
+    )
+
+
+@app.get("/api/retailer-simulation/meta")
+def retailer_simulation_meta(
+    simulation: Annotated[RetailerSimulationService, Depends(get_retailer_simulation)],
+) -> dict:
+    """Simulator version and provenance metadata."""
+    return simulation.meta()
+
+
+@app.get("/api/retailer-simulation/benchmarks")
+def retailer_simulation_benchmarks(
+    simulation: Annotated[RetailerSimulationService, Depends(get_retailer_simulation)],
+) -> dict:
+    """Public aggregate anchors with verification states."""
+    return simulation.benchmarks()
+
+
+@app.get("/api/retailer-simulation/defaults")
+def retailer_simulation_defaults(
+    simulation: Annotated[RetailerSimulationService, Depends(get_retailer_simulation)],
+) -> dict:
+    scenario = simulation.default_scenario()
+    return {"scenario": scenario.model_dump(mode="json")}
+
+
+@app.post("/api/retailer-simulation/run")
+def retailer_simulation_run_stateless(
+    body: RetailerSimulationRunRequest,
+    simulation: Annotated[RetailerSimulationService, Depends(get_retailer_simulation)],
+) -> dict:
+    """Run a simulation from explicit scenario parameters (no session storage)."""
+    scenario = _scenario_from_request(body)
+    return {
+        "simulation": simulation.run_view(
+            scenario,
+            focus_market_id=body.focus_market_id,
+        )
+    }
+
+
+@app.get("/api/sessions/{session_id}/retailer-simulation")
+def retailer_simulation_last(
+    session_id: str,
+    store: StoreDep,
+) -> dict:
+    session = _session(store, session_id)
+    if session.retailer_simulation is None:
+        raise HTTPException(status_code=404, detail="No simulation has been run in this session.")
+    return {"simulation": session.retailer_simulation}
+
+
+@app.post("/api/sessions/{session_id}/retailer-simulation/run")
+def retailer_simulation_run_session(
+    session_id: str,
+    body: RetailerSimulationRunRequest,
+    store: StoreDep,
+    simulation: Annotated[RetailerSimulationService, Depends(get_retailer_simulation)],
+) -> dict:
+    """Run and persist the last simulation for this session."""
+    session = _session(store, session_id)
+    scenario = _scenario_from_request(body)
+    with session.lock:
+        payload = simulation.run_view(
+            scenario,
+            focus_market_id=body.focus_market_id,
+        )
+        session.retailer_simulation = payload
+    return {"simulation": payload}
+
+
+# ------------------------------------------------------------- analog matching
+
+
+def _simulation_for_analog_search(
+    session: Session | None,
+    body: AnalogMatchingSearchRequest,
+    simulation_svc: RetailerSimulationService,
+) -> SimulationArtifact:
+    """Prefer session simulation when scenario matches; otherwise generate."""
+    from retailer_simulation.service import artifact_from_wire
+
+    if session is not None and session.retailer_simulation is not None and body.scenario is None:
+        return artifact_from_wire(session.retailer_simulation)
+
+    scenario = _scenario_from_request(body.scenario) if body.scenario else None
+    chosen = scenario or simulation_svc.default_scenario()
+
+    if session is not None and session.retailer_simulation is not None and body.scenario is not None:
+        stored = session.retailer_simulation.get("scenario", {})
+        requested = chosen.model_dump()
+        reuse_keys = ("store_count", "seed", "sales_target_usd", "margin_min_pct", "margin_max_pct")
+        if all(stored.get(key) == requested.get(key) for key in reuse_keys):
+            stored_mix = stored.get("format_mix", {})
+            if stored_mix == requested.get("format_mix"):
+                return artifact_from_wire(session.retailer_simulation)
+
+    return simulation_svc.run(chosen)
+
+
+@app.get("/api/analog-matching/meta")
+def analog_matching_meta(
+    matching: Annotated[AnalogMatchingService, Depends(get_analog_matching)],
+) -> dict:
+    """Matcher version, feature registry, and similarity thresholds."""
+    return matching.meta()
+
+
+@app.post("/api/analog-matching/search")
+def analog_matching_search_stateless(
+    body: AnalogMatchingSearchRequest,
+    matching: Annotated[AnalogMatchingService, Depends(get_analog_matching)],
+    simulation: Annotated[RetailerSimulationService, Depends(get_retailer_simulation)],
+) -> dict:
+    """Run analog search without session storage."""
+    try:
+        artifact = _simulation_for_analog_search(None, body, simulation)
+        result = matching.search(
+            market_id=body.market_id,
+            simulation=artifact,
+            top_k=body.top_k,
+            preferred_format=body.preferred_format,
+        )
+    except GeographyLevelMismatch as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+    except UnknownMarketError as error:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No market profile for {body.market_id!r}.",
+        ) from error
+    return {"search": search_view(result)}
+
+
+@app.get("/api/sessions/{session_id}/analog-matching")
+def analog_matching_last(
+    session_id: str,
+    store: StoreDep,
+) -> dict:
+    session = _session(store, session_id)
+    if session.analog_matching is None:
+        raise HTTPException(status_code=404, detail="No analog search has been run in this session.")
+    return {"search": session.analog_matching}
+
+
+@app.post("/api/sessions/{session_id}/analog-matching/search")
+def analog_matching_search_session(
+    session_id: str,
+    body: AnalogMatchingSearchRequest,
+    store: StoreDep,
+    matching: Annotated[AnalogMatchingService, Depends(get_analog_matching)],
+    simulation: Annotated[RetailerSimulationService, Depends(get_retailer_simulation)],
+) -> dict:
+    """Run and persist the last analog search for this session."""
+    session = _session(store, session_id)
+    try:
+        artifact = _simulation_for_analog_search(session, body, simulation)
+        result = matching.search(
+            market_id=body.market_id,
+            simulation=artifact,
+            top_k=body.top_k,
+            preferred_format=body.preferred_format,
+        )
+    except GeographyLevelMismatch as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+    except UnknownMarketError as error:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No market profile for {body.market_id!r}.",
+        ) from error
+    payload = search_view(result)
+    with session.lock:
+        session.analog_matching = payload
+    return {"search": payload}
 
 
 # ------------------------------------------------------------------------- sessions
@@ -427,6 +694,7 @@ def assistant_state(
         session.state.result,
         scope_note=DEMO_TOKEN_SCOPE_NOTE,
         plan=session.state.plan if session.state.stage == Stage.EXECUTED else None,
+        analog_search=session.analog_matching,
     )
     return {
         "messages": list(session.chat),
@@ -461,6 +729,7 @@ def assistant_ask(
             state.result,
             scope_note=DEMO_TOKEN_SCOPE_NOTE,
             plan=state.plan if executed else None,
+            analog_search=session.analog_matching,
         )
         history = [(entry["role"], entry["content"]) for entry in session.chat]
         reply = ask(

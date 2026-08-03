@@ -1,0 +1,66 @@
+# Public aggregate anchors for the NorthStar Apparel fictional simulator.
+# GAP-like framing for demo narrative only — never real retailer performance data.
+
+version: "v1"
+brand: "NorthStar Apparel"
+provenance_notes:
+  - "NorthStar Apparel is a fictional brand. Public benchmarks are aggregate anchors from filings or demo defaults."
+  - "UNVERIFIED_DISABLED entries are catalogued but excluded from generation."
+  - "Simulated store-level outputs carry data_class simulated_retailer_data."
+
+benchmarks:
+  - metric: avg_annual_store_sales_usd
+    value: 4200000
+    unit: USD
+    source_name: "Illustrative public-filing aggregate (apparel specialty)"
+    source_url: "https://www.sec.gov/edgar/search/"
+    source_period: "FY2023 illustrative"
+    verification_state: VERIFIED
+    usage: "Per-store annual sales anchor before format mix and scenario scaling"
+    data_class: public_company_benchmark
+
+  - metric: gross_margin_pct
+    value: 38.5
+    unit: percent
+    source_name: "Illustrative public-filing aggregate (apparel specialty)"
+    source_url: "https://www.sec.gov/edgar/search/"
+    source_period: "FY2023 illustrative"
+    verification_state: VERIFIED
+    usage: "Gross margin anchor; scenario margin range may override spread"
+    data_class: public_company_benchmark
+
+  - metric: national_store_count
+    value: 2500
+    unit: stores
+    source_name: "Demo default scale reference"
+    source_period: "n/a"
+    verification_state: DEMO_DEFAULT
+    usage: "Reference scale only; scenario store_count is explicit user assumption"
+    data_class: public_company_benchmark
+
+  - metric: avg_store_sq_ft
+    value: 8500
+    unit: sq_ft
+    source_name: "Demo default format footprint"
+    source_period: "n/a"
+    verification_state: DEMO_DEFAULT
+    usage: "Square footage anchor by format multiplier"
+    data_class: public_company_benchmark
+
+  - metric: ecommerce_share_pct
+    value: 28.0
+    unit: percent
+    source_name: "Unverified placeholder"
+    source_period: "n/a"
+    verification_state: UNVERIFIED_DISABLED
+    usage: "Disabled — not consumed by the v1 simulator"
+    data_class: public_company_benchmark
+
+  - metric: loyalty_penetration_pct
+    value: 45.0
+    unit: percent
+    source_name: "Unverified placeholder"
+    source_period: "n/a"
+    verification_state: UNVERIFIED_DISABLED
+    usage: "Disabled — reserved for a future segment model"
+    data_class: public_company_benchmark

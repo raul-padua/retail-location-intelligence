@@ -1,0 +1,130 @@
+[
+  {
+    "centroid_features": {
+      "labor_force_participation": 63.45454545454545,
+      "mean_commute_minutes": 28.681818181818183,
+      "median_age": 38.57272727272727,
+      "median_household_income": 67977.76007497657,
+      "pct_age_25_44": 27.927272727272726,
+      "pct_bachelor_or_higher": 35.04545454545455,
+      "pct_owner_occupied": 58.45454545454545,
+      "population_density": 7.723332013308002,
+      "population_total": 14.722945892043997
+    },
+    "cluster_id": "A01",
+    "distinctive_high": [
+      "population_total",
+      "population_density",
+      "median_age"
+    ],
+    "distinctive_low": [
+      "labor_force_participation",
+      "pct_bachelor_or_higher",
+      "median_household_income"
+    ],
+    "label": "Archetype 01",
+    "member_count": 11
+  },
+  {
+    "centroid_features": {
+      "labor_force_participation": 67.375,
+      "mean_commute_minutes": 34.875,
+      "median_age": 36.4,
+      "median_household_income": 96307.5,
+      "pct_age_25_44": 34.125,
+      "pct_bachelor_or_higher": 53.0,
+      "pct_owner_occupied": 31.5,
+      "population_density": 10.254243974465512,
+      "population_total": 14.072740850913164
+    },
+    "cluster_id": "A02",
+    "distinctive_high": [
+      "population_density",
+      "mean_commute_minutes",
+      "pct_age_25_44"
+    ],
+    "distinctive_low": [
+      "pct_owner_occupied",
+      "median_age"
+    ],
+    "label": "Archetype 02",
+    "member_count": 4
+  },
+  {
+    "centroid_features": {
+      "labor_force_participation": 69.2909090909091,
+      "mean_commute_minutes": 26.40909090909091,
+      "median_age": 35.89090909090909,
+      "median_household_income": 86196.31677600749,
+      "pct_age_25_44": 32.08181818181818,
+      "pct_bachelor_or_higher": 49.1,
+      "pct_owner_occupied": 55.72727272727273,
+      "population_density": 7.522205637670615,
+      "population_total": 13.816959289855212
+    },
+    "cluster_id": "A03",
+    "distinctive_high": [
+      "pct_age_25_44",
+      "labor_force_participation",
+      "pct_bachelor_or_higher"
+    ],
+    "distinctive_low": [
+      "median_age",
+      "mean_commute_minutes",
+      "pct_owner_occupied"
+    ],
+    "label": "Archetype 03",
+    "member_count": 11
+  },
+  {
+    "centroid_features": {
+      "labor_force_participation": 68.55,
+      "mean_commute_minutes": 31.32,
+      "median_age": 40.78,
+      "median_household_income": 118755.8556701031,
+      "pct_age_25_44": 26.48,
+      "pct_bachelor_or_higher": 51.95,
+      "pct_owner_occupied": 69.1,
+      "population_density": 7.428200820672073,
+      "population_total": 13.793594068250394
+    },
+    "cluster_id": "A04",
+    "distinctive_high": [
+      "median_household_income",
+      "pct_owner_occupied",
+      "median_age"
+    ],
+    "distinctive_low": [
+      "pct_age_25_44",
+      "population_density",
+      "population_total"
+    ],
+    "label": "Archetype 04",
+    "member_count": 10
+  },
+  {
+    "centroid_features": {
+      "labor_force_participation": 65.0,
+      "mean_commute_minutes": 24.366666666666664,
+      "median_age": 43.4,
+      "median_household_income": 67839.86254295534,
+      "pct_age_25_44": 23.133333333333336,
+      "pct_bachelor_or_higher": 33.199999999999996,
+      "pct_owner_occupied": 74.83333333333333,
+      "population_density": 4.344065832955308,
+      "population_total": 10.93709456712375
+    },
+    "cluster_id": "A05",
+    "distinctive_high": [
+      "median_age",
+      "pct_owner_occupied"
+    ],
+    "distinctive_low": [
+      "population_total",
+      "population_density",
+      "pct_age_25_44"
+    ],
+    "label": "Archetype 05",
+    "member_count": 3
+  }
+]

@@ -15,12 +15,13 @@ from __future__ import annotations
 
 from typing import Any
 
-from api.geographies import DEMO_GEOGRAPHIES, DEMO_TOKEN_SCOPE_NOTE
+from api.geographies import DEMO_GEOGRAPHIES, DEMO_TOKEN_SCOPE_NOTE, centroid_for
 from orchestration.workflow import Stage, WorkflowState
 from core.config import DEFAULT_LLM_MODEL, Settings
 from explanation.assistant import AssistantContext, AssistantReply
 from metrics.registry import MetricRegistry
 from models.analysis import AUTHORITY_LABELS, AnalysisResult
+from models.geography import Geography
 from models.metrics import (
     CATEGORY_DESCRIPTIONS,
     CATEGORY_LABELS,
@@ -29,6 +30,7 @@ from models.metrics import (
     MetricDefinition,
 )
 from models.plan import AnalysisPlanProposal, PlanRevisionProposal
+from models.provenance import DataClass, data_class_view
 from models.sensitivity import SensitivityReport
 from models.strategy import PROFILE_FIELD_LABELS, RetailStrategyProfile
 from planning.capabilities import CapabilityRegistry
@@ -96,6 +98,28 @@ STAGE_STEPS: list[dict[str, str]] = [
 ]
 
 
+# ------------------------------------------------------------------------- geography
+
+
+def geography_view(
+    geography: Geography,
+    *,
+    data_class: DataClass = DataClass.ATLAS_EVIDENCE,
+) -> dict[str, Any]:
+    """Geography plus the map centroid and data-class badge the workspace needs.
+
+    Centroids are presentation aids for the licensed demo footprint. They are not inputs to
+    scoring, clustering, or any other analytical service.
+    """
+    lat_lon = centroid_for(geography.slug)
+    return {
+        **geography.model_dump(mode="json"),
+        "lat": lat_lon[0] if lat_lon else None,
+        "lon": lat_lon[1] if lat_lon else None,
+        "data_class": data_class_view(data_class),
+    }
+
+
 # ------------------------------------------------------------------------------ plan
 
 
@@ -151,6 +175,9 @@ def plan_view(plan: AnalysisPlanProposal | None) -> dict[str, Any] | None:
         check.model_dump(mode="json") for check in plan.validation.failures
     ]
     data["profile_rows"] = profile_view(plan.retail_strategy_profile)
+    data["candidate_geographies"] = [
+        geography_view(geography) for geography in plan.candidate_geographies
+    ]
     return data
 
 
@@ -186,16 +213,33 @@ def result_view(
     data["plan_version"] = result.plan_version
     data["proposal"] = plan_view(result.proposal)
 
+    if result.recommendation is not None:
+        recommendation = data["recommendation"]
+        if result.recommendation.leading_region is not None:
+            recommendation["leading_region"] = geography_view(
+                result.recommendation.leading_region
+            )
+        for region, projected in zip(
+            result.recommendation.ranked_regions,
+            recommendation["ranked_regions"],
+            strict=True,
+        ):
+            projected["geography"] = geography_view(region.geography)
+            projected["data_class"] = data_class_view(DataClass.ATLAS_EVIDENCE)
+
     if result.evidence is not None:
         evidence = data["evidence"]
         evidence["completeness"] = result.evidence.completeness
         evidence["usable_count"] = len(result.evidence.usable_items())
         evidence["raw_call_count"] = len(result.evidence.raw_calls)
+        evidence["data_class"] = data_class_view(DataClass.ATLAS_EVIDENCE)
         for item, projected in zip(result.evidence.items, evidence["items"], strict=True):
             projected["metric"] = metric_view(item.metric)
+            projected["geography"] = geography_view(item.geography)
             projected["is_usable"] = item.is_usable
             projected["geography_context_shifted"] = item.geography_context_shifted
             projected["citation"] = item.citation()
+            projected["data_class"] = data_class_view(DataClass.ATLAS_EVIDENCE)
         if not include_raw_calls:
             evidence["raw_calls"] = []
 
@@ -365,7 +409,10 @@ def catalog_view(
             profile.model_dump(mode="json") for profile in STRATEGY_PROFILES
         ],
         "geographies": [
-            geography.model_dump(mode="json") for geography in DEMO_GEOGRAPHIES.values()
+            geography_view(geography) for geography in DEMO_GEOGRAPHIES.values()
+        ],
+        "data_classes": [
+            data_class_view(entry) for entry in DataClass
         ],
         "presets": [{"label": label, "slugs": slugs} for label, slugs in PRESETS.items()],
         "objective_examples": [
@@ -387,6 +434,7 @@ __all__ = [
     "assistant_context_view",
     "assistant_reply_view",
     "catalog_view",
+    "geography_view",
     "plan_view",
     "profile_view",
     "result_view",

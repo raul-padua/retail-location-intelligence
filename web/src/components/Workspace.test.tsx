@@ -293,6 +293,37 @@ describe("the approval gate, as the user sees it", () => {
   });
 });
 
+describe("the map-first workspace", () => {
+  it("lists candidate markets and updates the intelligence panel on selection", async () => {
+    stubApi({ state: reviewStateFixture });
+    renderApp(<Workspace />);
+
+    await screen.findByLabelText(/Candidate markets/i);
+    const plan = reviewStateFixture.plan!;
+    const first = plan.candidate_geographies[0];
+    const second = plan.candidate_geographies[1];
+
+    expect(
+      await screen.findByRole("heading", { name: first.display_name }),
+    ).toBeInTheDocument();
+
+    await userEvent.click(
+      screen.getByRole("option", { name: new RegExp(second.display_name, "i") }),
+    );
+    expect(
+      await screen.findByRole("heading", { name: second.display_name }),
+    ).toBeInTheDocument();
+  });
+
+  it("shows Atlas provenance on an executed recommendation", async () => {
+    stubApi({ state: executedStateFixture });
+    renderApp(<Workspace />);
+
+    await screen.findByText("Executive recommendation");
+    expect(screen.getAllByText("Atlas verified").length).toBeGreaterThan(0);
+  });
+});
+
 describe("provenance is visible, not implied", () => {
   it("labels every profile field with where its value came from", async () => {
     stubApi({ state: reviewStateFixture });
@@ -381,7 +412,7 @@ describe("revision confirmation", () => {
 });
 
 describe("the result panels", () => {
-  it("puts the leading region, its score, and the hash on the recommendation", async () => {
+  it("puts the leading region and its score on the recommendation", async () => {
     stubApi({ state: executedStateFixture });
     renderApp(<Workspace />);
 
@@ -390,7 +421,8 @@ describe("the result panels", () => {
 
     await screen.findByText("Executive recommendation");
     expect(screen.getAllByText(leader.geography.display_name).length).toBeGreaterThan(0);
-    expect(screen.getByText(result.reproducibility_hash!)).toBeInTheDocument();
+    expect(screen.queryByText("Reproducibility hash")).not.toBeInTheDocument();
+    expect(screen.queryByText(result.reproducibility_hash!)).not.toBeInTheDocument();
   });
 
   it("renders the narrative's emphasis rather than printing its asterisks", async () => {
@@ -487,7 +519,7 @@ describe("the result panels", () => {
     renderApp(<Workspace />);
 
     await screen.findByText("Executive recommendation");
-    await userEvent.click(screen.getByRole("tab", { name: "Comparison" }));
+    await userEvent.click(screen.getByRole("tab", { name: "Market comparison" }));
 
     const excluded = executedStateFixture.versions.at(-1)!.result.evidence!
       .excluded_metrics;

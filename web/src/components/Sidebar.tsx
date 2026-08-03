@@ -31,7 +31,7 @@ export function Sidebar() {
   const selectedModel = catalog?.llm_models.find((entry) => entry.id === model);
 
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-6 border-slate-200 bg-white p-5 lg:h-screen lg:w-80 lg:overflow-y-auto lg:border-r">
+    <aside className="flex h-full w-full min-w-0 flex-1 flex-col gap-6 border-slate-200 bg-white p-5 lg:overflow-y-auto lg:border-r">
       <div>
         <h1 className="text-lg font-semibold tracking-tight text-slate-900">
           Retail Location Intelligence

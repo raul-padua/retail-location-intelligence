@@ -42,6 +42,34 @@ DEMO_GEOGRAPHIES: dict[str, Geography] = {
     slug: Geography.parse(slug, display_name) for slug, display_name in _DEMO_SPECS
 }
 
+# Approximate centroids for the licensed demo footprint. Used only for map markers in the
+# Next.js workspace - never as analytical inputs. Values are WGS84 (lat, lon).
+_DEMO_CENTROIDS: dict[str, tuple[float, float]] = {
+    "county:chittenden-county-vt": (44.4600, -73.0800),
+    "county:franklin-county-vt": (44.8600, -72.9100),
+    "county:grand-isle-county-vt": (44.7200, -73.3000),
+    "cbsa:burlington-south-burlington-vt-metro-area": (44.5200, -73.1500),
+    "city:burlington-vt": (44.4759, -73.2121),
+    "city:colchester-vt": (44.5439, -73.2110),
+    "city:essex-junction-vt": (44.4906, -73.1109),
+    "city:essex-vt": (44.5095, -73.0582),
+    "city:jericho-vt": (44.5039, -72.9976),
+    "city:milton-vt": (44.6398, -73.1104),
+    "city:shelburne-vt": (44.3806, -73.2276),
+    "city:south-burlington-vt": (44.4669, -73.1710),
+    "city:st-albans-city-vt": (44.8109, -73.0832),
+    "city:st-albans-town-vt": (44.8264, -73.1001),
+    "city:swanton-vt": (44.9181, -73.1243),
+    "city:williston-vt": (44.4376, -73.0682),
+    "city:winooski-vt": (44.4914, -73.1857),
+    "congressionaldistrict:cd5000": (44.0000, -72.7000),
+}
+
+
+def centroid_for(slug: str) -> tuple[float, float] | None:
+    """Return ``(lat, lon)`` for a demo geography, or ``None`` if unknown."""
+    return _DEMO_CENTROIDS.get(slug)
+
 _SLUG_RE = re.compile(r"^[a-z]+:[a-z0-9-]+$")
 
 # Free-text aliases so a user can type "Burlington" rather than a slug. Resolution is

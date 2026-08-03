@@ -1,13 +1,16 @@
 "use client";
 
 /**
- * Stage router. The server's `stage` is the only thing that decides what renders, which is
- * why there is no local notion of "which screen am I on" to fall out of sync with it.
+ * Stage router inside the map-first decision workspace.
+ *
+ * The server's ``stage`` is still the only thing that decides which form or result view
+ * renders. The map shell is presentation around that state machine, not a second router.
  */
 
+import { SelectionProvider } from "@/lib/selection";
 import { useSession } from "@/lib/session";
 import { Banner, Button } from "./ui";
-import { Sidebar } from "./Sidebar";
+import { DecisionWorkspace } from "./map/DecisionWorkspace";
 import { ClarifyStage } from "./stages/ClarifyStage";
 import { DescribeStage } from "./stages/DescribeStage";
 import { ExecutedStage } from "./stages/ExecutedStage";
@@ -43,10 +46,9 @@ export function Workspace() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col lg:flex-row">
-      <Sidebar />
-      <main className="min-w-0 flex-1 px-5 py-6 lg:px-8 lg:py-8">
-        <div className="mx-auto max-w-6xl space-y-5">
+    <SelectionProvider>
+      <DecisionWorkspace forceMapFallback={process.env.NODE_ENV === "test"}>
+        <div className="space-y-4">
           {!settings?.atlas_token_present ? (
             <Banner tone="negative" title="No Atlas token is configured">
               Copy <code className="font-mono">.env.example</code> to{" "}
@@ -75,9 +77,9 @@ export function Workspace() {
           {state.stage === "clarify" ? <ClarifyStage /> : null}
           {state.stage === "review" ? <ReviewStage /> : null}
           {state.stage === "refused" ? <RefusedStage /> : null}
-          {state.stage === "executed" ? <ExecutedStage /> : null}
+          {state.stage === "executed" ? <ExecutedStage compact /> : null}
         </div>
-      </main>
-    </div>
+      </DecisionWorkspace>
+    </SelectionProvider>
   );
 }

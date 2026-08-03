@@ -10,8 +10,20 @@
 import type {
   AssistantAskResponse,
   AssistantState,
+  ArchetypeCluster,
+  ArchetypeMarket,
   Catalog,
   Health,
+  MarketArchetypeProfile,
+  MarketDiscoveryArtifact,
+  PcaPoint,
+  RetailerBenchmarkCatalog,
+  RetailerSimulationArtifact,
+  RetailerSimulationMeta,
+  RetailerSimulationRunRequest,
+  AnalogMatchingMeta,
+  AnalogMatchingSearchRequest,
+  AnalogSearchResult,
   SensitivityReport,
   AnalysisResult,
   WorkflowState,
@@ -217,5 +229,64 @@ export const api = {
   fullResult: (session: string, version?: number) =>
     request<{ version: number; result: AnalysisResult }>(
       `/api/sessions/${session}/result${version ? `?version=${version}` : ""}`,
+    ),
+
+  marketDiscoveryArtifact: () =>
+    request<MarketDiscoveryArtifact>("/api/market-discovery/artifact"),
+
+  marketDiscoveryClusters: () =>
+    request<{ clusters: ArchetypeCluster[]; artifact: MarketDiscoveryArtifact }>(
+      "/api/market-discovery/clusters",
+    ),
+
+  marketDiscoveryMarkets: () =>
+    request<{ markets: ArchetypeMarket[]; artifact: MarketDiscoveryArtifact }>(
+      "/api/market-discovery/markets",
+    ),
+
+  marketDiscoveryPca: () =>
+    request<{ points: PcaPoint[]; artifact: MarketDiscoveryArtifact }>(
+      "/api/market-discovery/pca",
+    ),
+
+  marketDiscoveryMarket: (marketId: string, peers = 5) =>
+    request<MarketArchetypeProfile>(
+      `/api/market-discovery/markets/${encodeURIComponent(marketId)}?peers=${peers}`,
+    ),
+
+  retailerSimulationMeta: () =>
+    request<RetailerSimulationMeta>("/api/retailer-simulation/meta"),
+
+  retailerSimulationBenchmarks: () =>
+    request<RetailerBenchmarkCatalog>("/api/retailer-simulation/benchmarks"),
+
+  retailerSimulationDefaults: () =>
+    request<{ scenario: RetailerSimulationArtifact["scenario"] }>(
+      "/api/retailer-simulation/defaults",
+    ),
+
+  retailerSimulationRun: (session: string, body: RetailerSimulationRunRequest) =>
+    request<{ simulation: RetailerSimulationArtifact }>(
+      `/api/sessions/${session}/retailer-simulation/run`,
+      { method: "POST", body },
+    ),
+
+  retailerSimulationLast: (session: string) =>
+    request<{ simulation: RetailerSimulationArtifact }>(
+      `/api/sessions/${session}/retailer-simulation`,
+    ),
+
+  analogMatchingMeta: () =>
+    request<AnalogMatchingMeta>("/api/analog-matching/meta"),
+
+  analogMatchingSearch: (session: string, body: AnalogMatchingSearchRequest) =>
+    request<{ search: AnalogSearchResult }>(
+      `/api/sessions/${session}/analog-matching/search`,
+      { method: "POST", body },
+    ),
+
+  analogMatchingLast: (session: string) =>
+    request<{ search: AnalogSearchResult }>(
+      `/api/sessions/${session}/analog-matching`,
     ),
 };

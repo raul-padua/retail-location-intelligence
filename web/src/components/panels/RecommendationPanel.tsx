@@ -2,6 +2,7 @@
 
 import { percent, score } from "@/lib/format";
 import type { AnalysisResult } from "@/lib/types";
+import { ProvenanceBadge } from "../ProvenanceBadge";
 import { Badge, Banner, Card, Disclosure, Metric, Prose, SectionHeading } from "../ui";
 
 export function RecommendationPanel({ result }: { result: AnalysisResult }) {
@@ -22,9 +23,23 @@ export function RecommendationPanel({ result }: { result: AnalysisResult }) {
     <div className="space-y-6">
       <Card
         title="Executive recommendation"
-        actions={<Badge tone="accent">{recommendation.confidence_label}</Badge>}
+        actions={
+          <div className="flex flex-wrap items-center gap-2">
+            <ProvenanceBadge
+              badge={
+                result.evidence?.data_class ?? {
+                  data_class: "atlas_evidence",
+                  label: "Atlas verified",
+                  short_note:
+                    "Returned by the StateBook Atlas API and gated by the metric registry.",
+                }
+              }
+            />
+            <Badge tone="accent">{recommendation.confidence_label}</Badge>
+          </div>
+        }
       >
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-3">
           <Metric
             label="Leading region"
             value={leader?.geography.display_name ?? "—"}
@@ -43,15 +58,6 @@ export function RecommendationPanel({ result }: { result: AnalysisResult }) {
             label="Evidence completeness"
             value={percent(recommendation.evidence_completeness)}
             hint="Share of planned metric-region pairs Atlas actually returned"
-          />
-          <Metric
-            label="Reproducibility hash"
-            value={
-              <span className="font-mono text-sm">
-                {result.reproducibility_hash ?? "—"}
-              </span>
-            }
-            hint="Same inputs, same hash, same ranking"
           />
         </div>
 

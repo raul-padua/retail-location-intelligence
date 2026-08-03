@@ -131,6 +131,64 @@ _AVAILABLE: tuple[Capability, ...] = (
         produces="A cited narrative, or the deterministic template if verification fails",
         deterministic=False,
     ),
+    Capability(
+        capability_id="retailer.scenario_simulation",
+        display_name="Fictional retailer scenario simulation",
+        kind=CapabilityKind.MODELLING,
+        status=CapabilityStatus.AVAILABLE,
+        description=(
+            "Run a seeded, equation-based NorthStar Apparel simulator anchored to public "
+            "aggregate benchmarks. Outputs are explicitly simulated — never observed "
+            "retailer performance."
+        ),
+        required_data=[
+            "Explicit scenario parameters (store count, format mix, seed, sales target)",
+            "Public benchmark catalog with verification states",
+        ],
+        produces=(
+            "Simulated stores, monthly roll-ups, segment shares, reconciliation report, "
+            "and provenance metadata"
+        ),
+    ),
+    Capability(
+        capability_id="market.archetype_analysis",
+        display_name="Market archetype analysis",
+        kind=CapabilityKind.CALCULATION,
+        status=CapabilityStatus.AVAILABLE,
+        description=(
+            "Look up a county's public-market archetype from a versioned, deterministic "
+            "clustering artifact (ACS-shaped features; fixed seed; canonical cluster ids). "
+            "Explains profile, peers, and quality caveats. Does not predict store sales."
+        ),
+        required_data=[
+            "County GEOID or Atlas city/county slug mappable to a county",
+            "Versioned market-discovery artifact",
+        ],
+        produces=(
+            "Cluster id, deterministic label, feature profile vs centroid, nearest peer "
+            "counties, and artifact quality metrics"
+        ),
+    ),
+    Capability(
+        capability_id="retailer.analog_store_search",
+        display_name="Analog store matching",
+        kind=CapabilityKind.CALCULATION,
+        status=CapabilityStatus.AVAILABLE,
+        description=(
+            "Rank NorthStar Apparel simulated stores against a candidate market using "
+            "public ACS county features only. Simulated sales and margins attach after "
+            "ranking for display — they never enter the distance vector."
+        ),
+        required_data=[
+            "County GEOID or Atlas slug for the candidate market",
+            "NorthStar simulation (explicit scenario or session reuse)",
+            "Versioned market-discovery county artifact",
+        ],
+        produces=(
+            "Ranked analog matches with similarity, per-feature contributions, "
+            "analogy-strength assessment, and simulated performance summaries"
+        ),
+    ),
 )
 
 _UNAVAILABLE: tuple[Capability, ...] = (
