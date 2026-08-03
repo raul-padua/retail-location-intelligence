@@ -3,6 +3,10 @@
 /**
  * Steps 3 and 4. Review the proposal, edit it, then authorize it.
  *
+ * Category weights and selected metrics are editable in place on the plan itself — those
+ * are the controls people reach for first. Candidate regions stay behind a secondary
+ * editor because changing the geography set is a larger decision.
+ *
  * The approve button is disabled from `plan.can_approve`, which the server computes.
  * Editing does not bypass that: an edit goes back through the same validator, so pushing
  * a weight to zero or removing every metric produces a plan that cannot be approved
@@ -11,47 +15,104 @@
 
 import { useMemo, useState } from "react";
 
-import { percent } from "@/lib/format";
 import { useSession } from "@/lib/session";
 import { Badge, Banner, Button, Card, Field } from "../ui";
 import { PlanView } from "../panels/PlanView";
 import { PlanningTrace } from "../panels/PlanningTrace";
 
+function weightsEqual(
+  left: Record<string, number>,
+  right: Record<string, number>,
+): boolean {
+  const keys = new Set([...Object.keys(left), ...Object.keys(right)]);
+  for (const key of keys) {
+    if (Math.abs((left[key] ?? 0) - (right[key] ?? 0)) > 0.0005) return false;
+  }
+  return true;
+}
+
+function listsEqual(left: string[], right: string[]): boolean {
+  if (left.length !== right.length) return false;
+  return left.every((value, index) => value === right[index]);
+}
+
 export function ReviewStage() {
   const { state, catalog, approve, reject, edit, backToQuestions, busy } =
     useSession();
   const plan = state?.plan;
-  const [editing, setEditing] = useState(false);
+  const [editingRegions, setEditingRegions] = useState(false);
 
-  const initialWeights = useMemo(
-    () => ({ ...(plan?.category_weights ?? {}) }),
-    [plan?.category_weights],
+  // null means "show the server's plan as-is". A draft is only held while the user is
+  // changing controls; once the edit is applied (or the plan is replaced), we drop it.
+  const [draftWeights, setDraftWeights] = useState<Record<string, number> | null>(
+    null,
   );
-  const [weights, setWeights] = useState<Record<string, number>>(initialWeights);
-  const [metrics, setMetrics] = useState<string[]>(plan?.selected_metric_ids ?? []);
-  const [regions, setRegions] = useState<string[]>(
-    plan?.candidate_geographies.map((geography) => geography.slug) ?? [],
+  const [draftMetrics, setDraftMetrics] = useState<string[] | null>(null);
+  const [regions, setRegions] = useState<string[] | null>(null);
+
+  const weights = useMemo(
+    () => draftWeights ?? plan?.category_weights ?? {},
+    [draftWeights, plan?.category_weights],
   );
+  const weightsDirty = useMemo(
+    () =>
+      plan != null &&
+      draftWeights != null &&
+      !weightsEqual(draftWeights, plan.category_weights),
+    [draftWeights, plan],
+  );
+
+  const selectedMetrics = draftMetrics ?? plan?.selected_metric_ids ?? [];
+  const metricsDirty = useMemo(
+    () =>
+      plan != null &&
+      draftMetrics != null &&
+      !listsEqual(draftMetrics, plan.selected_metric_ids),
+    [draftMetrics, plan],
+  );
+
+  const planDirty = weightsDirty || metricsDirty;
 
   if (!plan) return null;
 
-  const weightTotal = Object.values(weights).reduce((sum, value) => sum + value, 0);
+  const selectedRegions =
+    regions ?? plan.candidate_geographies.map((geography) => geography.slug);
 
-  const openEditor = () => {
-    setWeights({ ...plan.category_weights });
-    setMetrics(plan.selected_metric_ids);
-    setRegions(plan.candidate_geographies.map((geography) => geography.slug));
-    setEditing(true);
+  const applyWeights = async () => {
+    await edit({ categoryWeights: weights });
+    setDraftWeights(null);
   };
 
-  const applyEdits = async () => {
-    await edit({
-      categoryWeights: weights,
-      selectedMetricIds: metrics,
-      geographies: regions,
-    });
-    setEditing(false);
+  const applyMetrics = async () => {
+    await edit({ selectedMetricIds: selectedMetrics });
+    setDraftMetrics(null);
   };
+
+  const applyRegionEdits = async () => {
+    await edit({ geographies: selectedRegions });
+    setRegions(null);
+    setEditingRegions(false);
+  };
+
+  const approveAndRun = async () => {
+    // Unsaved slider / checkbox moves should not be silently discarded under Approve.
+    // Apply them first so the analysis that runs is the one the user is looking at.
+    if (weightsDirty || metricsDirty) {
+      await edit({
+        categoryWeights: weightsDirty ? weights : undefined,
+        selectedMetricIds: metricsDirty ? selectedMetrics : undefined,
+      });
+      setDraftWeights(null);
+      setDraftMetrics(null);
+    }
+    await approve();
+  };
+
+  const approveLabel = busy
+    ? "Running…"
+    : planDirty
+      ? "Apply edits and run the analysis"
+      : "Approve and run the analysis";
 
   return (
     <div className="space-y-6">
@@ -77,91 +138,54 @@ export function ReviewStage() {
           </Badge>
         }
       >
-        <PlanView plan={plan} />
+        <PlanView
+          plan={plan}
+          weightEditor={{
+            values: weights,
+            onChange: setDraftWeights,
+            onApply: () => void applyWeights(),
+            dirty: weightsDirty,
+            busy,
+          }}
+          metricEditor={{
+            values: selectedMetrics,
+            onChange: setDraftMetrics,
+            onApply: () => void applyMetrics(),
+            dirty: metricsDirty,
+            busy,
+          }}
+        />
       </Card>
 
       <Card
-        title="Edit before approving"
-        description="Every edit is recorded against the plan and re-validated. It does not skip the gate."
+        title="Edit candidate regions"
+        description="Weights and metrics are editable above. Changing the geography set is a larger decision, so it lives here. Every edit is recorded and re-validated."
         actions={
-          <Button onClick={editing ? () => setEditing(false) : openEditor}>
-            {editing ? "Cancel" : "Edit plan"}
+          <Button
+            onClick={
+              editingRegions
+                ? () => {
+                    setEditingRegions(false);
+                    setRegions(null);
+                  }
+                : () => {
+                    setRegions(
+                      plan.candidate_geographies.map((geography) => geography.slug),
+                    );
+                    setEditingRegions(true);
+                  }
+            }
+          >
+            {editingRegions ? "Cancel" : "Edit regions"}
           </Button>
         }
       >
-        {editing ? (
+        {editingRegions ? (
           <div className="space-y-5">
             <Field
-              label="Category weights"
-              hint={`They need not sum to 1 — the server renormalizes and records the change. Current total: ${weightTotal.toFixed(2)}`}
+              label="Candidate regions"
+              hint={`${selectedRegions.length} selected. Two or more are required to compare.`}
             >
-              <div className="space-y-3">
-                {catalog?.categories.map((category) => (
-                  <div key={category.id}>
-                    <div className="flex items-center gap-3">
-                      <label
-                        htmlFor={`weight-${category.id}`}
-                        className="w-44 shrink-0 text-sm text-slate-700"
-                      >
-                        {category.label}
-                      </label>
-                      <input
-                        id={`weight-${category.id}`}
-                        type="range"
-                        min={0}
-                        max={1}
-                        step={0.01}
-                        value={weights[category.id] ?? 0}
-                        onChange={(event) =>
-                          setWeights((current) => ({
-                            ...current,
-                            [category.id]: Number(event.target.value),
-                          }))
-                        }
-                        className="flex-1"
-                      />
-                      <span className="w-14 shrink-0 text-right text-sm tabular-nums text-slate-600">
-                        {percent(weights[category.id] ?? 0, 0)}
-                      </span>
-                    </div>
-                    <p className="ml-44 pl-3 text-xs text-slate-500">
-                      {category.guidance}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </Field>
-
-            <Field
-              label="Metrics in the analysis"
-              hint={`${metrics.length} selected. Only registry metrics can be added.`}
-            >
-              <div className="grid max-h-52 grid-cols-1 gap-1 overflow-y-auto rounded-lg border border-slate-200 p-2 sm:grid-cols-2">
-                {catalog?.metrics.map((metric) => (
-                  <label
-                    key={metric.metric_id}
-                    className="flex items-center gap-2 rounded px-2 py-1 text-sm hover:bg-slate-50"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={metrics.includes(metric.metric_id)}
-                      onChange={() =>
-                        setMetrics((current) =>
-                          current.includes(metric.metric_id)
-                            ? current.filter((entry) => entry !== metric.metric_id)
-                            : [...current, metric.metric_id],
-                        )
-                      }
-                    />
-                    <span className="truncate" title={metric.display_name}>
-                      {metric.display_name}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </Field>
-
-            <Field label="Candidate regions" hint={`${regions.length} selected.`}>
               <div className="grid max-h-40 grid-cols-1 gap-1 overflow-y-auto rounded-lg border border-slate-200 p-2 sm:grid-cols-2">
                 {catalog?.geographies.map((geography) => (
                   <label
@@ -170,13 +194,16 @@ export function ReviewStage() {
                   >
                     <input
                       type="checkbox"
-                      checked={regions.includes(geography.slug)}
+                      checked={selectedRegions.includes(geography.slug)}
                       onChange={() =>
-                        setRegions((current) =>
-                          current.includes(geography.slug)
-                            ? current.filter((entry) => entry !== geography.slug)
-                            : [...current, geography.slug],
-                        )
+                        setRegions((current) => {
+                          const base =
+                            current ??
+                            plan.candidate_geographies.map((entry) => entry.slug);
+                          return base.includes(geography.slug)
+                            ? base.filter((entry) => entry !== geography.slug)
+                            : [...base, geography.slug];
+                        })
                       }
                     />
                     <span className="truncate">{geography.display_name}</span>
@@ -185,8 +212,12 @@ export function ReviewStage() {
               </div>
             </Field>
 
-            <Button variant="primary" onClick={() => void applyEdits()} disabled={busy}>
-              Apply edits and revalidate
+            <Button
+              variant="primary"
+              onClick={() => void applyRegionEdits()}
+              disabled={busy || selectedRegions.length < 2}
+            >
+              Apply region changes
             </Button>
           </div>
         ) : plan.approval_record.edits.length ? (
@@ -210,12 +241,14 @@ export function ReviewStage() {
           disabled={busy || !state?.can_approve}
           title={
             state?.can_approve
-              ? undefined
+              ? planDirty
+                ? "Applies your unsaved weight and metric changes, then runs the analysis."
+                : undefined
               : "This plan has not passed deterministic validation."
           }
-          onClick={() => void approve()}
+          onClick={() => void approveAndRun()}
         >
-          {busy ? "Running…" : "Approve and run the analysis"}
+          {approveLabel}
         </Button>
         <Button
           disabled={busy || plan.clarification_questions.length === 0}

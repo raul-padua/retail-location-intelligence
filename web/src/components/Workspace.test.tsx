@@ -15,6 +15,7 @@ import { Workspace } from "@/components/Workspace";
 import type { WorkflowState } from "@/lib/types";
 
 import {
+  catalogFixture,
   clarifyStateFixture,
   executedStateFixture,
   pendingRevisionStateFixture,
@@ -144,6 +145,151 @@ describe("the approval gate, as the user sees it", () => {
     expect(approveCall.method).toBe("POST");
     expect(JSON.stringify(approveCall.body)).not.toContain("plan_id");
     expect(JSON.stringify(approveCall.body)).not.toContain("approved");
+  });
+
+  it("lets the user change category weights on the plan itself before approving", async () => {
+    const edited: WorkflowState = {
+      ...reviewStateFixture,
+      plan: {
+        ...reviewStateFixture.plan!,
+        category_weights: {
+          ...reviewStateFixture.plan!.category_weights,
+          growth_outlook: 0.4,
+        },
+        approval_record: {
+          ...reviewStateFixture.plan!.approval_record,
+          edits: [
+            {
+              field: "category_weights",
+              before: reviewStateFixture.plan!.category_weights,
+              after: {
+                ...reviewStateFixture.plan!.category_weights,
+                growth_outlook: 0.4,
+              },
+              edited_at: "2026-08-02T00:00:00Z",
+            },
+          ],
+        },
+      },
+    };
+    const stub = stubApi({
+      state: reviewStateFixture,
+      routes: { "/edit": edited },
+    });
+    renderApp(<Workspace />);
+
+    await screen.findByText("Proposed category weights");
+    const growth = screen.getByLabelText("Growth Outlook") as HTMLInputElement;
+    expect(growth).toHaveAttribute("type", "range");
+
+    const apply = screen.getByRole("button", { name: /apply weight changes/i });
+    expect(apply).toBeDisabled();
+
+    await userEvent.click(growth);
+    // fireEvent is clearer than pointer math for a range input.
+    const { fireEvent } = await import("@testing-library/react");
+    fireEvent.change(growth, { target: { value: "0.55" } });
+
+    expect(apply).toBeEnabled();
+    await userEvent.click(apply);
+
+    await waitFor(() => {
+      expect(stub.calls.some((call) => call.url.includes("/edit"))).toBe(true);
+    });
+    const editCall = stub.calls.find((call) => call.url.includes("/edit"))!;
+    expect(editCall.body).toMatchObject({
+      category_weights: expect.objectContaining({ growth_outlook: 0.55 }),
+    });
+    expect(await screen.findByText(/You changed/i)).toBeInTheDocument();
+  });
+
+  it("applies unsaved weight changes before approving, rather than discarding them", async () => {
+    const stub = stubApi({
+      state: reviewStateFixture,
+      routes: {
+        "/edit": reviewStateFixture,
+        "/approve": executedStateFixture,
+      },
+    });
+    renderApp(<Workspace />);
+
+    const growth = (await screen.findByLabelText(
+      "Growth Outlook",
+    )) as HTMLInputElement;
+    const { fireEvent } = await import("@testing-library/react");
+    fireEvent.change(growth, { target: { value: "0.5" } });
+
+    await userEvent.click(
+      screen.getByRole("button", { name: /apply edits and run the analysis/i }),
+    );
+
+    await waitFor(() => {
+      expect(stub.calls.some((call) => call.url.includes("/approve"))).toBe(true);
+    });
+    const paths = stub.calls.map((call) => call.url);
+    const editAt = paths.findIndex((url) => url.includes("/edit"));
+    const approveAt = paths.findIndex((url) => url.includes("/approve"));
+    expect(editAt).toBeGreaterThanOrEqual(0);
+    expect(approveAt).toBeGreaterThan(editAt);
+  });
+
+  it("lets the user drop a metric from the selected-metrics table before approving", async () => {
+    const plan = reviewStateFixture.plan!;
+    const removedId = plan.selected_metric_ids[0];
+    const remaining = plan.selected_metric_ids.slice(1);
+    const edited: WorkflowState = {
+      ...reviewStateFixture,
+      plan: {
+        ...plan,
+        selected_metric_ids: remaining,
+        approval_record: {
+          ...plan.approval_record,
+          edits: [
+            {
+              field: "selected_metric_ids",
+              before: plan.selected_metric_ids,
+              after: remaining,
+              edited_at: "2026-08-02T00:00:00Z",
+            },
+          ],
+        },
+      },
+    };
+    const stub = stubApi({
+      state: reviewStateFixture,
+      routes: { "/edit": edited },
+    });
+    renderApp(<Workspace />);
+
+    await screen.findByText(/Selected metrics/i);
+    const metricName =
+      catalogFixture.metrics.find((metric) => metric.metric_id === removedId)
+        ?.display_name ?? removedId;
+
+    const checkbox = screen.getByRole("checkbox", {
+      name: `Include ${metricName}`,
+    });
+    expect(checkbox).toBeChecked();
+
+    const apply = screen.getByRole("button", { name: /apply metric changes/i });
+    expect(apply).toBeDisabled();
+
+    await userEvent.click(checkbox);
+    expect(apply).toBeEnabled();
+    await userEvent.click(apply);
+
+    await waitFor(() => {
+      expect(stub.calls.some((call) => call.url.includes("/edit"))).toBe(true);
+    });
+    const editCall = stub.calls.find((call) => call.url.includes("/edit"))!;
+    expect(editCall.body).toEqual(
+      expect.objectContaining({
+        selected_metric_ids: remaining,
+      }),
+    );
+    expect(
+      (editCall.body as { selected_metric_ids: string[] }).selected_metric_ids,
+    ).not.toContain(removedId);
   });
 });
 

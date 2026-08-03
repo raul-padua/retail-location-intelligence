@@ -74,10 +74,17 @@ export function stubApi(options: StubOptions = {}): Stub {
         body: init?.body ? JSON.parse(String(init.body)) : undefined,
       });
 
-      // Longest match wins, so "/api/sessions/x/assistant" beats "/api/sessions".
-      const match = Object.keys(routes)
-        .filter((route) => url.includes(route))
-        .sort((a, b) => b.length - a.length)[0];
+      // Prefer a suffix or exact path match over a bare prefix. Otherwise the create
+      // route `/api/sessions` steals every `/api/sessions/{id}/…` call, and an `/edit`
+      // stub never fires.
+      const path = new URL(url, "http://local.test").pathname;
+      const match =
+        Object.keys(routes)
+          .filter((route) => path === route || path.endsWith(route))
+          .sort((a, b) => b.length - a.length)[0] ??
+        Object.keys(routes)
+          .filter((route) => path.includes(route))
+          .sort((a, b) => b.length - a.length)[0];
 
       if (!match) {
         return new Response(JSON.stringify({ detail: `No stub for ${url}` }), {
