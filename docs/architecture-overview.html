@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galadreal × StateBook — Technical Hypotheses for Discussion</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --ink: #1a1a18;
+      --muted: #5c5c57;
+      --faint: #8a8a84;
+      --line: #e3e3de;
+      --accent: #1f4b7a;
+      --accent-soft: #e8f0f7;
+      --demo: #1f5a2c;
+      --demo-bg: #e8f3ea;
+      --hyp: #1f4b7a;
+      --hyp-bg: #e8f0f7;
+      --val: #6a4e16;
+      --val-bg: #f8f1e3;
+      --fut: #5c5c57;
+      --fut-bg: #efefec;
+      --lim: #8b3a2f;
+      --lim-bg: #f7ebe8;
+      --room: #3d5a40;
+      --room-bg: #eef4ef;
+      --focus: #1f4b7a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.45;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px 72px; }
+    h1 { font-size: 26px; margin: 0 0 8px; letter-spacing: -0.02em; }
+    h2 { font-size: 18px; margin: 0 0 12px; letter-spacing: -0.01em; }
+    h3 { font-size: 15px; margin: 0 0 8px; }
+    h4 { font-size: 13px; margin: 0 0 6px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+    p { margin: 0; color: var(--muted); }
+    .lede { font-size: 15px; max-width: 48rem; color: var(--ink); }
+    .banner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      background: var(--val-bg);
+      border: 1px solid #e4d6b8;
+      color: var(--val);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .audience { font-size: 12px; color: var(--faint); margin-top: 6px; }
+    .progress {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 18px 0 8px;
+      align-items: center;
+    }
+    .progress-step {
+      font-size: 11px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding: 4px 8px;
+      border: 1px solid transparent;
+    }
+    .progress-step.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 600;
+    }
+    .progress-step.done { color: var(--muted); }
+    .progress-sep { color: var(--line); font-size: 11px; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0 8px;
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 12px 14px;
+      min-width: 0;
+    }
+    .stat b { display: block; font-size: 22px; letter-spacing: -0.03em; color: var(--ink); }
+    .stat span { color: var(--muted); font-size: 12px; display: block; margin-top: 4px; }
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border: 1px solid;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+    .badge.demo { color: var(--demo); background: var(--demo-bg); border-color: #b7d4bc; }
+    .badge.hyp { color: var(--hyp); background: var(--hyp-bg); border-color: #b7c9db; }
+    .badge.val { color: var(--val); background: var(--val-bg); border-color: #e0cf9f; }
+    .badge.fut { color: var(--fut); background: var(--fut-bg); border-color: #d0d0ca; }
+    .badge.lim { color: var(--lim); background: var(--lim-bg); border-color: #e0bbb4; }
+    .badge.obs { color: var(--ink); background: #efefec; border-color: var(--line); }
+    .callout {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+    }
+    .callout strong { color: var(--accent); display: block; margin-bottom: 4px; font-size: 13px; }
+    .callout p, .callout { color: var(--ink); font-size: 14px; }
+    .callout.warn { background: var(--val-bg); border-left-color: var(--val); }
+    .callout.warn strong { color: var(--val); }
+    .callout.lim { background: var(--lim-bg); border-left-color: var(--lim); }
+    .callout.lim strong { color: var(--lim); }
+    .callout.room {
+      background: var(--room-bg);
+      border-left-color: var(--room);
+      margin-top: 16px;
+    }
+    .callout.room strong { color: var(--room); }
+    .callout.joint {
+      background: #fff;
+      border: 2px solid var(--accent);
+      border-left-width: 2px;
+      padding: 16px 18px;
+      margin-top: 20px;
+    }
+    .callout.joint strong {
+      color: var(--accent);
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .callout.joint p { color: var(--ink); font-size: 16px; margin-top: 6px; font-weight: 500; }
+    .note {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: var(--fut-bg);
+      border: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 22px 0 10px;
+    }
+    .tab {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: 8px 11px;
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--ink);
+      max-width: 100%;
+    }
+    .tab:hover { border-color: var(--accent); }
+    .tab:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .tab[aria-selected="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .panel {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 18px 18px 22px;
+    }
+    .panel.active { display: block; }
+    .panel > .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .grid4 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .card {
+      border: 1px solid var(--line);
+      padding: 14px;
+      background: #fafaf8;
+      min-width: 0;
+    }
+    .card h3 {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .card p, .card li { font-size: 13px; }
+    .card ul { margin: 0; padding-left: 18px; color: var(--ink); }
+    .card li { margin: 4px 0; }
+    .concerns { display: grid; grid-template-columns: 1fr; gap: 8px; margin: 14px 0; }
+    .concern {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    .concern .n {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .split-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    details.hyp-card {
+      border: 1px solid var(--line);
+      background: #fafaf8;
+      margin-bottom: 10px;
+    }
+    details.hyp-card summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      font-weight: 600;
+      font-size: 14px;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    details.hyp-card summary::-webkit-details-marker { display: none; }
+    details.hyp-card summary::before {
+      content: "+";
+      color: var(--accent);
+      font-weight: 700;
+      width: 1em;
+    }
+    details.hyp-card[open] summary::before { content: "−"; }
+    details.hyp-card summary:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: -2px;
+    }
+    .hyp-body { padding: 0 14px 14px; border-top: 1px solid var(--line); }
+    .hyp-body .block { margin-top: 12px; }
+    .hyp-body p { color: var(--ink); font-size: 13px; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .step {
+      border: 1px solid var(--line);
+      padding: 14px;
+      background: #fff;
+      min-width: 0;
+    }
+    .step .num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 8px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      word-break: break-word;
+    }
+    th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .scroll {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .eng {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--faint);
+    }
+    .closing {
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--accent-soft);
+      border: 1px solid #b7c9db;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .foot { margin-top: 24px; font-size: 12px; color: var(--faint); }
+    @media (max-width: 820px) {
+      .stats, .grid2, .grid3, .grid4, .steps { grid-template-columns: 1fr; }
+      h1 { font-size: 22px; }
+      .tab { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner" role="status">
+      Technical hypotheses for discussion — not a final architecture proposal
+    </div>
+
+    <h1>Where could a governed AI layer add value — without weakening Atlas?</h1>
+    <p class="lede">
+      This prototype is not a proposed replacement for Atlas or Calypso. It is a rapid
+      technical exploration of where agentic flexibility might help customers while
+      StateBook remains the trusted evidence foundation.
+    </p>
+    <p class="audience">
+      Discussion for Calandra (CEO) · Eric (former CTO) · Mark (Lead Engineer)
+    </p>
+
+    <div class="progress" id="progress" aria-label="Discussion arc">
+      <span class="progress-step active" data-arc="problem">1. Problem</span>
+      <span class="progress-sep" aria-hidden="true">→</span>
+      <span class="progress-step" data-arc="hypothesis">2. Hypothesis</span>
+      <span class="progress-sep" aria-hidden="true">→</span>
+      <span class="progress-step" data-arc="evidence">3. Evidence</span>
+      <span class="progress-sep" aria-hidden="true">→</span>
+      <span class="progress-step" data-arc="unknowns">4. Unknowns</span>
+      <span class="progress-sep" aria-hidden="true">→</span>
+      <span class="progress-step" data-arc="increment">5. First increment</span>
+      <span class="progress-sep" aria-hidden="true">→</span>
+      <span class="progress-step" data-arc="discussion">6. Discussion</span>
+    </div>
+
+    <div class="stats" aria-label="Discussion summary">
+      <div class="stat">
+        <b>1</b>
+        <span>Central architectural hypothesis to pressure-test</span>
+      </div>
+      <div class="stat">
+        <b>4</b>
+        <span>Control mechanisms demonstrated in the prototype</span>
+      </div>
+      <div class="stat">
+        <b>5</b>
+        <span>Hypotheses that need StateBook validation</span>
+      </div>
+      <div class="stat">
+        <b>3</b>
+        <span>Candidate first product increments</span>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Presentation sections">
+      <button class="tab" role="tab" id="tab-why" aria-controls="why" aria-selected="true" tabindex="0" data-panel="why" data-arc="problem">1 · Why I built this</button>
+      <button class="tab" role="tab" id="tab-hyp" aria-controls="hyp" aria-selected="false" tabindex="-1" data-panel="hyp" data-arc="hypothesis">2 · Central hypothesis</button>
+      <button class="tab" role="tab" id="tab-demo" aria-controls="demo" aria-selected="false" tabindex="-1" data-panel="demo" data-arc="evidence">3 · What it demonstrated</button>
+      <button class="tab" role="tab" id="tab-atlas" aria-controls="atlas" aria-selected="false" tabindex="-1" data-panel="atlas" data-arc="evidence">4 · What I learned about Atlas</button>
+      <button class="tab" role="tab" id="tab-hyps" aria-controls="hyps" aria-selected="false" tabindex="-1" data-panel="hyps" data-arc="unknowns">5 · Hypotheses to validate</button>
+      <button class="tab" role="tab" id="tab-ext" aria-controls="ext" aria-selected="false" tabindex="-1" data-panel="ext" data-arc="unknowns">6 · Exploratory extensions</button>
+      <button class="tab" role="tab" id="tab-first" aria-controls="first" aria-selected="false" tabindex="-1" data-panel="first" data-arc="increment">7 · First increment</button>
+      <button class="tab" role="tab" id="tab-q" aria-controls="q" aria-selected="false" tabindex="-1" data-panel="q" data-arc="discussion">8 · Questions for today</button>
+      <button class="tab" role="tab" id="tab-next" aria-controls="next" aria-selected="false" tabindex="-1" data-panel="next" data-arc="discussion">9 · Proposed next step</button>
+    </div>
+
+    <!-- TAB 1 -->
+    <section id="why" class="panel active" role="tabpanel" aria-labelledby="tab-why">
+      <div class="meta">
+        <span class="badge obs">Observed framing</span>
+        <span class="badge hyp">Working hypothesis</span>
+      </div>
+      <h2>Why run this experiment?</h2>
+      <p class="lede" style="color:var(--ink);margin-bottom:12px">
+        Starting question: how could Galadreal introduce AI-driven decision support without
+        repeating previous hallucination failures?
+      </p>
+
+      <h4>Three initial concerns</h4>
+      <div class="concerns">
+        <div class="concern">
+          <div class="n">1</div>
+          <div>
+            <strong>Wrong evidence</strong>
+            <p>The agent could select datapoints, geographies, or analyses that do not match the real decision.</p>
+          </div>
+        </div>
+        <div class="concern">
+          <div class="n">2</div>
+          <div>
+            <strong>Unsupported calculation or explanation</strong>
+            <p>The model could invent arithmetic, rankings, or narrative claims beyond what evidence supports.</p>
+          </div>
+        </div>
+        <div class="concern">
+          <div class="n">3</div>
+          <div>
+            <strong>Irreproducible recommendation</strong>
+            <p>The product could present an answer that no engineer or customer can reconstruct from sources.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Intent of the build</strong>
+        I built a narrow retail-location prototype to test architectural boundaries, not to
+        design the final Galadreal product.
+      </div>
+
+      <div class="card" style="margin-top:14px;background:#fff">
+        <h3>Illustrative scenario <span class="badge obs">Scenario only</span></h3>
+        <p style="color:var(--ink)">
+          A national apparel retailer wants to compare candidate regions for a new store —
+          for example Burlington, South Burlington, and Winooski — prioritizing growth and
+          accessibility over current market size.
+        </p>
+      </div>
+
+      <div class="note">
+        <strong style="color:var(--ink)">Note.</strong>
+        Retail was chosen because Calandra mentioned location intelligence as a potential
+        use case. The retailer and its economics are illustrative. This exercise uses no
+        proprietary retailer data and is not affiliated with any retailer.
+      </div>
+    </section>
+
+    <!-- TAB 2 -->
+    <section id="hyp" class="panel" role="tabpanel" aria-labelledby="tab-hyp" hidden>
+      <div class="meta">
+        <span class="badge hyp">Working hypothesis</span>
+        <span class="badge val">Needs StateBook validation</span>
+      </div>
+      <h2>Hypothesis 1 — Separate deciding what to investigate from deciding what is true</h2>
+      <p style="margin-bottom:12px;color:var(--ink)">
+        An agent should manage the decision process — understanding the question,
+        identifying missing information, proposing approved analyses, and explaining
+        results — while Atlas and deterministic analytical services remain responsible for
+        facts, calculations, and comparability.
+      </p>
+      <p style="margin-bottom:14px;font-size:14px;color:var(--muted)">
+        A model that both chooses the evidence and determines what is true is difficult to
+        govern. The prototype tests whether those powers can be separated.
+        <span class="badge hyp">Not yet validated by StateBook</span>
+      </p>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="split-head">
+            <h3 style="margin:0">Agentic responsibilities</h3>
+            <span class="badge hyp">Hypothesis</span>
+          </div>
+          <ul>
+            <li>Interpret the business objective</li>
+            <li>Ask material clarification questions</li>
+            <li>Propose metrics and analytical capabilities</li>
+            <li>Identify unsupported data requirements</li>
+            <li>Propose revisions to an analysis plan</li>
+            <li>Translate validated evidence for an executive audience</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="split-head">
+            <h3 style="margin:0">Deterministic &amp; evidence responsibilities</h3>
+            <span class="badge hyp">Hypothesis</span>
+          </div>
+          <ul>
+            <li>Resolve approved geographies</li>
+            <li>Retrieve Atlas evidence</li>
+            <li>Validate source, period, unit, and geography</li>
+            <li>Perform arithmetic</li>
+            <li>Normalize and rank</li>
+            <li>Assess sufficiency</li>
+            <li>Preserve provenance</li>
+            <li>Produce reproducible outputs</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout room">
+        <strong>Question for the room</strong>
+        Does this boundary align with how Atlas and Calypso are designed today, or does it
+        duplicate capabilities already inside the platform?
+      </div>
+    </section>
+
+    <!-- TAB 3 -->
+    <section id="demo" class="panel" role="tabpanel" aria-labelledby="tab-demo" hidden>
+      <div class="meta">
+        <span class="badge demo">Demonstrated</span>
+        <span class="badge val">Needs StateBook validation</span>
+      </div>
+      <h2>What the exercise demonstrated</h2>
+      <p style="margin-bottom:12px">
+        Only mechanisms that are implemented in the repository are listed here.
+        <span class="badge demo">Demonstrated in prototype — not yet validated against StateBook production architecture</span>
+      </p>
+
+      <div class="grid4">
+        <div class="card">
+          <h3>1. Governed planning <span class="badge demo">Demonstrated</span></h3>
+          <ul>
+            <li>Natural-language objective becomes a typed plan proposal</li>
+            <li>Material assumptions are exposed on the plan</li>
+            <li>User approval is required before Atlas execution</li>
+            <li>Revisions create a new plan version rather than mutating the approved one</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>2. Evidence-bound Atlas workflow <span class="badge demo">Demonstrated</span></h3>
+          <ul>
+            <li>Metrics come from a verified registry gated on live-checked datapoints</li>
+            <li>Atlas calls preserve source, period, geography, and raw-request provenance</li>
+            <li>Missing or incompatible evidence stays visible (not silently dropped)</li>
+            <li>The agent does not create factual values — only EvidenceItems from Atlas responses</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>3. Deterministic analytics <span class="badge demo">Demonstrated</span></h3>
+          <ul>
+            <li>Normalization, weighting, scoring, sensitivity, and reproducibility hashes run outside the model</li>
+            <li>Sufficiency logic can withhold a ranking when evidence does not distinguish candidates reliably</li>
+            <li>LLM is optional for correctness; deterministic planner is the reference path</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>4. Evidence-bound explanation <span class="badge demo">Demonstrated</span></h3>
+          <ul>
+            <li>Narrator and assistant receive a validated fact sheet / context pack</li>
+            <li>Unsupported company financial forecasts are refused before a model call when detected</li>
+            <li>Generated figures not present in evidence are rejected and replaced deterministically</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout lim">
+        <strong>Known limitation</strong>
+        Pattern-based injection and forecast detectors are prototype controls, not a complete
+        security boundary. Sessions are in-memory and unauthenticated — appropriate for a
+        local demo, not multi-replica production.
+      </div>
+
+      <div class="eng">
+        Engineering evidence (secondary): fixed workflow stages in
+        <code>orchestration/workflow.py</code>; offline Python suite and frontend contract
+        tests; demo-token geography limited to Burlington–South Burlington metro. Counts of
+        layers or tests are not the value proposition.
+      </div>
+    </section>
+
+    <!-- TAB 4 -->
+    <section id="atlas" class="panel" role="tabpanel" aria-labelledby="tab-atlas" hidden>
+      <div class="meta">
+        <span class="badge demo">Demonstrated</span>
+        <span class="badge fut">Future possibility</span>
+        <span class="badge val">Needs StateBook validation</span>
+      </div>
+      <h2>What the exercise suggests about Atlas</h2>
+      <p style="margin-bottom:12px">
+        The prototype exercises a narrow slice of Atlas. It does not claim to use the full
+        API or to mirror internal StateBook architecture.
+      </p>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="split-head">
+            <h3 style="margin:0">What the prototype actually uses</h3>
+            <span class="badge demo">Implemented &amp; tested</span>
+          </div>
+          <ul>
+            <li>Named geography and multi-geography requests</li>
+            <li>Scalar datapoints</li>
+            <li>Filtered collections (where curated metrics need them)</li>
+            <li>Period scope</li>
+            <li>Datapoint / response metadata</li>
+            <li>Requested versus reported geography (context-shift detection)</li>
+            <li>Source attribution on observations</li>
+            <li>Public demo-token licensing boundaries (allowlist refusal)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="split-head">
+            <h3 style="margin:0">Broader potential to validate</h3>
+            <span class="badge fut">Documented opportunity — not in this version</span>
+          </div>
+          <ul>
+            <li>Custom trade areas</li>
+            <li>Address or coordinate criteria</li>
+            <li>Drive-time or distance analysis</li>
+            <li>Market discovery through criteria</li>
+            <li>Richer collection enrichment</li>
+            <li>Longitudinal analysis</li>
+            <li>Uncertainty and margin-of-error handling (`.moe` available; not productized here)</li>
+            <li>Custom geography and GeoJSON support</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout room">
+        <strong>Question for the room</strong>
+        Which of these capabilities are important in real customer workflows, and which are
+        technically possible but rarely used?
+      </div>
+    </section>
+
+    <!-- TAB 5 -->
+    <section id="hyps" class="panel" role="tabpanel" aria-labelledby="tab-hyps" hidden>
+      <div class="meta">
+        <span class="badge hyp">Working hypothesis</span>
+        <span class="badge val">Needs StateBook validation</span>
+      </div>
+      <h2>Five hypotheses I would like to validate</h2>
+      <p style="margin-bottom:12px">Expand each card. Please correct anything that misreads Atlas or Calypso.</p>
+
+      <details class="hyp-card" open>
+        <summary>
+          Hypothesis 1 — Atlas can remain the semantic and factual evidence layer
+          <span class="badge hyp">Hypothesis</span>
+        </summary>
+        <div class="hyp-body">
+          <div class="block">
+            <h4>Evidence from the experiment</h4>
+            <p>Verified datapoint gate; Observation metadata; reported geography; source and period provenance on RawCall / EvidenceItem paths.</p>
+          </div>
+          <div class="block">
+            <h4>What remains unknown</h4>
+            <p>Whether Atlas metadata consistency and any internal semantic registry already cover this role across domains.</p>
+          </div>
+          <div class="block">
+            <h4>Questions for Eric and Mark</h4>
+            <p>How consistent is Atlas metadata across domains? Is there already an internal semantic registry? Which response fields are mechanically trustworthy?</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="hyp-card">
+        <summary>
+          Hypothesis 2 — A separate governed orchestration layer can sit above Atlas
+          <span class="badge hyp">Hypothesis</span>
+        </summary>
+        <div class="hyp-body">
+          <div class="block">
+            <h4>Evidence from the experiment</h4>
+            <p>Typed analysis plan; human approval gate; fixed workflow state machine; capability registry with unavailable capabilities as data, not fake executors.</p>
+          </div>
+          <div class="block">
+            <h4>What remains unknown</h4>
+            <p>Whether this belongs inside Calypso, beside it, or as a separate Galadreal service — and what orchestration already exists.</p>
+          </div>
+          <div class="block">
+            <h4>Questions for Eric and Mark</h4>
+            <p>Should this layer sit inside Calypso, beside it, or as a separate service? What orchestration already exists today?</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="hyp-card">
+        <summary>
+          Hypothesis 3 — Most previous hallucination risks can be bounded architecturally
+          <span class="badge hyp">Hypothesis</span>
+        </summary>
+        <div class="hyp-body">
+          <div class="block">
+            <h4>Evidence from the experiment</h4>
+            <p>Metric allowlist; fixed request construction after approval; deterministic scoring; evidence-bound narrative verification; explicit refusals for unsupported forecasts.</p>
+          </div>
+          <div class="block">
+            <h4>What remains unknown</h4>
+            <p>Where prior hallucinations actually originated, and which failure classes this architecture would not solve.</p>
+          </div>
+          <div class="block">
+            <h4>Questions for Eric and Mark</h4>
+            <p>Where did prior hallucinations originate? Which failure classes would this architecture not solve?</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="hyp-card">
+        <summary>
+          Hypothesis 4 — The first product should assist an existing workflow, not make autonomous decisions
+          <span class="badge hyp">Hypothesis</span>
+        </summary>
+        <div class="hyp-body">
+          <div class="block">
+            <h4>Evidence from the experiment</h4>
+            <p>Planning and explanation remain useful without giving the model factual authority; approval and revision keep a human in the loop.</p>
+          </div>
+          <div class="block">
+            <h4>What remains unknown</h4>
+            <p>The narrowest real customer workflow, user, required output, and success metric.</p>
+          </div>
+          <div class="block">
+            <h4>Questions for Eric and Mark</h4>
+            <p>What is the narrowest real customer workflow? Who is the user? What output do they need? What metric would demonstrate value?</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="hyp-card">
+        <summary>
+          Hypothesis 5 — External and proprietary data can be added without contaminating Atlas provenance
+          <span class="badge hyp">Hypothesis</span>
+        </summary>
+        <div class="hyp-body">
+          <div class="block">
+            <h4>Evidence from the experiment</h4>
+            <p>Explicit <code>DataClass</code> provenance; public market clustering labeled separately from Atlas evidence; simulated retailer twin and analog matching keep outcome labels from leaking into match features.</p>
+          </div>
+          <div class="block">
+            <h4>What remains unknown</h4>
+            <p>How Atlas, customer, licensed third-party, and modeled data should be represented in production — and whether a unified evidence abstraction already exists.</p>
+          </div>
+          <div class="block">
+            <h4>Questions for Eric and Mark</h4>
+            <p>How should those classes be represented? Is a unified evidence abstraction already available?</p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- TAB 6 -->
+    <section id="ext" class="panel" role="tabpanel" aria-labelledby="tab-ext" hidden>
+      <div class="meta">
+        <span class="badge fut">Future possibility</span>
+        <span class="badge lim">Limitation</span>
+        <span class="badge demo">Architectural demo only</span>
+      </div>
+      <h2>Exploratory extensions — not the proposed first product</h2>
+
+      <div class="callout warn">
+        <strong>Warning</strong>
+        These extensions helped test provenance and modularity. They should not distract
+        from identifying the first real StateBook customer workflow. They are not core
+        StateBook capabilities and do not predict store performance.
+      </div>
+
+      <div class="grid3" style="margin-top:14px">
+        <div class="card">
+          <h3>Market archetypes <span class="badge fut">Exploratory</span></h3>
+          <h4>Demonstrates</h4>
+          <ul>
+            <li>Deterministic analytical services can extend Atlas evidence</li>
+            <li>Public and Atlas data can retain separate provenance</li>
+          </ul>
+          <h4>Does not prove</h4>
+          <ul>
+            <li>Clusters predict store performance</li>
+            <li>This is a Galadreal priority</li>
+          </ul>
+          <h4>Would need in production</h4>
+          <p>Customer-approved geography universe, feature contract, and a named decision the clusters serve.</p>
+        </div>
+        <div class="card">
+          <h3>Synthetic NorthStar twin <span class="badge lim">Fictional</span></h3>
+          <h4>Demonstrates</h4>
+          <ul>
+            <li>A customer-data contract can be prototyped before proprietary data exists</li>
+            <li>Assumptions can be exposed and versioned</li>
+          </ul>
+          <h4>Does not prove</h4>
+          <ul>
+            <li>Fidelity to GAP or any retailer economics</li>
+            <li>Predictive validity</li>
+          </ul>
+          <h4>Would need in production</h4>
+          <p>Real store network, performance history, and customer-owned assumptions — never implied by Atlas alone.</p>
+        </div>
+        <div class="card">
+          <h3>Analog-store matching <span class="badge fut">Exploratory</span></h3>
+          <h4>Demonstrates</h4>
+          <ul>
+            <li>Customer-specific context can layer after market evidence</li>
+            <li>Outcomes can attach after similarity selection to limit leakage</li>
+          </ul>
+          <h4>Does not prove</h4>
+          <ul>
+            <li>Real-site revenue</li>
+            <li>Causal performance</li>
+          </ul>
+          <h4>Would need in production</h4>
+          <p>Customer store features, outcome definitions, and governance for when analogs may be shown.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 7 -->
+    <section id="first" class="panel" role="tabpanel" aria-labelledby="tab-first" hidden>
+      <div class="meta">
+        <span class="badge hyp">Working hypothesis</span>
+        <span class="badge val">Needs StateBook validation</span>
+      </div>
+      <h2>What could realistically be built first?</h2>
+      <p style="margin-bottom:12px">Three candidate vertical slices — not a recommendation.</p>
+
+      <div class="grid3">
+        <div class="card">
+          <h3>Option A — Evidence-backed result explainer <span class="badge hyp">Lower risk</span></h3>
+          <h4>Input</h4>
+          <p>An existing Atlas or Calypso result.</p>
+          <h4>AI role</h4>
+          <p>Explain the result, identify limitations, answer grounded follow-up questions.</p>
+          <h4>Why lower risk</h4>
+          <p>No autonomous data selection or calculation.</p>
+          <h4>Questions</h4>
+          <ul>
+            <li>Is there a customer need?</li>
+            <li>Can Calypso expose a structured evidence context?</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Option B — Guided Atlas query builder <span class="badge hyp">Medium risk</span></h3>
+          <h4>Input</h4>
+          <p>A natural-language business question.</p>
+          <h4>AI role</h4>
+          <p>Propose approved datapoints, geographies, and filters.</p>
+          <h4>Deterministic role</h4>
+          <p>Validate and execute the query.</p>
+          <h4>Why medium risk</h4>
+          <p>The model affects evidence selection, but only through a registry and approval.</p>
+          <h4>Questions</h4>
+          <ul>
+            <li>Is datapoint discovery a real user pain?</li>
+            <li>Is there already an internal semantic / query builder?</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Option C — Governed decision workflow <span class="badge val">Higher scope</span></h3>
+          <h4>Input</h4>
+          <p>A strategic objective such as retail site selection.</p>
+          <h4>AI role</h4>
+          <p>Clarify the decision, construct a plan, orchestrate approved analyses, explain.</p>
+          <h4>Why higher scope</h4>
+          <p>Needs domain metrics, analytical services, product design, and often customer-specific data.</p>
+          <h4>Questions</h4>
+          <ul>
+            <li>Is there a specific customer workflow ready?</li>
+            <li>What deterministic services already exist?</li>
+          </ul>
+        </div>
+      </div>
+
+      <h4 style="margin-top:16px">Comparison (discussion aid)</h4>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>A · Explainer</th>
+              <th>B · Query builder</th>
+              <th>C · Decision workflow</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Customer value</td>
+              <td>Trust &amp; comprehension of existing results</td>
+              <td>Faster / safer evidence selection</td>
+              <td>End-to-end decision support</td>
+            </tr>
+            <tr>
+              <td>Implementation complexity</td>
+              <td>Lower — if evidence context exists</td>
+              <td>Medium — registry + approval UX</td>
+              <td>Higher — domain + orchestration</td>
+            </tr>
+            <tr>
+              <td>Hallucination exposure</td>
+              <td>Lower (explain only)</td>
+              <td>Medium (selection bounded by allowlists)</td>
+              <td>Higher surface; architecture must hold</td>
+            </tr>
+            <tr>
+              <td>Dependence on existing architecture</td>
+              <td>High on Calypso/Atlas result shape</td>
+              <td>High on datapoint catalog &amp; query APIs</td>
+              <td>High on capabilities + customer data</td>
+            </tr>
+            <tr>
+              <td>Time to pilot</td>
+              <td>Potentially weeks</td>
+              <td>Weeks to a short quarter</td>
+              <td>Longer unless tightly scoped</td>
+            </tr>
+            <tr>
+              <td>Information still needed</td>
+              <td>Need, context pack, evaluation</td>
+              <td>Pain, existing builders, governance</td>
+              <td>Named workflow, owner, success metric</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout" style="margin-top:14px">
+        <strong>Bias, not a decision</strong>
+        My current bias is to start as close as possible to an existing trusted workflow,
+        but the correct choice depends on how Atlas and Calypso are used by customers today.
+      </div>
+    </section>
+
+    <!-- TAB 8 -->
+    <section id="q" class="panel" role="tabpanel" aria-labelledby="tab-q" hidden>
+      <div class="meta">
+        <span class="badge val">Needs StateBook validation</span>
+      </div>
+      <h2>What I need to learn from Eric and Mark</h2>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>For Eric</h3>
+          <ul>
+            <li>Where did the previous hallucination failures originate?</li>
+            <li>Which original architectural decisions should be protected?</li>
+            <li>What would you redesign first?</li>
+            <li>Where should a new AI layer sit relative to Atlas and Calypso?</li>
+            <li>What evidence would make you trust it in production?</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>For Mark</h3>
+          <ul>
+            <li>What is the current request path from Calypso to Atlas?</li>
+            <li>How are datapoints and collections discovered and governed?</li>
+            <li>Which Atlas metadata is consistently reliable?</li>
+            <li>What query patterns are difficult or expensive?</li>
+            <li>Which capabilities in this prototype already exist internally?</li>
+            <li>What would make a new CTO useful rather than disruptive?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout joint">
+        <strong>Joint question — focus of the meeting</strong>
+        <p>
+          What is the narrowest customer problem we could solve within weeks, with a named
+          user, a defined input and output, and a measurable success criterion?
+        </p>
+      </div>
+    </section>
+
+    <!-- TAB 9 -->
+    <section id="next" class="panel" role="tabpanel" aria-labelledby="tab-next" hidden>
+      <div class="meta">
+        <span class="badge hyp">Working hypothesis</span>
+        <span class="badge fut">Proposed process</span>
+      </div>
+      <h2>From hypothesis to validated plan</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num">1 · Learn</div>
+          <ul>
+            <li>Architecture walkthrough</li>
+            <li>Prior failure analysis</li>
+            <li>Customer workflow review</li>
+            <li>Capability inventory</li>
+          </ul>
+        </div>
+        <div class="step">
+          <div class="num">2 · Select</div>
+          <ul>
+            <li>One bounded use case</li>
+            <li>Evidence contract</li>
+            <li>Evaluation criteria</li>
+            <li>Ownership boundaries</li>
+          </ul>
+        </div>
+        <div class="step">
+          <div class="num">3 · Pilot</div>
+          <ul>
+            <li>Governed prototype</li>
+            <li>Production-like evaluation</li>
+            <li>Customer feedback</li>
+            <li>Expand, redesign, or stop</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="closing">
+        The objective is not to add an AI interface to every StateBook capability. It is to
+        find one workflow where agentic flexibility improves the customer experience without
+        weakening the trust that Atlas already provides.
+      </div>
+
+      <div class="callout room">
+        <strong>Question for the room</strong>
+        After today, what is the single artifact we should produce next — a workflow brief,
+        an architecture map, or a one-week technical spike?
+      </div>
+    </section>
+
+    <p class="foot">
+      Grounded in the retail-location-intelligence prototype (README, docs/architecture.md,
+      docs/agentic_planning.md, api/, planning/, orchestration/, validation/, scoring/,
+      explanation/, market_discovery/, retailer_simulation/, analog_matching/). Claims about
+      StateBook production architecture are hypotheses pending Eric and Mark’s correction.
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+      var panels = Array.prototype.slice.call(document.querySelectorAll(".panel"));
+      var progressSteps = Array.prototype.slice.call(document.querySelectorAll(".progress-step"));
+      var arcOrder = ["problem", "hypothesis", "evidence", "unknowns", "increment", "discussion"];
+
+      function setArc(arc) {
+        var idx = arcOrder.indexOf(arc);
+        progressSteps.forEach(function (el) {
+          var a = el.getAttribute("data-arc");
+          var i = arcOrder.indexOf(a);
+          el.classList.toggle("active", a === arc);
+          el.classList.toggle("done", i >= 0 && i < idx);
+        });
+      }
+
+      function activate(tab) {
+        var id = tab.getAttribute("data-panel");
+        tabs.forEach(function (t) {
+          var selected = t === tab;
+          t.setAttribute("aria-selected", selected ? "true" : "false");
+          t.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach(function (p) {
+          var on = p.id === id;
+          p.classList.toggle("active", on);
+          if (on) {
+            p.removeAttribute("hidden");
+          } else {
+            p.setAttribute("hidden", "");
+          }
+        });
+        setArc(tab.getAttribute("data-arc"));
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          activate(tab);
+        });
+        tab.addEventListener("keydown", function (e) {
+          var i = tabs.indexOf(tab);
+          var next = null;
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+            next = tabs[(i + 1) % tabs.length];
+          } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+            next = tabs[(i - 1 + tabs.length) % tabs.length];
+          } else if (e.key === "Home") {
+            next = tabs[0];
+          } else if (e.key === "End") {
+            next = tabs[tabs.length - 1];
+          } else if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            activate(tab);
+            return;
+          }
+          if (next) {
+            e.preventDefault();
+            next.focus();
+            activate(next);
+          }
+        });
+      });
+
+      // Ensure initial hidden state for inactive panels
+      panels.forEach(function (p) {
+        if (!p.classList.contains("active")) p.setAttribute("hidden", "");
+      });
+    })();
+  </script>
+</body>
+</html>
