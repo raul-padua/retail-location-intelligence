@@ -12,6 +12,8 @@ Config lives in [`vercel.json`](../vercel.json):
 - `web` → Next.js (`web/`)
 - `api` → FastAPI (`server.app:app`)
 - Public `/api/*` (and OpenAPI `/docs`) rewrite to the API; everything else to the UI
+- Function limits (`maxDuration`, `memory`, `includeFiles`) live under
+  `services.api.functions["server/app.py"]` — not as top-level service keys
 
 ### Dashboard checklist
 
