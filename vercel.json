@@ -6,33 +6,9 @@
       "framework": "nextjs"
     },
     "api": {
-      "root": "./",
+      "root": ".",
       "framework": "fastapi",
-      "entrypoint": "server.app:app",
-      "functions": {
-        "server/app.py": {
-          "maxDuration": 60,
-          "memory": 1024,
-          "includeFiles": [
-            "data/**",
-            "server/**",
-            "api/**",
-            "core/**",
-            "metrics/**",
-            "models/**",
-            "orchestration/**",
-            "planning/**",
-            "validation/**",
-            "scoring/**",
-            "explanation/**",
-            "market_discovery/**",
-            "retailer_simulation/**",
-            "analog_matching/**",
-            "requirements.txt",
-            "pyproject.toml"
-          ]
-        }
-      }
+      "entrypoint": "server.app:app"
     }
   },
   "rewrites": [

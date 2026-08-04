@@ -12,8 +12,13 @@ Config lives in [`vercel.json`](../vercel.json):
 - `web` → Next.js (`web/`)
 - `api` → FastAPI (`server.app:app`)
 - Public `/api/*` (and OpenAPI `/docs`) rewrite to the API; everything else to the UI
-- Function limits (`maxDuration`, `memory`, `includeFiles`) live under
-  `services.api.functions["server/app.py"]` — not as top-level service keys
+
+Keep each service object limited to schema-allowed fields (`root`, `framework`,
+`entrypoint`, …). Do **not** put `maxDuration`, `memory`, or `includeFiles` on the
+service itself — Vercel rejects those as additional properties
+([project configuration](https://vercel.com/docs/project-configuration)).
+Function limits can be tuned later in the dashboard if a deploy needs a longer Atlas
+timeout.
 
 ### Dashboard checklist
 
