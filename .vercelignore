@@ -1,0 +1,14 @@
+.venv
+.git
+.pytest_cache
+.agents
+**/__pycache__
+**/*.pyc
+web/node_modules
+web/.next
+web/out
+tests
+sample_outputs
+*.postman_collection.json
+.DS_Store
+.env

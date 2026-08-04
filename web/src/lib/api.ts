@@ -29,8 +29,19 @@ import type {
   WorkflowState,
 } from "./types";
 
-export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000";
+function resolveApiBase(): string {
+  // Explicit override wins (including empty string for same-origin on Vercel).
+  if (process.env.NEXT_PUBLIC_API_BASE !== undefined) {
+    return process.env.NEXT_PUBLIC_API_BASE.replace(/\/$/, "");
+  }
+  // On Vercel, FastAPI is rewritten under the same origin at /api/...
+  if (process.env.VERCEL === "1") {
+    return "";
+  }
+  return "http://localhost:8000";
+}
+
+export const API_BASE = resolveApiBase();
 
 export class ApiError extends Error {
   constructor(

@@ -35,3 +35,8 @@ markers = [
 
 [tool.uv]
 package = false
+
+# Vercel FastAPI detection (https://vercel.com/docs/frameworks/backend/fastapi).
+# Without this, the build scans every `app = ...` in the repo and may pick a test helper.
+[tool.vercel]
+entrypoint = "server.app:app"

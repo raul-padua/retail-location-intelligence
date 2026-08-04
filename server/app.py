@@ -132,6 +132,15 @@ def request_settings(
 DEFAULT_ORIGINS = ("http://localhost:3000", "http://127.0.0.1:3000")
 
 
+def _origin_from_vercel_host(host: str) -> str | None:
+    value = host.strip()
+    if not value:
+        return None
+    if value.startswith("http://") or value.startswith("https://"):
+        return value.rstrip("/")
+    return f"https://{value}"
+
+
 def allowed_origins() -> list[str]:
     """Browser origins permitted to call this API.
 
@@ -139,11 +148,27 @@ def allowed_origins() -> list[str]:
     which is what a deployment needs. A wildcard is deliberately not supported: this API
     accepts an OpenAI key in a header, and any origin being able to send one is a
     credential-forwarding hole rather than a convenience.
+
+    When unset, localhost defaults remain, and any Vercel-provided hostnames
+    (``VERCEL_URL``, branch URL, production URL) are appended so split frontend/API
+    deployments work without a manual CORS edit on every preview.
     """
     configured = os.getenv("RLI_CORS_ORIGINS", "").strip()
-    if not configured:
-        return list(DEFAULT_ORIGINS)
-    return [origin.strip() for origin in configured.split(",") if origin.strip()]
+    origins = (
+        [origin.strip() for origin in configured.split(",") if origin.strip()]
+        if configured
+        else list(DEFAULT_ORIGINS)
+    )
+    for key in (
+        "VERCEL_URL",
+        "VERCEL_BRANCH_URL",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+    ):
+        origin = _origin_from_vercel_host(os.getenv(key, ""))
+        if origin:
+            origins.append(origin)
+    # Preserve order while dropping duplicates.
+    return list(dict.fromkeys(origins))
 
 
 SettingsDep = Annotated[Settings, Depends(request_settings)]

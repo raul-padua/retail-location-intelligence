@@ -1,0 +1,42 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "web": {
+      "root": "web/",
+      "framework": "nextjs"
+    },
+    "api": {
+      "root": "./",
+      "framework": "fastapi",
+      "entrypoint": "server.app:app",
+      "maxDuration": 60,
+      "memory": 1024,
+      "includeFiles": [
+        "data/**",
+        "server/**",
+        "api/**",
+        "core/**",
+        "metrics/**",
+        "models/**",
+        "orchestration/**",
+        "planning/**",
+        "validation/**",
+        "scoring/**",
+        "explanation/**",
+        "market_discovery/**",
+        "retailer_simulation/**",
+        "analog_matching/**",
+        "requirements.txt",
+        "pyproject.toml"
+      ]
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": { "service": "api" } },
+    { "source": "/docs", "destination": { "service": "api" } },
+    { "source": "/docs/(.*)", "destination": { "service": "api" } },
+    { "source": "/openapi.json", "destination": { "service": "api" } },
+    { "source": "/redoc", "destination": { "service": "api" } },
+    { "source": "/(.*)", "destination": { "service": "web" } }
+  ]
+}

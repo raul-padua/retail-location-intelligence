@@ -32,6 +32,9 @@ cp .env.example .env                   # STATEBOOK_API_TOKEN=demo works out of t
 ./scripts/dev.sh                       # installs web deps on first run, starts both
 ```
 
+Deploying the Next.js client and FastAPI service together on Vercel:
+[`docs/vercel_deploy.md`](docs/vercel_deploy.md).
+
 Then open http://localhost:3000. The workspace is map-first: candidate markets appear on a
 street-level basemap and in a tray; the right-hand intelligence panel shows the selected
 market and the current workflow stage (describe → clarify → review → result). After a run,

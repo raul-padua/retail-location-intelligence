@@ -204,6 +204,12 @@ def test_the_cors_allowlist_is_configurable_and_never_a_wildcard(monkeypatch):
     from server.app import DEFAULT_ORIGINS, allowed_origins
 
     monkeypatch.delenv("RLI_CORS_ORIGINS", raising=False)
+    for key in (
+        "VERCEL_URL",
+        "VERCEL_BRANCH_URL",
+        "VERCEL_PROJECT_PRODUCTION_URL",
+    ):
+        monkeypatch.delenv(key, raising=False)
     assert allowed_origins() == list(DEFAULT_ORIGINS)
 
     monkeypatch.setenv("RLI_CORS_ORIGINS", "https://atlas.example.com, http://localhost:4000")
@@ -212,6 +218,12 @@ def test_the_cors_allowlist_is_configurable_and_never_a_wildcard(monkeypatch):
     monkeypatch.setenv("RLI_CORS_ORIGINS", "   ")
     assert allowed_origins() == list(DEFAULT_ORIGINS)
     assert "*" not in allowed_origins()
+
+    monkeypatch.delenv("RLI_CORS_ORIGINS", raising=False)
+    monkeypatch.setenv("VERCEL_URL", "retail-location-intelligence.vercel.app")
+    assert "https://retail-location-intelligence.vercel.app" in allowed_origins()
+    for origin in DEFAULT_ORIGINS:
+        assert origin in allowed_origins()
 
 
 def test_a_forged_approved_status_cannot_be_smuggled_through_an_edit(client):
