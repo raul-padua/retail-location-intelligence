@@ -31,20 +31,24 @@ timeout.
 
    | Name | Value |
    | --- | --- |
-   | `STATEBOOK_API_TOKEN` | `demo` (or your licensed token) |
+   | `STATEBOOK_API_TOKEN` | optional on Vercel — defaults to public `demo` when unset |
    | `STATEBOOK_API_BASE_URL` | optional — defaults to `https://api.statebook.com` |
    | `RLI_LOG_LEVEL` | `INFO` |
    | `OPENAI_API_KEY` | optional; users can still paste a key in the sidebar |
+
+   Hosted builds default `STATEBOOK_API_TOKEN` to the public StateBook `demo` token when
+   the variable is missing (so the Burlington metro demo works even if project env does
+   not reach the FastAPI service). Set the variable explicitly when you have a licensed
+   token.
 
    Do **not** set `NEXT_PUBLIC_API_BASE` for the single-project Services deploy.
    If it is set to `http://localhost:8000`, **delete it** — that is what makes the
    browser call your laptop instead of this deployment’s `/api`. Production builds
    use same-origin relative `/api/...` URLs automatically.
 
-   **Important:** after adding or changing env vars, you must **Redeploy**. An existing
-   deployment keeps the env it was built/started with; refreshing the browser is not
-   enough. Confirm with `https://<deployment>/api/health` →
-   `settings.atlas_token_present` should be `true`.
+   After changing env vars, **Redeploy**. Confirm with
+   `https://<deployment>/api/health` → `settings.atlas_token_present` should be `true`
+   and `settings.is_demo_token` should be `true` when using `demo`.
 
 5. Confirm the deployment builds **both** services (web + api). If only Next.js
    appears in the build log, Framework Preset is not Services.

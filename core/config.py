@@ -103,8 +103,15 @@ def _env_str(name: str) -> str | None:
 
 
 def load_settings() -> Settings:
+    token = _env_str("STATEBOOK_API_TOKEN")
+    # StateBook's public evaluation token is documented and used throughout this
+    # prototype. On Vercel, default to it when unset so the hosted demo works even if
+    # project env vars do not reach the FastAPI service. A licensed token still wins
+    # when STATEBOOK_API_TOKEN is set.
+    if not token and os.getenv("VERCEL"):
+        token = "demo"
     return Settings(
-        atlas_token=_env_str("STATEBOOK_API_TOKEN"),
+        atlas_token=token,
         atlas_base_url=(
             _env_str("STATEBOOK_API_BASE_URL") or "https://api.statebook.com"
         ).rstrip("/"),
