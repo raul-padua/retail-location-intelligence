@@ -61,10 +61,25 @@ export function Workspace() {
         <div className="space-y-4">
           {!settings?.atlas_token_present ? (
             <Banner tone="negative" title="No Atlas token is configured">
-              Copy <code className="font-mono">.env.example</code> to{" "}
-              <code className="font-mono">.env</code> and set{" "}
-              <code className="font-mono">STATEBOOK_API_TOKEN=demo</code> to use the public
-              evaluation token. Planning works without it; running an analysis does not.
+              {process.env.NODE_ENV === "production" ? (
+                <>
+                  In the Vercel project, set{" "}
+                  <code className="font-mono">STATEBOOK_API_TOKEN=demo</code> under
+                  Environment Variables for <strong>Production</strong> and{" "}
+                  <strong>Preview</strong>, then <strong>redeploy</strong>. Env vars do not
+                  apply to an already-built deployment.{" "}
+                  <code className="font-mono">STATEBOOK_API_BASE_URL</code> is optional — it
+                  defaults to the public Atlas host.
+                </>
+              ) : (
+                <>
+                  Copy <code className="font-mono">.env.example</code> to{" "}
+                  <code className="font-mono">.env</code> and set{" "}
+                  <code className="font-mono">STATEBOOK_API_TOKEN=demo</code> to use the
+                  public evaluation token. Planning works without it; running an analysis
+                  does not.
+                </>
+              )}
             </Banner>
           ) : null}
 

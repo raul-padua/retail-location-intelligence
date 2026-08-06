@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass, replace
-from functools import lru_cache
 
 from dotenv import load_dotenv
 
@@ -39,6 +38,12 @@ class Settings:
 
     def require_token(self) -> str:
         if not self.atlas_token or not self.atlas_token.strip():
+            if os.getenv("VERCEL"):
+                raise MissingTokenError(
+                    "STATEBOOK_API_TOKEN is not set on this deployment. In the Vercel "
+                    "project, add STATEBOOK_API_TOKEN=demo (Production + Preview), then "
+                    "redeploy. STATEBOOK_API_BASE_URL is optional."
+                )
             raise MissingTokenError(
                 "STATEBOOK_API_TOKEN is not set. Copy .env.example to .env and set "
                 "STATEBOOK_API_TOKEN=demo to use the public evaluation token."
@@ -86,18 +91,36 @@ def _int_env(name: str, default: int) -> int:
         return default
 
 
+def _env_str(name: str) -> str | None:
+    """Read a string env var, trimming whitespace and accidental surrounding quotes."""
+    raw = os.getenv(name)
+    if raw is None:
+        return None
+    cleaned = raw.strip()
+    if len(cleaned) >= 2 and cleaned[0] == cleaned[-1] and cleaned[0] in {'"', "'"}:
+        cleaned = cleaned[1:-1].strip()
+    return cleaned or None
+
+
 def load_settings() -> Settings:
     return Settings(
-        atlas_token=os.getenv("STATEBOOK_API_TOKEN"),
-        atlas_base_url=os.getenv("STATEBOOK_API_BASE_URL", "https://api.statebook.com").rstrip("/"),
+        atlas_token=_env_str("STATEBOOK_API_TOKEN"),
+        atlas_base_url=(
+            _env_str("STATEBOOK_API_BASE_URL") or "https://api.statebook.com"
+        ).rstrip("/"),
         timeout_seconds=_float_env("STATEBOOK_TIMEOUT_SECONDS", 30.0),
         max_retries=max(0, min(_int_env("STATEBOOK_MAX_RETRIES", 2), 5)),
-        openai_api_key=os.getenv("OPENAI_API_KEY"),
-        llm_model=os.getenv("RLI_LLM_MODEL", DEFAULT_LLM_MODEL),
-        log_level=os.getenv("RLI_LOG_LEVEL", "INFO").upper(),
+        openai_api_key=_env_str("OPENAI_API_KEY"),
+        llm_model=_env_str("RLI_LLM_MODEL") or DEFAULT_LLM_MODEL,
+        log_level=(_env_str("RLI_LOG_LEVEL") or "INFO").upper(),
     )
 
 
-@lru_cache(maxsize=1)
 def get_settings() -> Settings:
+    """Load settings from the process environment.
+
+    Not cached: Vercel (and similar hosts) inject env at deploy/process start, and a
+    cached empty token would keep failing after the operator adds STATEBOOK_API_TOKEN
+    until the instance recycled. Reading env is cheap relative to an Atlas call.
+    """
     return load_settings()

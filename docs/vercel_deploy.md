@@ -32,7 +32,7 @@ timeout.
    | Name | Value |
    | --- | --- |
    | `STATEBOOK_API_TOKEN` | `demo` (or your licensed token) |
-   | `STATEBOOK_API_BASE_URL` | `https://api.statebook.com` |
+   | `STATEBOOK_API_BASE_URL` | optional — defaults to `https://api.statebook.com` |
    | `RLI_LOG_LEVEL` | `INFO` |
    | `OPENAI_API_KEY` | optional; users can still paste a key in the sidebar |
 
@@ -40,6 +40,11 @@ timeout.
    If it is set to `http://localhost:8000`, **delete it** — that is what makes the
    browser call your laptop instead of this deployment’s `/api`. Production builds
    use same-origin relative `/api/...` URLs automatically.
+
+   **Important:** after adding or changing env vars, you must **Redeploy**. An existing
+   deployment keeps the env it was built/started with; refreshing the browser is not
+   enough. Confirm with `https://<deployment>/api/health` →
+   `settings.atlas_token_present` should be `true`.
 
 5. Confirm the deployment builds **both** services (web + api). If only Next.js
    appears in the build log, Framework Preset is not Services.
