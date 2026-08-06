@@ -31,17 +31,41 @@ import type {
 
 function resolveApiBase(): string {
   // Explicit override wins (including empty string for same-origin on Vercel).
-  if (process.env.NEXT_PUBLIC_API_BASE !== undefined) {
-    return process.env.NEXT_PUBLIC_API_BASE.replace(/\/$/, "");
+  // `scripts/dev.sh` sets NEXT_PUBLIC_API_BASE=http://localhost:8000 for local work.
+  const configured = process.env.NEXT_PUBLIC_API_BASE;
+  if (configured !== undefined) {
+    const base = configured.replace(/\/$/, "");
+    // A production browser build must never call the developer's machine.
+    if (
+      process.env.NODE_ENV === "production" &&
+      /^(https?:\/\/)?(localhost|127\.0\.0\.1)(:\d+)?$/i.test(base)
+    ) {
+      return "";
+    }
+    return base;
   }
-  // On Vercel, FastAPI is rewritten under the same origin at /api/...
-  if (process.env.VERCEL === "1") {
+  // Production (Vercel Services) → same-origin `/api/...` rewrites.
+  // Dev and test → FastAPI on :8000.
+  if (process.env.NODE_ENV === "production") {
     return "";
   }
   return "http://localhost:8000";
 }
 
 export const API_BASE = resolveApiBase();
+
+function unreachableMessage(): string {
+  if (API_BASE) {
+    return (
+      `Cannot reach the analysis service at ${API_BASE}. Start it with ` +
+      "`uv run uvicorn server.app:app --port 8000`."
+    );
+  }
+  return (
+    "Cannot reach the analysis service at /api on this deployment. " +
+    "Confirm the Vercel project Framework Preset is Services and that /api/health responds."
+  );
+}
 
 export class ApiError extends Error {
   constructor(
@@ -92,11 +116,7 @@ async function request<T>(
       body: body === undefined ? undefined : JSON.stringify(body),
     });
   } catch {
-    throw new ApiError(
-      0,
-      `Cannot reach the analysis service at ${API_BASE}. Start it with ` +
-        `\`uv run uvicorn server.app:app --port 8000\`.`,
-    );
+    throw new ApiError(0, unreachableMessage());
   }
 
   if (response.status === 204) {

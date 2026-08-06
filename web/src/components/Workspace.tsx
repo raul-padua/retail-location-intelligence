@@ -25,13 +25,23 @@ export function Workspace() {
       <main className="mx-auto max-w-2xl px-6 py-16">
         <Banner tone="negative" title="Cannot reach the analysis service">
           <p className="mt-1">{bootError}</p>
-          <p className="mt-3 text-xs">
-            Start it from the project root with{" "}
-            <code className="rounded bg-white/60 px-1 py-0.5 font-mono">
-              uv run uvicorn server.app:app --port 8000
-            </code>
-            .
-          </p>
+          {bootError.includes("localhost") || bootError.includes(":8000") ? (
+            <p className="mt-3 text-xs">
+              Start it from the project root with{" "}
+              <code className="rounded bg-white/60 px-1 py-0.5 font-mono">
+                uv run uvicorn server.app:app --port 8000
+              </code>
+              .
+            </p>
+          ) : (
+            <p className="mt-3 text-xs">
+              On Vercel, open <code className="rounded bg-white/60 px-1 py-0.5 font-mono">/api/health</code>{" "}
+              on this deployment. Framework Preset must be{" "}
+              <strong>Services</strong>, and do not set{" "}
+              <code className="rounded bg-white/60 px-1 py-0.5 font-mono">NEXT_PUBLIC_API_BASE</code>{" "}
+              to localhost.
+            </p>
+          )}
         </Banner>
       </main>
     );

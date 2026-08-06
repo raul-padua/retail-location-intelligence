@@ -36,15 +36,19 @@ timeout.
    | `RLI_LOG_LEVEL` | `INFO` |
    | `OPENAI_API_KEY` | optional; users can still paste a key in the sidebar |
 
-   Do **not** set `NEXT_PUBLIC_API_BASE` unless the API is on another origin. Same-origin
-   rewrites use relative `/api/...` URLs automatically when `VERCEL=1`.
+   Do **not** set `NEXT_PUBLIC_API_BASE` for the single-project Services deploy.
+   If it is set to `http://localhost:8000`, **delete it** — that is what makes the
+   browser call your laptop instead of this deployment’s `/api`. Production builds
+   use same-origin relative `/api/...` URLs automatically.
 
-5. Redeploy from the Deployments tab (or push to `main`).
+5. Confirm the deployment builds **both** services (web + api). If only Next.js
+   appears in the build log, Framework Preset is not Services.
+6. Redeploy from the Deployments tab (or push to `main`).
 
 ### Smoke check after deploy
 
 - UI: `https://<deployment>/`
-- Health: `https://<deployment>/api/health`
+- Health: `https://<deployment>/api/health` ← must return JSON, not a Next 404
 - OpenAPI: `https://<deployment>/docs`
 
 ## Fallback: two Vercel projects (if Services is unavailable)
