@@ -263,10 +263,16 @@ def _apply(
 
 @app.get("/api/health")
 def health(settings: SettingsDep) -> dict:
+    from server.sessions import DEFAULT_SESSION_TTL_SECONDS, get_store, session_ttl_seconds
+
+    store = get_store()
     return {
         "status": "ok",
         "settings": settings_view(settings),
         "demo_token_scope_note": DEMO_TOKEN_SCOPE_NOTE,
+        "session_ttl_seconds": session_ttl_seconds(),
+        "session_ttl_default_seconds": DEFAULT_SESSION_TTL_SECONDS,
+        "sessions_open": len(store),
     }
 
 

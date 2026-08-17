@@ -64,6 +64,44 @@ interface SessionValue {
 
 const SessionContext = createContext<SessionValue | null>(null);
 
+const SESSION_STORAGE_KEY = "rli.session_id";
+/** Keep the server session warm during long demos (server TTL defaults to two hours). */
+const SESSION_HEARTBEAT_MS = 2 * 60 * 1000;
+
+function readStoredSessionId(): string | null {
+  try {
+    return sessionStorage.getItem(SESSION_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function writeStoredSessionId(sessionId: string | null): void {
+  try {
+    if (sessionId) sessionStorage.setItem(SESSION_STORAGE_KEY, sessionId);
+    else sessionStorage.removeItem(SESSION_STORAGE_KEY);
+  } catch {
+    // Private mode / disabled storage — session still works for the tab lifetime.
+  }
+}
+
+async function bootSession(): Promise<{ session_id: string; state: WorkflowState }> {
+  const existing = readStoredSessionId();
+  if (existing) {
+    try {
+      return await api.readSession(existing);
+    } catch (caught) {
+      if (!(caught instanceof ApiError && caught.isMissingSession)) {
+        throw caught;
+      }
+      writeStoredSessionId(null);
+    }
+  }
+  const created = await api.createSession();
+  writeStoredSessionId(created.session_id);
+  return created;
+}
+
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [state, setState] = useState<WorkflowState | null>(null);
@@ -92,13 +130,14 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         const [health, loadedCatalog, session] = await Promise.all([
           api.health(),
           api.catalog(),
-          api.createSession(),
+          bootSession(),
         ]);
         if (cancelled) return;
         setSettings(health.settings);
         setCatalog(loadedCatalog);
         setModel(health.settings.llm_model || health.settings.default_llm_model);
         setSessionId(session.session_id);
+        writeStoredSessionId(session.session_id);
         setState(session.state);
       } catch (caught) {
         if (!cancelled) {
@@ -115,6 +154,18 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (!sessionId || booting) return;
+    const tick = window.setInterval(() => {
+      void api.readSession(sessionId).catch((caught) => {
+        if (caught instanceof ApiError && caught.isMissingSession) {
+          writeStoredSessionId(null);
+        }
+      });
+    }, SESSION_HEARTBEAT_MS);
+    return () => window.clearInterval(tick);
+  }, [sessionId, booting]);
+
   /**
    * Run one server transition. A workflow conflict is surfaced as a message and the state
    * is left exactly as the server has it, because a 409 means nothing moved.
@@ -129,9 +180,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       } catch (caught) {
         if (caught instanceof ApiError && caught.isMissingSession) {
           const fresh = await api.createSession();
+          writeStoredSessionId(fresh.session_id);
           setSessionId(fresh.session_id);
           setState(fresh.state);
-          setError("That session expired, so a new one was started.");
+          setError(
+            "That session expired after the idle limit (default two hours), so a new one was started.",
+          );
         } else {
           setError(caught instanceof Error ? caught.message : String(caught));
         }

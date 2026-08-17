@@ -73,9 +73,11 @@ If the Framework Preset **Services** option is missing on your plan:
 
 ## Known deployment limits
 
-- Session state is **in-memory**. On serverless instances it can reset between cold
-  starts; Fluid compute usually keeps a short demo usable, but this is not
-  multi-replica production storage.
+# Sessions are in-memory with a two-hour idle TTL by default, snapshotted under
+# `/tmp/rli_sessions` on Vercel so a soft recycle of the same instance can reload them.
+# Keep the browser tab open (the client heartbeats every two minutes) for long demos.
+# Multi-replica shared storage is still a productionization step — see
+# [`docs/productionization.md`](productionization.md).
 - Pattern-based injection detection remains a prototype control.
 - Bundle includes numpy / pandas / scikit-learn; if the build hits size limits, enable
   [Large Functions](https://vercel.com/docs/functions/limitations#large-functions-beta)

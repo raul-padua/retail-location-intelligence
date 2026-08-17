@@ -148,6 +148,9 @@ export interface Health {
   status: string;
   settings: ServerSettings;
   demo_token_scope_note: string;
+  session_ttl_seconds?: number;
+  session_ttl_default_seconds?: number;
+  sessions_open?: number;
 }
 
 // ------------------------------------------------------------------------------ plan

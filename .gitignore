@@ -76,3 +76,5 @@ web/*.tsbuildinfo
 
 # Sample outputs (optional - you may want to commit these)
 # sample_outputs/
+# Local durable workflow sessions (see server/sessions.py)
+.rli_sessions/

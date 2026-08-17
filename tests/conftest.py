@@ -7,6 +7,12 @@ Tests marked ``live`` are the only ones that call the real API.
 
 from __future__ import annotations
 
+import os
+
+# Keep the shared SessionStore memory-only under pytest so suite runs do not leave
+# pickle snapshots under .rli_sessions/.
+os.environ.setdefault("RLI_SESSION_DIR", "")
+
 from typing import Any, Callable
 
 import httpx

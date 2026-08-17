@@ -499,7 +499,7 @@ def test_reset_clears_the_analysis_and_the_conversation(client):
 
 
 def test_the_store_evicts_the_oldest_session_rather_than_growing_without_bound():
-    store = SessionStore(limit=3)
+    store = SessionStore(limit=3, persist_dir=None)
 
     created = [store.create().session_id for _ in range(4)]
 
@@ -508,12 +508,34 @@ def test_the_store_evicts_the_oldest_session_rather_than_growing_without_bound()
         store.get(created[0])
 
 
+def test_sessions_expire_after_the_configured_ttl(tmp_path):
+    store = SessionStore(limit=8, ttl_seconds=60, persist_dir=tmp_path)
+    session = store.create()
+    from datetime import UTC, datetime, timedelta
+
+    session.touched_at = datetime.now(UTC) - timedelta(seconds=61)
+    store._persist_locked(session)
+
+    with pytest.raises(KeyError):
+        store.get(session.session_id)
+
+
+def test_sessions_reload_from_disk_within_ttl(tmp_path):
+    first = SessionStore(limit=8, ttl_seconds=7200, persist_dir=tmp_path)
+    session_id = first.create().session_id
+    first.put(session_id, first.get(session_id).state)
+
+    second = SessionStore(limit=8, ttl_seconds=7200, persist_dir=tmp_path)
+    restored = second.get(session_id)
+    assert restored.session_id == session_id
+
+
 def test_a_session_mid_transition_is_not_evicted_out_from_under_itself():
     """Eviction picks the oldest *idle* session, and overshoots the cap rather than
     dropping one whose transition is still running - which would surface as its own
     ``put`` failing with "unknown session", a confusing way to say "the server was busy".
     """
-    store = SessionStore(limit=2)
+    store = SessionStore(limit=2, persist_dir=None)
     busy = store.create()
     holding = threading.Event()
     release = threading.Event()
