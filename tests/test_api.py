@@ -530,6 +530,35 @@ def test_sessions_reload_from_disk_within_ttl(tmp_path):
     assert restored.session_id == session_id
 
 
+def test_unpickleable_plan_state_does_not_break_put(tmp_path):
+    """Disk snapshots are best-effort; describe must not 500 if pickle fails."""
+    from orchestration.workflow import describe as describe_transition
+    from core.config import Settings
+    from metrics.registry import get_registry
+
+    store = SessionStore(limit=8, ttl_seconds=7200, persist_dir=tmp_path)
+    session = store.create()
+    settings = Settings(
+        atlas_token="test-token",
+        atlas_base_url="https://example.test",
+        timeout_seconds=5.0,
+        max_retries=0,
+        openai_api_key=None,
+        llm_model="test",
+        log_level="INFO",
+    )
+    updated = describe_transition(
+        session.state,
+        "Compare Burlington and Winooski for a suburban apparel store.",
+        ["city:burlington-vt", "city:winooski-vt"],
+        settings=settings,
+        registry=get_registry(),
+        use_llm=False,
+    )
+    stored = store.put(session.session_id, updated)
+    assert stored.state.plan is not None
+
+
 def test_a_session_mid_transition_is_not_evicted_out_from_under_itself():
     """Eviction picks the oldest *idle* session, and overshoots the cap rather than
     dropping one whose transition is still running - which would surface as its own

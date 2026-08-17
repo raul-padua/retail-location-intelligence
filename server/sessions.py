@@ -49,18 +49,17 @@ def session_ttl_seconds() -> int:
 def session_dir() -> Path | None:
     """Directory for durable session snapshots, or ``None`` to stay memory-only.
 
-    Defaults to a local/workable path so demos survive a uvicorn reload and so a warm
-    Vercel instance can reload after a soft recycle. Set ``RLI_SESSION_DIR=`` (empty) to
-    disable persistence.
+    Persistence is **opt-in** via ``RLI_SESSION_DIR``. The default is memory-only because
+    ``WorkflowState`` embeds parameterized Pydantic models that are not reliably
+    pickleable, and a failed snapshot must never break describe/approve. The two-hour TTL
+    plus the client's heartbeat keep demos alive on a warm process without disk.
     """
-    if "RLI_SESSION_DIR" in os.environ:
-        configured = os.environ["RLI_SESSION_DIR"].strip()
-        if not configured:
-            return None
-        return Path(configured)
-    if os.getenv("VERCEL"):
-        return Path("/tmp/rli_sessions")
-    return Path(".rli_sessions")
+    if "RLI_SESSION_DIR" not in os.environ:
+        return None
+    configured = os.environ["RLI_SESSION_DIR"].strip()
+    if not configured:
+        return None
+    return Path(configured)
 
 
 class UnknownSessionError(KeyError):
@@ -251,9 +250,17 @@ class SessionStore:
             "retailer_simulation": session.retailer_simulation,
             "analog_matching": session.analog_matching,
         }
-        tmp = path.with_suffix(".tmp")
-        tmp.write_bytes(pickle.dumps(payload, protocol=pickle.HIGHEST_PROTOCOL))
-        tmp.replace(path)
+        try:
+            tmp = path.with_suffix(".tmp")
+            tmp.write_bytes(pickle.dumps(payload, protocol=pickle.HIGHEST_PROTOCOL))
+            tmp.replace(path)
+        except Exception:
+            # Persistence is best-effort. WorkflowState can contain parameterized Pydantic
+            # generics (e.g. Attributed[str]) that pickle cannot round-trip; failing the
+            # request would turn a durable-cache miss into a 500 on describe/approve.
+            path.unlink(missing_ok=True)
+            tmp = path.with_suffix(".tmp")
+            tmp.unlink(missing_ok=True)
 
     def _load_locked(self, session_id: str) -> Session | None:
         path = self._persist_path(session_id)

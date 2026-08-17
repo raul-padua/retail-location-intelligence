@@ -73,9 +73,8 @@ If the Framework Preset **Services** option is missing on your plan:
 
 ## Known deployment limits
 
-- Sessions use a **two-hour idle TTL** by default and are snapshotted under
-  `/tmp/rli_sessions` on Vercel so a soft recycle of the same instance can reload them.
-  Keep the browser tab open (the client heartbeats every two minutes) for long demos.
+- Sessions use a **two-hour idle TTL** by default (memory + client heartbeat every two
+  minutes). Disk snapshots are opt-in via `RLI_SESSION_DIR` and best-effort only.
   Multi-replica shared storage is still a productionization step — see
   [`docs/productionization.md`](productionization.md).
 - Pattern-based injection detection remains a prototype control.
