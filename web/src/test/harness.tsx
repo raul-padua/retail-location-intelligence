@@ -311,6 +311,9 @@ export function stubApi(options: StubOptions = {}): Stub {
     reconciliation_passed: true,
   };
 
+  routes["/api/retailer-simulation/run"] = {
+    simulation: simulationFixture,
+  };
   routes["/api/sessions/test-session/retailer-simulation/run"] = {
     simulation: simulationFixture,
   };
@@ -421,6 +424,9 @@ export function stubApi(options: StubOptions = {}): Stub {
       short_note: "Public government or licensed open data, not Atlas.",
     },
     provenance_notes: ["Test fixture."],
+  };
+  routes["/api/analog-matching/search"] = {
+    search: analogSearchFixture,
   };
   routes["/api/sessions/test-session/analog-matching/search"] = {
     search: analogSearchFixture,

@@ -99,7 +99,13 @@ export function SimulationPanel() {
             const last = await api.retailerSimulationLast(sessionId);
             if (!cancelled) setSimulation(last.simulation);
           } catch (err) {
-            if (!(err instanceof ApiError && err.status === 404)) {
+            // No prior run, or the serverless instance no longer holds this session.
+            if (
+              !(
+                err instanceof ApiError &&
+                (err.status === 404 || err.isMissingSession)
+              )
+            ) {
               throw err;
             }
           }
@@ -121,12 +127,12 @@ export function SimulationPanel() {
   }, [sessionId]);
 
   const runSimulation = async () => {
-    if (!sessionId) return;
     setRunning(true);
     setError(null);
     try {
       const mixTotal = mallMix + stripMix + outletMix;
-      const payload = await api.retailerSimulationRun(sessionId, {
+      // Stateless run — does not depend on in-memory workflow sessions (important on Vercel).
+      const payload = await api.retailerSimulationRun({
         store_count: storeCount,
         seed,
         sales_target_usd: salesTarget,
@@ -291,7 +297,7 @@ export function SimulationPanel() {
             : "Select a candidate on the map to focus the similar-market store profile."}
         </p>
         <div className="mt-4">
-          <Button onClick={() => void runSimulation()} disabled={running || !sessionId}>
+          <Button onClick={() => void runSimulation()} disabled={running}>
             {running ? "Running…" : "Run simulation"}
           </Button>
         </div>

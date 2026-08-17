@@ -296,9 +296,9 @@ export const api = {
       "/api/retailer-simulation/defaults",
     ),
 
-  retailerSimulationRun: (session: string, body: RetailerSimulationRunRequest) =>
+  retailerSimulationRun: (body: RetailerSimulationRunRequest) =>
     request<{ simulation: RetailerSimulationArtifact }>(
-      `/api/sessions/${session}/retailer-simulation/run`,
+      "/api/retailer-simulation/run",
       { method: "POST", body },
     ),
 
@@ -310,9 +310,9 @@ export const api = {
   analogMatchingMeta: () =>
     request<AnalogMatchingMeta>("/api/analog-matching/meta"),
 
-  analogMatchingSearch: (session: string, body: AnalogMatchingSearchRequest) =>
+  analogMatchingSearch: (body: AnalogMatchingSearchRequest) =>
     request<{ search: AnalogSearchResult }>(
-      `/api/sessions/${session}/analog-matching/search`,
+      "/api/analog-matching/search",
       { method: "POST", body },
     ),
 

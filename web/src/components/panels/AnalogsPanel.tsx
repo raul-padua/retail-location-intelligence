@@ -79,7 +79,12 @@ export function AnalogsPanel() {
               setSelectedMatchId(last.search.matches[0]?.store_id ?? null);
             }
           } catch (err) {
-            if (!(err instanceof ApiError && err.status === 404)) {
+            if (
+              !(
+                err instanceof ApiError &&
+                (err.status === 404 || err.isMissingSession)
+              )
+            ) {
               throw err;
             }
           }
@@ -99,11 +104,12 @@ export function AnalogsPanel() {
   }, [sessionId]);
 
   const runSearch = async () => {
-    if (!sessionId || !selectedSlug) return;
+    if (!selectedSlug) return;
     setRunning(true);
     setError(null);
     try {
-      const payload = await api.analogMatchingSearch(sessionId, {
+      // Stateless search — does not depend on in-memory workflow sessions (important on Vercel).
+      const payload = await api.analogMatchingSearch({
         market_id: selectedSlug,
         top_k: topK,
         preferred_format: preferredFormat || null,
@@ -224,7 +230,7 @@ export function AnalogsPanel() {
           </Field>
         </div>
         <div className="mt-4">
-          <Button onClick={() => void runSearch()} disabled={running || !sessionId}>
+          <Button onClick={() => void runSearch()} disabled={running || !selectedSlug}>
             {running ? "Searching…" : "Find look-alike stores"}
           </Button>
         </div>
