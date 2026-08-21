@@ -4,6 +4,14 @@ An evidence-bound agentic prototype that helps a retail strategy or real-estate 
 compare candidate regions for a new store, using real data from the
 [StateBook Atlas API](https://statebook.zendesk.com/hc/en-us/articles/360016198753-Authentication-and-Licensing).
 
+> **Portfolio project by [Raul Salles de Padua](https://www.linkedin.com/in/raulpadua)** — AI Engineering & Product Leader focused on production Agentic AI, AI agents, RAG, recommender systems, AI platforms, and measurable business impact.
+>
+> **Live application:** [Explore Retail Location Intelligence](https://retail-location-intelligence.vercel.app/)
+>
+> **Recruiter snapshot:** A deployed, governed AI decision platform that turns an ambiguous retail site-selection objective into an approved analytical plan, validated StateBook evidence, deterministic scoring, sensitivity analysis, provenance, and evidence-bound explanations.
+>
+> **Keywords:** Agentic AI · AI agents · decision intelligence · AI governance · human-in-the-loop · deterministic validation · data provenance · retail analytics · FastAPI · Next.js
+
 The central design constraint: **deterministic analytical services are the source of
 truth**. The agent interprets a business objective, constructs a governed analysis plan,
 asks what it needs to ask, and explains the result. It cannot invent a value, invent a
