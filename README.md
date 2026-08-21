@@ -6,7 +6,9 @@ compare candidate regions for a new store, using real data from the
 
 > **Portfolio project by [Raul Salles de Padua](https://www.linkedin.com/in/raulpadua)** — AI Engineering & Product Leader focused on production Agentic AI, AI agents, RAG, recommender systems, AI platforms, and measurable business impact.
 >
-> **Recruiter snapshot:** A governed AI decision platform combining agentic planning with deterministic retrieval, validation, scoring, provenance, human approval, and evidence-bound explanations for retail site selection.
+> **Live application:** [Explore Retail Location Intelligence](https://retail-location-intelligence.vercel.app/)
+>
+> **Recruiter snapshot:** A deployed, governed AI decision platform that turns an ambiguous retail site-selection objective into an approved analytical plan, validated StateBook evidence, deterministic scoring, sensitivity analysis, provenance, and evidence-bound explanations.
 >
 > **Keywords:** Agentic AI · AI agents · decision intelligence · AI governance · human-in-the-loop · deterministic validation · data provenance · retail analytics · FastAPI · Next.js
 
